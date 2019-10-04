@@ -1,0 +1,167 @@
+{
+    "spins": 84,
+    "shields": 3,
+    "seq": 22334,
+    "village": 72,
+    "coins": 3895600,
+    "Ship": 5,
+    "Farm": 3,
+    "Crop": 1,
+    "Statue": 2,
+    "House": 3,
+    "name": "Truong",
+    "fillTime": 1570158309666,
+    "image": "10156498653158263",
+    "raid": {
+        "name": "Maggie",
+        "id": "rofnf_ck0ov4yr6009hovq9cdaj5kb4",
+        "image": "m:100000823647343",
+        "coins": 300000,
+        "raid_target": "nf"
+    },
+    "msToNextDailyBonus": 63905491,
+    "dailybonusextra": 0,
+    "dailybonusextraPurchaseDisabled": false,
+    "piggy": {
+        "coins": 1000000,
+        "productCode": "com.moonactive.cm.piggy.a"
+    },
+    "cardsXP": 501,
+    "messages": [
+        {
+            "a": 4,
+            "t": 1570159075367,
+            "u": "rof4__ck1bjml7l017nlykaeqn82ios",
+            "n": "Nguyen",
+            "i": "f:2487420421479807",
+            "xp": 11,
+            "e": 305000,
+            "data": {}
+        },
+        {
+            "a": 6,
+            "u": "rof4__ck1bjml7l017nlykaeqn82ios",
+            "n": "Nguyen",
+            "i": "f:2487420421479807",
+            "e": 100,
+            "t": 1570158181286
+        },
+        {
+            "a": 4,
+            "t": 1570154160902,
+            "u": "rof4__cjzq3kzx8052ta4ljea3f4j8a",
+            "n": "Truong",
+            "i": "f:1204676683057655",
+            "xp": 30,
+            "e": 815000,
+            "data": {}
+        },
+        {
+            "a": 3,
+            "t": 1570150961738,
+            "u": "rofnf_ck0ov4yuk00pmovq9253536cn",
+            "n": "Lillie",
+            "i": "m:100000494679386",
+            "xp": 1390,
+            "e": "Farm"
+        },
+        {
+            "a": 3,
+            "t": 1570135230695,
+            "u": "rof5__cjv670sib01g9h2leaokl9b7x",
+            "n": "Marcie",
+            "i": "f:2279808338749570",
+            "xp": 4354,
+            "e": "Farm"
+        },
+        {
+            "a": 4,
+            "t": 1570135071415,
+            "u": "rof5__cjv670sib01g9h2leaokl9b7x",
+            "n": "Marcie",
+            "i": "f:2279808338749570",
+            "xp": 4354,
+            "e": 336000,
+            "data": {}
+        },
+        {
+            "a": 3,
+            "t": 1570133632687,
+            "u": "rofnf_ck0ov4yr1008sovq9gvtxcao9",
+            "n": "Mark",
+            "i": "m:100001086840070",
+            "xp": 1366,
+            "e": "Ship"
+        },
+        {
+            "a": 3,
+            "t": 1570129770112,
+            "u": "rof5__cjv670sib01g9h2leaokl9b7x",
+            "n": "Marcie",
+            "i": "f:2279808338749570",
+            "xp": 4354,
+            "e": "Farm"
+        },
+        {
+            "a": 4,
+            "t": 1570124785982,
+            "u": "rofnf_ck0ov4yvw00w4ovq92k2l5sru",
+            "n": "El",
+            "i": "m:100000231205213",
+            "xp": 1413,
+            "e": 1338000,
+            "data": {}
+        },
+        {
+            "a": 3,
+            "t": 1570119675324,
+            "u": "rofnf_ck0ov4yrq00c9ovq93tg995sx",
+            "n": "Arthur",
+            "i": "m:100000068866373",
+            "xp": 1342,
+            "e": "Farm"
+        }
+    ],
+    "lastName": "Nguyen",
+    "extraShieldsToPay": 0,
+    "hiddenShields": 1,
+    "inbox": 2,
+    "selectedPet": {
+        "type": "rhino",
+        "xp": 7148,
+        "paused": false,
+        "level": 6,
+        "messages": [],
+        "blockedAttacks": 0,
+        "ttl": 0,
+        "nextXp": 30000,
+        "scoreBonus": 12,
+        "shieldRatio": 17,
+        "nextShieldRatio": 18
+    },
+    "petXpBank": 101271,
+    "petTtlBank": 57600000,
+    "DailyMiniSnacksUnlocksAtMiliSec": 1566108090000,
+    "activeTriplePromotionIds": [],
+    "score": 2432,
+    "jp_t": 0,
+    "accumulation": {
+        "missionIndex": 1,
+        "currentAmount": 3,
+        "currentAmountNonCapped": 3,
+        "totalAmount": 15,
+        "reward": {
+            "coins": 7000000
+        },
+        "id": "accumulation_2019-10-04T00:05"
+    },
+    "active_events": {
+        "village_complete_bonus": 7203,
+        "accumulation": 331203,
+        "baloons": 7203
+    },
+    "genericRewards": [],
+    "globalChestCounter": 254,
+    "now": 1570161297143,
+    "coupons": []
+}

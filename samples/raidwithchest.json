@@ -1,0 +1,112 @@
+{
+    "spins": 2,
+    "shields": 3,
+    "seq": 22423,
+    "village": 72,
+    "coins": 16407600,
+    "Ship": 5,
+    "Farm": 3,
+    "Crop": 1,
+    "Statue": 2,
+    "House": 3,
+    "name": "Truong",
+    "fillTime": 1570162345949,
+    "image": "10156498653158263",
+    "raid": {
+        "name": "Marius",
+        "id": "rofnf_ck0ov4yr30093ovq97c4tdtns",
+        "image": "m:100000697645320",
+        "coins": 798000,
+        "raid_target": "nf"
+    },
+    "msToNextDailyBonus": 60166188,
+    "dailybonusextra": 0,
+    "dailybonusextraPurchaseDisabled": false,
+    "piggy": {
+        "coins": 1000000,
+        "productCode": "com.moonactive.cm.piggy.a"
+    },
+    "cardsXP": 501,
+    "messages": [],
+    "lastName": "Nguyen",
+    "extraShieldsToPay": 0,
+    "hiddenShields": 1,
+    "inbox": 0,
+    "selectedPet": {
+        "type": "rhino",
+        "xp": 7237,
+        "paused": false,
+        "level": 6,
+        "messages": [],
+        "blockedAttacks": 0,
+        "ttl": 0,
+        "nextXp": 30000,
+        "scoreBonus": 12,
+        "shieldRatio": 17,
+        "nextShieldRatio": 18
+    },
+    "petXpBank": 101271,
+    "petTtlBank": 57600000,
+    "DailyMiniSnacksUnlocksAtMiliSec": 1566108090000,
+    "activeTriplePromotionIds": [],
+    "score": 2432,
+    "jp_t": 0,
+    "accumulation": {
+        "missionIndex": 3,
+        "currentAmount": 26,
+        "currentAmountNonCapped": 26,
+        "totalAmount": 50,
+        "reward": {
+            "spins": 75
+        },
+        "id": "accumulation_2019-10-04T00:05"
+    },
+    "balloons": [
+        1,
+        1,
+        1,
+        5
+    ],
+    "active_events": {
+        "village_complete_bonus": 3464,
+        "accumulation": 327464,
+        "baloons": 3464
+    },
+    "genericRewards": [],
+    "globalChestCounter": 255,
+    "now": 1570165036445,
+    "res": "win",
+    "pay": 0,
+    "chest": {
+        "type": "golden",
+        "cards": [
+            {
+                "name": "halloween_4",
+                "rarity": 3,
+                "deckName": "halloween",
+                "swappable": true
+            },
+            {
+                "name": "halloween_2",
+                "rarity": 2,
+                "deckName": "halloween",
+                "swappable": true
+            },
+            {
+                "name": "bling_3",
+                "rarity": 2,
+                "deckName": "bling",
+                "swappable": true
+            },
+            {
+                "name": "halloween_6",
+                "rarity": 4,
+                "deckName": "halloween",
+                "swappable": true
+            }
+        ],
+        "seq": 255
+    },
+    "completedDecksData": [],
+    "coupons": []
+}
