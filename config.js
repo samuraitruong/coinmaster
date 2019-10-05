@@ -8,4 +8,3 @@ module.exports = {
   "Device[os]": "WebGL",
   "Client[version]": "3.5.27"
 };
-
