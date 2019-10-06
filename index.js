@@ -37,6 +37,7 @@ class CoinMaster {
   async getFriend(friendId) {
     //console.log("********************Spins*******************".green);
     const info = await this.post(`friends/${friendId}`);
+    info.id = friendId;
     info.village = {
       ...info
     };
@@ -402,7 +403,7 @@ class CoinMaster {
         // DO NOT ATTACK FRIENDLY EXCLUDES
         if (excludedAttack.some(x => x === message.u)) continue;
 
-        const village = this.getFriend(message.u);
+        const village = await this.getFriend(message.u);
         for (const item of attackPriorities) {
           if (!village[item] || village[item] === 0 || village[item] > 6) continue;
           attackable.push(village);
