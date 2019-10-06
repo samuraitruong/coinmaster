@@ -1,25 +1,25 @@
 {
-    "spins": 13,
+    "spins": 10,
     "shields": 3,
-    "seq": 22568,
+    "seq": 22623,
     "village": 72,
-    "coins": 3840600,
+    "coins": 3240440,
     "Ship": 5,
     "Farm": 3,
     "Crop": 2,
     "Statue": 2,
     "House": 4,
     "name": "Truong",
-    "fillTime": 1570194887070,
+    "fillTime": 1570220087070,
     "image": "10156498653158263",
     "raid": {
-        "name": "Brian",
-        "id": "rofnf_ck0ov4ysg00geovq9hj3d198t",
-        "image": "m:100000009372564",
-        "coins": 624000,
+        "name": "Lora",
+        "id": "rofnf_ck0ov4ytl00lbovq9fbciepzp",
+        "image": "m:100000056824305",
+        "coins": 390000,
         "raid_target": "nf"
     },
-    "msToNextDailyBonus": 30074580,
+    "msToNextDailyBonus": 4017241,
     "dailybonusextra": 0,
     "dailybonusextraPurchaseDisabled": false,
     "piggy": {
@@ -34,7 +34,7 @@
     "inbox": 0,
     "selectedPet": {
         "type": "rhino",
-        "xp": 7382,
+        "xp": 7437,
         "paused": false,
         "level": 6,
         "messages": [],
@@ -53,30 +53,63 @@
     "jp_t": 0,
     "accumulation": {
         "missionIndex": 5,
-        "currentAmount": 36,
-        "currentAmountNonCapped": 36,
+        "currentAmount": 76,
+        "currentAmountNonCapped": 76,
         "totalAmount": 105,
         "reward": {
             "spins": 150
         },
-        "id": "accumulation_2019-10-04T00:05"
+        "id": "accumulation_2019-10-04T00:05",
+        "bonus": {
+            "id": "accumulation_bonus_2019-10-04T20:05",
+            "remainingSeconds": 4915,
+            "bonusExtraRewards": {
+                "coins": 50000000
+            },
+            "giftImageId": "gift_1",
+            "version": 5,
+            "counter": 1,
+            "clientOptions": {
+                "Tooltip_appearance_time_sec": "4",
+                "show_bonus_timer": "true"
+            }
+        }
     },
     "tournaments": {
         "scoreThreshold": 5,
-        "score": 60,
+        "score": 75,
         "tournamentStartTime": "2019-10-04T06:05:00.000Z",
         "tournamentId": "0_36432",
-        "rank": 14
+        "rank": 19
     },
     "active_events": {
-        "accumulation": 297372,
-        "tournaments": 31404,
-        "bet_master": 45372
+        "accumulation": 271315,
+        "tournaments": 5347,
+        "bet_master": 19315
     },
     "genericRewards": [],
-    "globalChestCounter": 257,
-    "now": 1570195128056,
+    "globalChestCounter": 259,
+    "now": 1570221185397,
     "res": "win",
-    "pay": 150000,
+    "pay": 0,
+    "chest": {
+        "type": "wooden",
+        "cards": [
+            {
+                "name": "africa_1",
+                "rarity": 1,
+                "deckName": "africa",
+                "swappable": true
+            },
+            {
+                "name": "plants_2",
+                "rarity": 2,
+                "deckName": "plants",
+                "swappable": true
+            }
+        ],
+        "seq": 259
+    },
+    "completedDecksData": [],
     "coupons": []
 }

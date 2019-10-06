@@ -21,7 +21,7 @@ axios.interceptors.response.use(null, error => {
     return axios.request(error.config);
   }
 
-  return Promise.reject(error);
+  return Promise.reject(er`ror);
 });
 
 class CoinMaster {

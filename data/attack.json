@@ -1,25 +1,25 @@
 {
-    "spins": 16,
+    "spins": 12,
     "shields": 3,
-    "seq": 22565,
+    "seq": 22621,
     "village": 72,
-    "coins": 2165600,
+    "coins": 2860440,
     "Ship": 5,
     "Farm": 3,
     "Crop": 2,
     "Statue": 2,
     "House": 4,
     "name": "Truong",
-    "fillTime": 1570194887070,
+    "fillTime": 1570220087070,
     "image": "10156498653158263",
     "raid": {
-        "name": "Brian",
-        "id": "rofnf_ck0ov4ysg00geovq9hj3d198t",
-        "image": "m:100000009372564",
-        "coins": 624000,
-        "raid_target": "nf"
+        "name": "Pham",
+        "id": "rof4__cjzn7tig40149hdli9tzz8f7g",
+        "image": "10156799422207762",
+        "coins": 390000,
+        "raid_target": "f"
     },
-    "msToNextDailyBonus": 30088859,
+    "msToNextDailyBonus": 4025899,
     "dailybonusextra": 0,
     "dailybonusextraPurchaseDisabled": false,
     "piggy": {
@@ -34,7 +34,7 @@
     "inbox": 0,
     "selectedPet": {
         "type": "rhino",
-        "xp": 7379,
+        "xp": 7435,
         "paused": false,
         "level": 6,
         "messages": [],
@@ -53,62 +53,75 @@
     "jp_t": 0,
     "accumulation": {
         "missionIndex": 5,
-        "currentAmount": 36,
-        "currentAmountNonCapped": 36,
+        "currentAmount": 66,
+        "currentAmountNonCapped": 66,
         "totalAmount": 105,
         "reward": {
             "spins": 150
         },
-        "id": "accumulation_2019-10-04T00:05"
+        "id": "accumulation_2019-10-04T00:05",
+        "bonus": {
+            "id": "accumulation_bonus_2019-10-04T20:05",
+            "remainingSeconds": 4923,
+            "bonusExtraRewards": {
+                "coins": 50000000
+            },
+            "giftImageId": "gift_1",
+            "version": 5,
+            "counter": 1,
+            "clientOptions": {
+                "Tooltip_appearance_time_sec": "4",
+                "show_bonus_timer": "true"
+            }
+        }
     },
     "tournaments": {
         "scoreThreshold": 5,
-        "score": 55,
+        "score": 69,
         "tournamentStartTime": "2019-10-04T06:05:00.000Z",
         "tournamentId": "0_36432",
-        "rank": 18
+        "rank": 19
     },
     "active_events": {
-        "accumulation": 297386,
-        "tournaments": 31418,
-        "bet_master": 45386
+        "accumulation": 271323,
+        "tournaments": 5355,
+        "bet_master": 19323
     },
     "genericRewards": [],
-    "globalChestCounter": 257,
-    "now": 1570195113714,
+    "globalChestCounter": 258,
+    "now": 1570221176664,
     "reward": 2,
     "pay": 0,
     "r1": 3,
     "r2": 3,
     "r3": 3,
     "attack": {
-        "id": "rofnf_ck0ov4ypu0036ovq95ka4ckug",
-        "image": "m:275600446",
-        "name": "Cordelia",
-        "coins": 18966000,
+        "id": "rof4__ck1bjml7l017nlykaeqn82ios",
+        "name": "Nguyen",
+        "image": "2487420421479807",
         "village": {
-            "shields": 1,
-            "village": 55,
-            "Ship": 13,
-            "Farm": 1,
+            "shields": 0,
+            "village": 0,
+            "Ship": 4,
+            "Farm": 4,
             "Crop": 1,
-            "Statue": 1,
-            "House": 13
+            "Statue": 4,
+            "House": 14
         }
     },
     "random": {
-        "id": "rofnf_ck0ov4ypu0036ovq95ka4ckug",
-        "image": "m:275600446",
-        "name": "Cordelia",
-        "coins": 18966000,
+        "id": "rofnf_ck0ov4ypk001vovq91fe9c5t3",
+        "image": "m:1265347880",
+        "name": "Fannie",
+        "coins": 14322000,
         "village": {
-            "shields": 1,
+            "shields": 0,
             "village": 55,
-            "Ship": 13,
-            "Farm": 1,
-            "Crop": 1,
-            "Statue": 1,
-            "House": 13
+            "Ship": 14,
+            "Farm": 14,
+            "Crop": 2,
+            "Statue": 14,
+            "House": 1
         }
     },
     "coupons": []
