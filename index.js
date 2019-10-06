@@ -43,7 +43,15 @@ class CoinMaster {
     console.log(`FRIEND: ${friendId}`, info);
     return info;
   }
-  async getAllMessages(friendId) {
+  async fetchMetadata() {
+    
+    const response  = await axios.get("https://static.moonactive.net/data/vikings/production-3_5_fbweb_Pool-all.json");
+    // console.log("metadata", response.data.data.profile);
+    config["Device[change]"] = response.data.data.profile.change_purpose;
+    console.log("config", config);
+    // throw new Error("tata");
+  }
+  async getAllMessages() {
     //console.log("********************Spins*******************".green);
     const info = await this.post(`all_messages`);
     console.log(`All Message:`, info.messages);
@@ -82,7 +90,7 @@ class CoinMaster {
 
     const response = await this.post("spin", {
       seq: this.seq + 1,
-      auto_spin: "False",
+      auto_spin: "True",
       bet: process.env.BET || 1
     });
 
@@ -99,7 +107,11 @@ class CoinMaster {
     return await this.post(`read_sys_messages`);
   }
   async popBallon(index) {
-    return await this.post(`balloons/${index}/pop`);
+    console.log("Popping baloon", index);
+    const result = await this.post(`balloons/${index}/pop`);
+    const { pay, coins, spins } = result;
+    console.log(`popping result :  pay ${pay}, coins : ${coins}, spins : ${spins}`);
+    return result;
   }
   // apart of handle messages list
   async collectRewards(rewardType) {
@@ -134,6 +146,9 @@ class CoinMaster {
     return new Promise(resolve => setTimeout(resolve, ts));
   }
   async play() {
+    await this.fetchMetadata();
+    const firstResponse = await  this.getAllMessages();
+    await this.handleMessage(firstResponse);
     let res = await this.getBalance();
     res = await this.collectGift(res);
     res = await this.getBalance();
@@ -166,8 +181,9 @@ class CoinMaster {
       //   await this.collectRewards();
       //   return await this.readSyncMessage();
       // }
-      spinResult = await this.handleMessage(spinResult);
-      spins = spinResult.spins;
+      const messageResult = await this.handleMessage(spinResult);
+      if(messageResult)
+      spins = messageResult.spins;
 
       if (++spinCount % 10 === 0) {
         await this.upgrade(spinResult);
@@ -176,6 +192,10 @@ class CoinMaster {
     console.log("No more spins, no more fun, good bye!".yellow);
   }
   async handleMessage(spinResult) {
+    if(!spinResult) {
+      console.log("something wrong handleMessage with null".red);
+      return null;
+    }
     const { messages } = spinResult;
     if (!messages) return spinResult;
 
@@ -197,16 +217,22 @@ class CoinMaster {
 
     for (const message of messages) {
       const { data } = message;
+      let baloonsCount = 1;
       if (data && data.status === "PENDING_COLLECT" && data.collectUrl) {
         console.log("Collect rewards ", data.rewardId, data.reason);
         spinResult = await this.post(
           "https://vik-game.moonactive.net" + data.collectUrl
         );
-      } else {
-        const type = message.a;
+      } else
+      if (data && data.type === "baloons") {
+        await this.popBallon(baloonsCount);
+        baloonsCount++;
+
+      }
+      else {
         // 3 -attack
         if (!message.data || Object.keys(message.data).length == 0) continue;
-        console.log(" Attention : UNHANDLED MESSAGE", message);
+        console.log("Need Attention: --->UNHANDLED MESSAGE<----", message);
       }
     }
     return spinResult;
@@ -232,8 +258,6 @@ class CoinMaster {
     for (var i = 0; i < 3; i++) {
       await this.sleep(1000);
       const slotIndex = list[i];
-      console.log("selected slotIndex", slotIndex);
-
       response = await this.post(`raid/dig/${slotIndex}`);
       //this.updateSeq(response.data.seq)
       const { res, pay, coins, chest } = response;
@@ -252,37 +276,62 @@ class CoinMaster {
       );
 
       console.log(
-        `Raid : index ${slotIndex},  result: ${res} - Pay ${pay} => coins : ${coins}`
+        colors.gray(`Raid : index ${slotIndex},  result: ${res} - Pay ${pay} => coins : ${coins}`)
       );
 
       // response = await this.getBalance();
     }
     const afterRaidCoins = response.coins;
-    if (afterRaidCoins === originalCoins && retry < 2) {
+    /*if (afterRaidCoins === originalCoins && retry < 2) {
       response = await this.getBalance();
       console.log("Retry raid: ", retry + 1);
       return this.raid(response, retry + 1);
-    }
+    }*/
     // raided end, update tracking
-    // this.track({
-    //   event: "raid_end",
-    //   msg: {
-    //     dig_1_type: raided[0]>0?"coins" :"no coins",
-    //     dig_1_amount: raided[0].toString(),
-    //     dig_2_type: raided[1]>0?"coins" :"no coins",
-    //     dig_2_amount: raided[1].toString(),
-    //     dig_3_type: raided[2]>0?"coins" :"no coins",
-    //     dig_3_amount: raided[2].toString(),
-    //   }
-    // });
-    await this.track('{"event":"raid_end", msg: {}}')
+    this.track({
+      event: "raid_end",
+      msg: {
+        dig_1_type: raided[0]>0?"coins" :"no coins",
+        dig_1_amount: raided[0].toString(),
+        dig_2_type: raided[1]>0?"coins" :"no coins",
+        dig_2_amount: raided[1].toString(),
+        dig_3_type: raided[2]>0?"coins" :"no coins",
+        dig_3_amount: raided[2].toString(),
+      },
+      time: new Date().getTime()
+    });
     return response;
   }
-  async track(data) {
+  async track(event) {
     console.log("Update tracking data".yellow);
-    const result = await this.post("https://vik-analytics.moonactive.net/vikings/track", {
-      data
-    });
+    const deviceInfo = {
+      event: "device_info",
+      msg: {
+        os: "WebGL",
+        app_version: "3.5.27",
+        model: "",
+        brand: "",
+        manufacturer: "",
+        os_version: "",
+        screen_dpi: "",
+        screen_height: "1440",
+        screen_width: "2560",
+        has_telephone: "",
+        carrier: "",
+        wifi: "",
+        device_id: config["Device[udid]"],
+        fullscreen: "False"
+      },
+      i: "1939300993-24"
+    };
+    var data =  JSON.stringify(deviceInfo +"\n"+ JSON.stringify({...event, device_id: config["Device[udid]"]}));
+    console.log("Tracking event", event)
+    const result = await this.post(
+      "https://vik-analytics.moonactive.net/vikings/track",
+      {
+        data
+      }
+    );
     console.log("tracking result", result);
   }
   async collectGift(spinResult) {
@@ -306,10 +355,35 @@ class CoinMaster {
       console.log("No gift pending");
     }
   }
+  //return the target
+  async findRevengeAttack(spinResult) {
+    console.log("Find revenge target".yellow)
+    const data = await this.getAllMessages();
+    const attackable = [];
+    const attackPriorities = ["Ship", "Statue", "Crop", "Farm", "House"];
+
+
+    if(data.messages) {
+      for (const message of data.messages) {
+        // DO NOT ATTACK FRIENDLY EXCLUDES
+        if(excludedAttack.some(x => x === message.u)) continue;
+
+        const village = this.getFriend(message.u);
+        for (const item of attackPriorities) {
+          if (!village[item] || village[item] === 0 || village[item] > 6 ) continue;
+          attackable.push(village);
+          if(village.shields === 0) return village;
+        }
+      }
+    }
+    if(attackable.length >0) return attackable[0]
+    return null;
+  }
   async hammerAttach(spinResult) {
     console.log("Hammer Attack:".blue);
     //console.log("attack", spinResult.attack);
-    let desireTarget = spinResult.attack;
+    let desireTarget = await this.findRevengeAttack(spinResult);
+    desireTarget = desireTarget || spinResult.attack;
 
     if (
       desireTarget.village.shields > 0 ||
@@ -366,8 +440,11 @@ class CoinMaster {
       //this.updateSeq(response.data.seq)
       const { res, pay, coins } = response;
       console.log(`Attack Result : ${res} - Pay ${pay} => coins : ${coins}`);
-      if (res != "ok") {
+      if (res != "ok" && res != "shield") {
         console.log("Attack failed".red);
+      }
+      if(res == "shield") {
+        console.log("Your attack has been blocked by shiled".yellow);
       }
       return response;
     }

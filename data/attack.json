@@ -1,103 +1,177 @@
 {
-    "spins": 16,
+    "spins": 27,
     "shields": 3,
-    "seq": 5448,
-    "village": 21,
-    "coins": 2758980,
+    "seq": 324,
+    "village": 1,
+    "coins": 212000,
     "Ship": 3,
-    "Farm": 4,
-    "Crop": 4,
+    "Farm": 3,
+    "Crop": 2,
     "Statue": 3,
-    "House": 5,
-    "name": "Xuong",
-    "fillTime": 1570276751797,
-    "image": "159704061873110",
+    "House": 4,
+    "name": "Truong",
+    "fillTime": 1570361147952,
+    "image": "1204676683057655",
     "raid": {
-        "name": "Betty",
-        "id": "rofnf_ck0ov4ysm00h8ovq9b3gyeofh",
-        "image": "m:100000620232719",
-        "coins": 552000,
+        "name": "Veronica",
+        "id": "rofnf_ck0ov4ypt0031ovq96ug2elgl",
+        "image": "m:1188292969",
+        "coins": 1116000,
         "raid_target": "nf"
     },
-    "msToNextDailyBonus": 45051666,
+    "msToNextDailyBonus": 0,
     "dailybonusextra": 0,
     "dailybonusextraPurchaseDisabled": false,
     "piggy": {
         "coins": 1000000,
         "productCode": "com.moonactive.cm.piggy.a"
     },
-    "cardsXP": 264,
     "messages": [],
-    "extraShieldsToPay": 1,
-    "inbox": 5,
-    "selectedPet": {
-        "type": "fox",
-        "xp": 15833,
-        "paused": false,
-        "level": 7,
-        "messages": [],
-        "ttl": 0,
-        "nextXp": 12000,
-        "scoreBonus": 5,
-        "currentStealPercent": 28,
-        "nextStealPercent": 30
-    },
-    "petXpBank": 41200,
-    "petTtlBank": 72000000,
-    "DailyMiniSnacksUnlocksAtMiliSec": 1566721960406,
+    "extraShieldsToPay": 0,
+    "cardsXP": 0,
+    "inbox": 0,
+    "DailyMiniSnacksUnlocksAtMiliSec": 1570107116276,
     "activeTriplePromotionIds": [],
-    "score": 800,
+    "score": 35,
     "jp_t": 0,
-    "accumulation": {
-        "missionIndex": 7,
-        "currentAmount": 21,
-        "currentAmountNonCapped": 21,
-        "totalAmount": 160,
-        "reward": {
-            "spins": 225
-        },
-        "id": "accumulation_2019-10-04T00:05"
-    },
-    "active_events": {
-        "accumulation": 215279
-    },
     "genericRewards": [],
-    "globalChestCounter": 62,
-    "now": 1570277221237,
+    "now": 1570362579771,
     "reward": 2,
     "pay": 0,
     "r1": 3,
     "r2": 3,
     "r3": 3,
     "attack": {
-        "id": "rofnf_ck0ov4ysl00h3ovq93i89dvnz",
-        "image": "m:100000620624322",
-        "name": "Tillie",
-        "coins": 1164000,
+        "id": "rof4__cjzn7tig40149hdli9tzz8f7g",
+        "name": "Pham",
+        "image": "10156799422207762",
         "village": {
             "shields": 2,
-            "village": 20,
+            "village": 84,
             "Ship": 2,
-            "Farm": 14,
-            "Crop": 3,
-            "Statue": 12,
-            "House": 5
+            "Farm": 4,
+            "Crop": 2,
+            "Statue": 2,
+            "House": 4
         }
     },
     "random": {
-        "id": "rofnf_ck0ov4ysl00h3ovq93i89dvnz",
-        "image": "m:100000620624322",
-        "name": "Tillie",
-        "coins": 1164000,
+        "id": "rofnf_ck0ov4yvd00tqovq94ohh8o4k",
+        "image": "m:100000539492141",
+        "name": "Sophia",
+        "coins": 378000,
         "village": {
-            "shields": 2,
-            "village": 20,
-            "Ship": 2,
-            "Farm": 14,
-            "Crop": 3,
-            "Statue": 12,
-            "House": 5
+            "shields": 0,
+            "village": 2,
+            "Ship": 13,
+            "Farm": 11,
+            "Crop": 11,
+            "Statue": 1,
+            "House": 1
         }
     },
-    "coupons": []
+    "coupons": [
+        {
+            "id": "190821",
+            "expireAt": 1570377300000,
+            "state": "pending",
+            "payload": {
+                "couponType": "SpinsNCoins",
+                "percentage": 70
+            },
+            "title": "Coupon20190821",
+            "supportedVersion": "3.5.4",
+            "sku": "",
+            "minCost": 0,
+            "source": "profile",
+            "group": "GE",
+            "segment": "",
+            "bundle": "generic"
+        },
+        {
+            "id": "1908212",
+            "expireAt": 1570377300000,
+            "state": "pending",
+            "payload": {
+                "couponType": "SpinsNCoins",
+                "percentage": 100
+            },
+            "title": "Coupon20190821",
+            "supportedVersion": "3.5.4",
+            "sku": "",
+            "minCost": 0,
+            "source": "profile",
+            "group": "GF",
+            "segment": "",
+            "bundle": "generic"
+        },
+        {
+            "id": "19070213",
+            "expireAt": 1570377300000,
+            "state": "pending",
+            "payload": {
+                "couponType": "SpinsNCoins",
+                "percentage": 300
+            },
+            "title": "Coupon20190702",
+            "supportedVersion": "3.5.4",
+            "sku": "",
+            "minCost": 0,
+            "source": "profile",
+            "group": "GH",
+            "segment": "",
+            "bundle": "generic"
+        },
+        {
+            "id": "19070214",
+            "expireAt": 1570377300000,
+            "state": "pending",
+            "payload": {
+                "couponType": "SpinsNCoins",
+                "percentage": 500
+            },
+            "title": "Coupon20190702",
+            "supportedVersion": "3.5.4",
+            "sku": "",
+            "minCost": 0,
+            "source": "profile",
+            "group": "GI",
+            "segment": "",
+            "bundle": "generic"
+        },
+        {
+            "id": "19070221",
+            "expireAt": 1570377300000,
+            "state": "pending",
+            "payload": {
+                "couponType": "SpinsNCoins",
+                "percentage": 200
+            },
+            "title": "Coupon20190702",
+            "supportedVersion": "3.5.4",
+            "sku": "",
+            "minCost": 0,
+            "source": "profile",
+            "group": "GB",
+            "segment": "",
+            "bundle": "generic"
+        },
+        {
+            "id": "19070231",
+            "expireAt": 1570377300000,
+            "state": "pending",
+            "payload": {
+                "couponType": "SpinsNCoins",
+                "percentage": 150
+            },
+            "title": "Coupon20190702",
+            "supportedVersion": "3.5.4",
+            "sku": "",
+            "minCost": 0,
+            "source": "profile",
+            "group": "GC",
+            "segment": "",
+            "bundle": "generic"
+        }
+    ]
 }
