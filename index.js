@@ -35,19 +35,19 @@ class CoinMaster {
     };
   }
   async getFriend(friendId) {
-    //console.log("********************Spins*******************".green);
     const info = await this.post(`friends/${friendId}`);
     info.id = friendId;
     info.village = {
       ...info
     };
-    console.log(`FRIEND: ${friendId}`, info);
+    console.log(`FRIEND: ${friendId}`, info.name);
     return info;
   }
   async fetchMetadata() {
 
     const response = await axios.get("https://static.moonactive.net/data/vikings/production-3_5_fbweb_Pool-all.json");
     // console.log("metadata", response.data.data.profile);
+    this.profile = response.data.data.profile;
     config["Device[change]"] = response.data.data.profile.change_purpose;
     console.log("config", config);
     // throw new Error("tata");
@@ -55,7 +55,7 @@ class CoinMaster {
   async getAllMessages() {
     //console.log("********************Spins*******************".green);
     const info = await this.post(`all_messages`);
-    console.log(`All Message:`, info.messages);
+    console.log(`All Message:`, info.messages.length);
     return info;
   }
 
@@ -242,10 +242,15 @@ class CoinMaster {
     // ],
 
     for (const message of messages) {
+<<<<<<< HEAD
+      const { data } = message;
+      let baloonsCount = 0;
+=======
       const {
         data
       } = message;
       let baloonsCount = 1;
+>>>>>>> 1dcc6714e7914f254a6fb3769277698aad64eff4
       if (data && data.status === "PENDING_COLLECT" && data.collectUrl) {
         console.log("Collect rewards ", data.rewardId, data.reason);
         spinResult = await this.post(
@@ -260,6 +265,14 @@ class CoinMaster {
         // 3 -attack
         if (!message.data || Object.keys(message.data).length == 0) continue;
         console.log("Need Attention: --->UNHANDLED MESSAGE<----", message);
+      }
+    }
+    if(spinResult.balloons) {
+      for (const key in spinResult.balloons) {
+        if (spinResult.balloons.hasOwnProperty(key)) {
+          await this.popBallon(key);
+          
+        }
       }
     }
     return spinResult;
@@ -355,10 +368,22 @@ class CoinMaster {
       },
       i: "1939300993-24"
     };
+<<<<<<< HEAD
+    event ={
+      ...event, 
+      device_id: config["Device[udid]"], 
+      user_id: this.userId, 
+      change_purpose: config["Device[change]"],
+      ...this.profile
+    };
+
+    var data =  JSON.stringify(deviceInfo +"\n"+ JSON.stringify(event));
+=======
     var data = JSON.stringify(deviceInfo + "\n" + JSON.stringify({
       ...event,
       device_id: config["Device[udid]"]
     }));
+>>>>>>> 1dcc6714e7914f254a6fb3769277698aad64eff4
     console.log("Tracking event", event)
     const result = await this.post(
       "https://vik-analytics.moonactive.net/vikings/track", {
@@ -460,7 +485,7 @@ class CoinMaster {
     for (const item of attackPriorities) {
       if (!village[item] || village[item] === 0 || village[item] > 6) continue;
       console.log(
-        colors.zalgo(
+        colors.green(
           `Attacking ${desireTarget.name} , item = ${item}, state = ${village[item]}`
         )
       );

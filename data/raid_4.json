@@ -1,4 +1,24 @@
 {
+<<<<<<< HEAD
+    "spins": 11,
+    "shields": 3,
+    "seq": 428,
+    "village": 2,
+    "coins": 371300,
+    "Ship": 1,
+    "Farm": 2,
+    "Crop": 1,
+    "Statue": 2,
+    "House": 2,
+    "name": "Angela",
+    "fillTime": 1570446485374,
+    "image": "123619322369397",
+    "raid": {
+        "name": "Brent",
+        "id": "rofnf_ck0ov4yqk006fovq95vpwfi9y",
+        "image": "m:449944880",
+        "coins": 900000,
+=======
     "spins": 14,
     "shields": 3,
     "seq": 189,
@@ -17,6 +37,7 @@
         "id": "rofnf_ck0ov4yte00klovq92dmr1mzh",
         "image": "m:100000091809983",
         "coins": 708000,
+>>>>>>> 1dcc6714e7914f254a6fb3769277698aad64eff4
         "raid_target": "nf"
     },
     "msToNextDailyBonus": 0,
@@ -26,6 +47,16 @@
         "coins": 1000000,
         "productCode": "com.moonactive.cm.piggy.a"
     },
+<<<<<<< HEAD
+    "cardsXP": 2,
+    "messages": [],
+    "lastName": "Smith",
+    "extraShieldsToPay": 0,
+    "inbox": 0,
+    "DailyMiniSnacksUnlocksAtMiliSec": 1569774605467,
+    "activeTriplePromotionIds": [],
+    "score": 50,
+=======
     "cardsXP": 0,
     "messages": [],
     "extraShieldsToPay": 1,
@@ -33,8 +64,18 @@
     "DailyMiniSnacksUnlocksAtMiliSec": 1570135057441,
     "activeTriplePromotionIds": [],
     "score": 43,
+>>>>>>> 1dcc6714e7914f254a6fb3769277698aad64eff4
     "jp_t": 0,
+    "active_events": {
+        "baloons": 2351
+    },
     "genericRewards": [],
+<<<<<<< HEAD
+    "now": 1570446949216,
+    "res": "win",
+    "pay": 0,
+    "coupons": []
+=======
     "now": 1570364473992,
     "res": "win",
     "pay": 161000,
@@ -142,4 +183,5 @@
             "bundle": "generic"
         }
     ]
+>>>>>>> 1dcc6714e7914f254a6fb3769277698aad64eff4
 }
