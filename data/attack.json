@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "spins": 7,
     "shields": 3,
     "seq": 436,
@@ -17,6 +18,26 @@
         "id": "rofnf_ck0ov4yvo00uzovq9d79q6mvc",
         "image": "m:100000026004698",
         "coins": 10152000,
+=======
+    "spins": 16,
+    "shields": 3,
+    "seq": 187,
+    "village": 2,
+    "coins": 1227400,
+    "Ship": 0,
+    "Farm": 2,
+    "Crop": 0,
+    "Statue": 0,
+    "House": 1,
+    "name": "Trau",
+    "fillTime": 1570363769317,
+    "image": "113041823433674",
+    "raid": {
+        "name": "Veronica",
+        "id": "rofnf_ck0ov4ypt0031ovq96ug2elgl",
+        "image": "m:1188292969",
+        "coins": 276000,
+>>>>>>> 1dcc6714e7914f254a6fb3769277698aad64eff4
         "raid_target": "nf"
     },
     "msToNextDailyBonus": 0,
@@ -26,6 +47,7 @@
         "coins": 1000000,
         "productCode": "com.moonactive.cm.piggy.a"
     },
+<<<<<<< HEAD
     "cardsXP": 2,
     "messages": [],
     "lastName": "Smith",
@@ -34,12 +56,25 @@
     "DailyMiniSnacksUnlocksAtMiliSec": 1569774605467,
     "activeTriplePromotionIds": [],
     "score": 51,
+=======
+    "cardsXP": 0,
+    "messages": [],
+    "extraShieldsToPay": 1,
+    "inbox": 0,
+    "DailyMiniSnacksUnlocksAtMiliSec": 1570135057441,
+    "activeTriplePromotionIds": [],
+    "score": 43,
+>>>>>>> 1dcc6714e7914f254a6fb3769277698aad64eff4
     "jp_t": 0,
     "active_events": {
         "baloons": 2334
     },
     "genericRewards": [],
+<<<<<<< HEAD
     "now": 1570446965660,
+=======
+    "now": 1570364463101,
+>>>>>>> 1dcc6714e7914f254a6fb3769277698aad64eff4
     "reward": 2,
     "pay": 0,
     "r1": 3,
@@ -61,6 +96,7 @@
         }
     },
     "random": {
+<<<<<<< HEAD
         "id": "rofnf_ck0ov4yr8009tovq93o6ggll3",
         "image": "m:100000321450940",
         "name": "Johnson",
@@ -73,6 +109,20 @@
             "Crop": 2,
             "Statue": 11,
             "House": 2
+=======
+        "id": "rofnf_ck0ov4ysh00ghovq98akh3koz",
+        "image": "m:100001188486871",
+        "name": "Rey",
+        "coins": 612000,
+        "village": {
+            "shields": 1,
+            "village": 4,
+            "Ship": 5,
+            "Farm": 3,
+            "Crop": 11,
+            "Statue": 3,
+            "House": 1
+>>>>>>> 1dcc6714e7914f254a6fb3769277698aad64eff4
         }
     },
     "coupons": []
