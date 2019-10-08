@@ -44,8 +44,9 @@ class CoinMaster {
     return info;
   }
   async fetchMetadata() {
-
-    const response = await axios.get("https://static.moonactive.net/data/vikings/production-3_5_fbweb_Pool-all.json");
+    const response = await axios.get(
+      "https://static.moonactive.net/data/vikings/production-3_5_fbweb_Pool-all.json"
+    );
     // console.log("metadata", response.data.data.profile);
     this.profile = response.data.data.profile;
     config["Device[change]"] = response.data.data.profile.change_purpose;
@@ -70,7 +71,7 @@ class CoinMaster {
       ...data
     };
     try {
-      console.log(colors.dim(`#${retry + 1} Request Url : ${url}`));
+      console.log(colors.dim(`#${retry + 1} Request Url : ${url}`), data);
       const response = await axios.post(
         url,
         qs.stringify(formData),
@@ -79,7 +80,7 @@ class CoinMaster {
       const info = response.data;
       return info;
     } catch (err) {
-      // console.log("");
+      console.log("Error", err.response.status, err.response.statusText);
       // if (retry < 3) {
       // return this.post(url, data, retry + 1);
       //}
@@ -87,7 +88,6 @@ class CoinMaster {
     return null;
   }
   async spin() {
-    console.log("********************Spins*******************".green);
 
     const response = await this.post("spin", {
       seq: this.seq + 1,
@@ -95,21 +95,16 @@ class CoinMaster {
       bet: process.env.BET || 1
     });
 
-    const {
-      pay,
-      r1,
-      r2,
-      r3,
-      seq,
-      coins,
-      spins
-    } = response;
+    const { pay, r1, r2, r3, seq, coins, spins } = response;
     this.updateSeq(seq);
     console.log(
       colors.gray(
         `SPIN: ${r1} ${r2} ${r3} - pay ${pay}, coins : ${coins}, spins : ${spins}`
       )
     );
+    fs.writeJsonSync(path.join(__dirname, "data", "spin.json"), response, {
+      spaces: 4
+    });
     return response;
   }
   async readSyncMessage() {
@@ -118,12 +113,10 @@ class CoinMaster {
   async popBallon(index) {
     console.log("Popping baloon", index);
     const result = await this.post(`balloons/${index}/pop`);
-    const {
-      pay,
-      coins,
-      spins
-    } = result;
-    console.log(`popping result :  pay ${pay}, coins : ${coins}, spins : ${spins}`);
+    const { pay, coins, spins } = result;
+    console.log(
+      `popping result :  pay ${pay}, coins : ${coins}, spins : ${spins}`
+    );
     return result;
   }
   // apart of handle messages list
@@ -142,12 +135,7 @@ class CoinMaster {
       segmented: "true"
     });
     this.updateSeq(response.seq);
-    const {
-      coins,
-      spins,
-      name,
-      shields
-    } = response;
+    const { coins, spins, name, shields } = response;
     console.log(
       `Hello ${name}, You have ${spins} spins and ${coins} coins ${shields} shields`
     );
@@ -177,20 +165,14 @@ class CoinMaster {
     while (spins > 0) {
       await this.sleep(1000);
       let spinResult = await this.spin();
-      const {
-        pay,
-        r1,
-        r2,
-        r3,
-        seq
-      } = spinResult;
+      const { pay, r1, r2, r3, seq } = spinResult;
       const result = `${r1}${r2}${r3}`;
       switch (result) {
         case "333":
           spinResult = await this.hammerAttach(spinResult);
           break;
         case "111":
-          console.log("Piggy Raid....");
+          console.log("Piggy Raid....",r1, r2, r3);
           spinResult = await this.raid(spinResult);
           break;
       }
@@ -206,8 +188,7 @@ class CoinMaster {
       //   return await this.readSyncMessage();
       // }
       const messageResult = await this.handleMessage(spinResult);
-      if (messageResult)
-        spins = messageResult.spins;
+      if (messageResult) spins = messageResult.spins;
 
       if (++spinCount % 10 === 0) {
         await this.upgrade(spinResult);
@@ -220,9 +201,7 @@ class CoinMaster {
       console.log("something wrong handleMessage with null".red);
       return null;
     }
-    const {
-      messages
-    } = spinResult;
+    const { messages } = spinResult;
     if (!messages) return spinResult;
 
     //   "messages": [
@@ -242,46 +221,70 @@ class CoinMaster {
     // ],
 
     for (const message of messages) {
-<<<<<<< HEAD
       const { data } = message;
       let baloonsCount = 0;
-=======
-      const {
-        data
-      } = message;
-      let baloonsCount = 1;
->>>>>>> 1dcc6714e7914f254a6fb3769277698aad64eff4
       if (data && data.status === "PENDING_COLLECT" && data.collectUrl) {
         console.log("Collect rewards ", data.rewardId, data.reason);
         spinResult = await this.post(
           "https://vik-game.moonactive.net" + data.collectUrl
         );
-      } else
-      if (data && data.type === "baloons") {
+      } else if (data && data.type === "baloons") {
         await this.popBallon(baloonsCount);
         baloonsCount++;
-
       } else {
         // 3 -attack
-        if (!message.data || Object.keys(message.data).length == 0) continue;
+        if (!message.data || Object.keys(message.data).length == 0 || message.data.type === "village_complete_bonus" || message.data.type === "raid_master") continue;
         console.log("Need Attention: --->UNHANDLED MESSAGE<----", message);
       }
     }
-    if(spinResult.balloons) {
+    if (spinResult.balloons) {
       for (const key in spinResult.balloons) {
         if (spinResult.balloons.hasOwnProperty(key)) {
           await this.popBallon(key);
-          
         }
       }
     }
     return spinResult;
   }
   async raid(spinResult, retry) {
-    await this.readSyncMessage();
+    console.log("************** RAID **************".magenta);
+
+    // console.log(spinResult);
+    fs.writeJsonSync(
+      path.join(__dirname, "data", `raid.json`),
+      spinResult,
+      {
+        spaces: 4
+      }
+    );
+
+    const { raid } = spinResult;
+    let raidVillige = raid.village ;
+    if(!raidVillige) {
+      console.log("Raid response invalid, missing villige".red);
+      raidVillige = {};
+    }
+    const ts = new Date().getTime();
+    let time = spinResult.now ;
+    await this.track({
+      event: "raid_start",
+      msg: {
+        raid_userid: spinResult.raid.id,
+        raid_name: raid.name,
+        raid_balance: raid.coins.toString(),
+        raid_target: raid.target,
+        raid_village: raidVillige.village,
+        raid_house: raidVillige.House,
+        raid_ship: raidVillige.Ship,
+        raid_crop: raidVillige.Crop,
+        raid_statue: raidVillige.Statue,
+        raid_farm: raidVillige.Farm
+        //"all_time_raids":"3"
+      },
+      time,
+    });
     retry = retry || 0;
     let totalAmount = 0;
-    console.log("************** RAID **************".magenta);
     console.log("raid", spinResult.raid);
     const originalCoins = spinResult.coins;
     //await this.sleep(3000);
@@ -300,12 +303,7 @@ class CoinMaster {
       const slotIndex = list[i];
       response = await this.post(`raid/dig/${slotIndex}`);
       //this.updateSeq(response.data.seq)
-      const {
-        res,
-        pay,
-        coins,
-        chest
-      } = response;
+      const { res, pay, coins, chest } = response;
       raided.push(pay);
 
       totalAmount += pay;
@@ -314,13 +312,16 @@ class CoinMaster {
       }
       fs.writeJsonSync(
         path.join(__dirname, "data", `raid_${slotIndex}.json`),
-        response, {
+        response,
+        {
           spaces: 4
         }
       );
 
       console.log(
-        colors.gray(`Raid : index ${slotIndex},  result: ${res} - Pay ${pay} => coins : ${coins}`)
+        colors.gray(
+          `Raid : index ${slotIndex},  result: ${res} - Pay ${pay} => coins : ${coins}`
+        )
       );
 
       // response = await this.getBalance();
@@ -332,6 +333,8 @@ class CoinMaster {
       return this.raid(response, retry + 1);
     }*/
     // raided end, update tracking
+
+    time += (new Date().getTime()) - ts;
     this.track({
       event: "raid_end",
       msg: {
@@ -341,8 +344,10 @@ class CoinMaster {
         dig_2_amount: raided[1].toString(),
         dig_3_type: raided[2] > 0 ? "coins" : "no coins",
         dig_3_amount: raided[2].toString(),
+        duration: (new Date().getTime()) - ts,
+        amount_total: parseInt(raided[0], 10) + parseInt(raided[1], 10) + parseInt(raided[2], 10)
       },
-      time: new Date().getTime()
+      time
     });
     return response;
   }
@@ -366,27 +371,21 @@ class CoinMaster {
         device_id: config["Device[udid]"],
         fullscreen: "False"
       },
-      i: "1939300993-24"
+      //i: "1939300993-24"
     };
-<<<<<<< HEAD
-    event ={
-      ...event, 
-      device_id: config["Device[udid]"], 
-      user_id: this.userId, 
+    event = {
+      ...event,
+      device_id: config["Device[udid]"],
+      user_id: this.userId,
       change_purpose: config["Device[change]"],
       ...this.profile
     };
 
-    var data =  JSON.stringify(deviceInfo +"\n"+ JSON.stringify(event));
-=======
-    var data = JSON.stringify(deviceInfo + "\n" + JSON.stringify({
-      ...event,
-      device_id: config["Device[udid]"]
-    }));
->>>>>>> 1dcc6714e7914f254a6fb3769277698aad64eff4
-    console.log("Tracking event", event)
+    var data = JSON.stringify(deviceInfo) + "\n" + JSON.stringify(event);
+    console.log("Tracking event", event);
     const result = await this.post(
-      "https://vik-analytics.moonactive.net/vikings/track", {
+      "https://vik-analytics.moonactive.net/vikings/track",
+      {
         data
       }
     );
@@ -396,9 +395,7 @@ class CoinMaster {
     console.log("Collect gift");
 
     const response = await this.post("inbox/pending");
-    const {
-      messages
-    } = response;
+    const { messages } = response;
     if (messages && messages.length > 0) {
       console.log("Your have gifts", messages);
 
@@ -417,26 +414,28 @@ class CoinMaster {
   }
   //return the target
   async findRevengeAttack(spinResult) {
-    console.log("Find revenge target".yellow)
+    console.log("Find revenge target".yellow);
     const data = await this.getAllMessages();
     const attackable = [];
     const attackPriorities = ["Ship", "Statue", "Crop", "Farm", "House"];
-
-
+    const hash = {};
     if (data.messages) {
       for (const message of data.messages) {
+        if(message.u) continue;
         // DO NOT ATTACK FRIENDLY EXCLUDES
-        if (excludedAttack.some(x => x === message.u)) continue;
+        if (excludedAttack.some(x => x === message.u) || hash[message.u]) continue;
 
         const village = await this.getFriend(message.u);
+        hash[message.u] = village;
         for (const item of attackPriorities) {
-          if (!village[item] || village[item] === 0 || village[item] > 6) continue;
+          if (!village[item] || village[item] === 0 || village[item] > 6)
+            continue;
           attackable.push(village);
           if (village.shields === 0) return village;
         }
       }
     }
-    if (attackable.length > 0) return attackable[0]
+    if (attackable.length > 0) return attackable[0];
     return null;
   }
   async hammerAttach(spinResult) {
@@ -491,17 +490,14 @@ class CoinMaster {
       );
 
       const response = await this.post(
-        `targets/${targetId}/attack/structures/House`, {
+        `targets/${targetId}/attack/structures/House`,
+        {
           state: village[item],
           item
         }
       );
       //this.updateSeq(response.data.seq)
-      const {
-        res,
-        pay,
-        coins
-      } = response;
+      const { res, pay, coins } = response;
       console.log(`Attack Result : ${res} - Pay ${pay} => coins : ${coins}`);
       if (res != "ok" && res != "shield") {
         console.log("Attack failed".red);
@@ -537,13 +533,7 @@ class CoinMaster {
   async upgrade(spinResult) {
     console.log("Running upgrade".magenta);
     const priority = ["Farm", "House", "Ship", "Statue", "Crop"];
-    let {
-      Farm,
-      House,
-      Ship,
-      Statue,
-      Crop
-    } = spinResult;
+    let { Farm, House, Ship, Statue, Crop } = spinResult;
     for (const item of priority) {
       console.log("Before upgrade", {
         Farm,

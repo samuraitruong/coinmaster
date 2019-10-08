@@ -19,7 +19,7 @@
         "coins": 606000,
         "raid_target": "f"
     },
-    "msToNextDailyBonus": 71495624,
+    "msToNextDailyBonus": 71497211,
     "dailybonusextra": 0,
     "dailybonusextraPurchaseDisabled": false,
     "piggy": {
@@ -959,9 +959,12 @@
     },
     "genericRewards": [],
     "globalChestCounter": 33,
-    "now": 1570537015914,
-    "res": "win",
-    "pay": 101000,
+    "now": 1570537014290,
+    "reward": 1,
+    "pay": 94300,
+    "r1": 1,
+    "r2": 1,
+    "r3": 1,
     "coupons": [
         {
             "id": "190821",
