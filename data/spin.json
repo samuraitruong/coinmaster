@@ -1,25 +1,25 @@
 {
-    "spins": 159,
+    "spins": 10,
     "shields": 3,
-    "seq": 3977,
+    "seq": 4142,
     "village": 14,
-    "coins": 994480,
+    "coins": 1798480,
     "Ship": 0,
-    "Farm": 1,
-    "Crop": 0,
-    "Statue": 0,
-    "House": 1,
+    "Farm": 3,
+    "Crop": 2,
+    "Statue": 3,
+    "House": 4,
     "name": "Thaopham",
-    "fillTime": 1570487185888,
+    "fillTime": 1570537475823,
     "image": "108071973910424",
     "raid": {
-        "name": "Lillie",
-        "id": "rofnf_ck0ov4yp60002ovq9g9uafoqy",
-        "image": "m:392549394",
-        "coins": 330000,
+        "name": "Cornelia",
+        "id": "rofnf_ck0ov4ysi00gpovq9gynv0ho0",
+        "image": "m:100000396741671",
+        "coins": 318000,
         "raid_target": "nf"
     },
-    "msToNextDailyBonus": 71460105,
+    "msToNextDailyBonus": 70935645,
     "dailybonusextra": 0,
     "dailybonusextraPurchaseDisabled": false,
     "piggy": {
@@ -931,7 +931,7 @@
     "inbox": 6,
     "selectedPet": {
         "type": "fox",
-        "xp": 3701,
+        "xp": 3866,
         "paused": false,
         "level": 6,
         "messages": [],
@@ -945,7 +945,7 @@
     "petTtlBank": 0,
     "DailyMiniSnacksUnlocksAtMiliSec": 1567987791805,
     "activeTriplePromotionIds": [],
-    "score": 540,
+    "score": 550,
     "jp_t": 0,
     "superBet": {
         "betLevel": 2,
@@ -958,42 +958,13 @@
         ]
     },
     "genericRewards": [],
-    "globalChestCounter": 34,
-    "now": 1570537051406,
-    "reward": 2,
-    "pay": 0,
-    "r1": 3,
-    "r2": 3,
-    "r3": 3,
-    "attack": {
-        "id": "rof4__cjzgkbk3s02cib3k76fci3yw6",
-        "name": "Truong",
-        "image": "10156498653158263",
-        "village": {
-            "shields": 2,
-            "village": 73,
-            "Ship": 5,
-            "Farm": 4,
-            "Crop": 3,
-            "Statue": 3,
-            "House": 4
-        }
-    },
-    "random": {
-        "id": "rofnf_ck0ov4yuy00rxovq9hu7we9l8",
-        "image": "m:100000189663158",
-        "name": "Mark",
-        "coins": 4530000,
-        "village": {
-            "shields": 0,
-            "village": 17,
-            "Ship": 0,
-            "Farm": 12,
-            "Crop": 3,
-            "Statue": 13,
-            "House": 13
-        }
-    },
+    "globalChestCounter": 36,
+    "now": 1570537575857,
+    "reward": 1,
+    "pay": 94300,
+    "r1": 1,
+    "r2": 1,
+    "r3": 1,
     "coupons": [
         {
             "id": "190821",

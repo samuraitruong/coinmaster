@@ -373,14 +373,14 @@ class CoinMaster {
       },
       //i: "1939300993-24"
     };
-    event = {
-      ...event,
+    const finalEvent = { ...event}
+    finalEvent.msg= {...event.msg, 
       device_id: config["Device[udid]"],
       user_id: this.userId,
       change_purpose: config["Device[change]"],
       ...this.profile
-    };
-
+    }
+    
     var data = JSON.stringify(deviceInfo) + "\n" + JSON.stringify(event);
     console.log("Tracking event", event);
     const result = await this.post(
@@ -421,7 +421,7 @@ class CoinMaster {
     const hash = {};
     if (data.messages) {
       for (const message of data.messages) {
-        if(message.u) continue;
+        if(!message.u) continue;
         // DO NOT ATTACK FRIENDLY EXCLUDES
         if (excludedAttack.some(x => x === message.u) || hash[message.u]) continue;
 
