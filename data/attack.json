@@ -1,43 +1,22 @@
 {
-<<<<<<< HEAD
-    "spins": 7,
-    "shields": 3,
-    "seq": 436,
-    "village": 2,
-    "coins": 63900,
+    "spins": 0,
+    "shields": 2,
+    "seq": 216,
+    "village": 1,
+    "coins": 338500,
     "Ship": 1,
     "Farm": 2,
     "Crop": 1,
-    "Statue": 2,
+    "Statue": 3,
     "House": 3,
-    "name": "Angela",
-    "fillTime": 1570446485374,
-    "image": "123619322369397",
+    "name": "Nguyen",
+    "fillTime": 1570536344020,
+    "image": "2487420421479807",
     "raid": {
-        "name": "Fred",
-        "id": "rofnf_ck0ov4yvo00uzovq9d79q6mvc",
-        "image": "m:100000026004698",
-        "coins": 10152000,
-=======
-    "spins": 16,
-    "shields": 3,
-    "seq": 187,
-    "village": 2,
-    "coins": 1227400,
-    "Ship": 0,
-    "Farm": 2,
-    "Crop": 0,
-    "Statue": 0,
-    "House": 1,
-    "name": "Trau",
-    "fillTime": 1570363769317,
-    "image": "113041823433674",
-    "raid": {
-        "name": "Veronica",
-        "id": "rofnf_ck0ov4ypt0031ovq96ug2elgl",
-        "image": "m:1188292969",
-        "coins": 276000,
->>>>>>> 1dcc6714e7914f254a6fb3769277698aad64eff4
+        "name": "Etta",
+        "id": "rofnf_ck0ov4yqh0063ovq98bi77oq5",
+        "image": "m:798045356",
+        "coins": 960000,
         "raid_target": "nf"
     },
     "msToNextDailyBonus": 0,
@@ -47,83 +26,243 @@
         "coins": 1000000,
         "productCode": "com.moonactive.cm.piggy.a"
     },
-<<<<<<< HEAD
-    "cardsXP": 2,
-    "messages": [],
-    "lastName": "Smith",
-    "extraShieldsToPay": 0,
-    "inbox": 0,
-    "DailyMiniSnacksUnlocksAtMiliSec": 1569774605467,
-    "activeTriplePromotionIds": [],
-    "score": 51,
-=======
     "cardsXP": 0,
-    "messages": [],
-    "extraShieldsToPay": 1,
-    "inbox": 0,
-    "DailyMiniSnacksUnlocksAtMiliSec": 1570135057441,
+    "messages": [
+        {
+            "a": 1,
+            "t": 1570338290084,
+            "u": "rof4__cjzgkbk3s02cib3k76fci3yw6",
+            "n": "Truong",
+            "i": "f:10156498653158263",
+            "xp": 2455,
+            "e": "Crop"
+        },
+        {
+            "a": 2,
+            "t": 1570337060632,
+            "u": "rof4__cjzgkbk3s02cib3k76fci3yw6",
+            "n": "Truong",
+            "i": "f:10156498653158263",
+            "xp": 2446,
+            "e": "Crop"
+        },
+        {
+            "a": 1,
+            "t": 1570336694546,
+            "u": "rof4__cjzgkbk3s02cib3k76fci3yw6",
+            "n": "Truong",
+            "i": "f:10156498653158263",
+            "xp": 2445,
+            "e": "Statue"
+        },
+        {
+            "a": 2,
+            "t": 1570335271140,
+            "u": "rof4__cjzgkbk3s02cib3k76fci3yw6",
+            "n": "Truong",
+            "i": "f:10156498653158263",
+            "xp": 2444,
+            "e": "Statue"
+        },
+        {
+            "a": 2,
+            "t": 1570300082345,
+            "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
+            "n": "Pham",
+            "i": "f:10156799422207762",
+            "xp": 2894,
+            "e": "Statue"
+        },
+        {
+            "a": 1,
+            "t": 1570299583038,
+            "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
+            "n": "Pham",
+            "i": "f:10156799422207762",
+            "xp": 2894,
+            "e": "Farm"
+        },
+        {
+            "a": 2,
+            "t": 1570299535129,
+            "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
+            "n": "Pham",
+            "i": "f:10156799422207762",
+            "xp": 2894,
+            "e": "Farm"
+        },
+        {
+            "a": 1,
+            "t": 1570298946272,
+            "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
+            "n": "Pham",
+            "i": "f:10156799422207762",
+            "xp": 2891,
+            "e": "House"
+        },
+        {
+            "a": 2,
+            "t": 1570298396328,
+            "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
+            "n": "Pham",
+            "i": "f:10156799422207762",
+            "xp": 2888,
+            "e": "House"
+        },
+        {
+            "a": 2,
+            "t": 1570298214237,
+            "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
+            "n": "Pham",
+            "i": "f:10156799422207762",
+            "xp": 2888,
+            "e": "House"
+        }
+    ],
+    "extraShieldsToPay": -1,
+    "inbox": 1,
+    "DailyMiniSnacksUnlocksAtMiliSec": 1570158159744,
     "activeTriplePromotionIds": [],
-    "score": 43,
->>>>>>> 1dcc6714e7914f254a6fb3769277698aad64eff4
+    "score": 30,
     "jp_t": 0,
-    "active_events": {
-        "baloons": 2334
-    },
     "genericRewards": [],
-<<<<<<< HEAD
-    "now": 1570446965660,
-=======
-    "now": 1570364463101,
->>>>>>> 1dcc6714e7914f254a6fb3769277698aad64eff4
+    "now": 1570536470950,
     "reward": 2,
     "pay": 0,
     "r1": 3,
     "r2": 3,
     "r3": 3,
     "attack": {
-        "id": "rofnf_ck0ov4yr8009tovq93o6ggll3",
-        "image": "m:100000321450940",
-        "name": "Johnson",
-        "coins": 1086000,
+        "id": "rof4__cjzgkbk3s02cib3k76fci3yw6",
+        "name": "Truong",
+        "image": "10156498653158263",
         "village": {
-            "shields": 0,
-            "village": 4,
-            "Ship": 2,
-            "Farm": 14,
-            "Crop": 2,
-            "Statue": 11,
-            "House": 2
+            "shields": 2,
+            "village": 73,
+            "Ship": 5,
+            "Farm": 4,
+            "Crop": 3,
+            "Statue": 3,
+            "House": 4
         }
     },
     "random": {
-<<<<<<< HEAD
-        "id": "rofnf_ck0ov4yr8009tovq93o6ggll3",
-        "image": "m:100000321450940",
-        "name": "Johnson",
-        "coins": 1086000,
+        "id": "rofnf_ck0ov4yrm00bnovq9du7o0iic",
+        "image": "m:100000175162827",
+        "name": "Justin",
+        "coins": 594000,
         "village": {
-            "shields": 0,
-            "village": 4,
-            "Ship": 2,
-            "Farm": 14,
-            "Crop": 2,
-            "Statue": 11,
-            "House": 2
-=======
-        "id": "rofnf_ck0ov4ysh00ghovq98akh3koz",
-        "image": "m:100001188486871",
-        "name": "Rey",
-        "coins": 612000,
-        "village": {
-            "shields": 1,
-            "village": 4,
-            "Ship": 5,
-            "Farm": 3,
-            "Crop": 11,
-            "Statue": 3,
-            "House": 1
->>>>>>> 1dcc6714e7914f254a6fb3769277698aad64eff4
+            "shields": 2,
+            "village": 2,
+            "Ship": 10,
+            "Farm": 1,
+            "Crop": 12,
+            "Statue": 12,
+            "House": 11
         }
     },
-    "coupons": []
+    "coupons": [
+        {
+            "id": "190821",
+            "expireAt": 1570578900000,
+            "state": "pending",
+            "payload": {
+                "couponType": "SpinsNCoins",
+                "percentage": 70
+            },
+            "title": "Coupon20190821",
+            "supportedVersion": "3.5.4",
+            "sku": "",
+            "minCost": 0,
+            "source": "profile",
+            "group": "GE",
+            "segment": "",
+            "bundle": "generic"
+        },
+        {
+            "id": "1908212",
+            "expireAt": 1570578900000,
+            "state": "pending",
+            "payload": {
+                "couponType": "SpinsNCoins",
+                "percentage": 100
+            },
+            "title": "Coupon20190821",
+            "supportedVersion": "3.5.4",
+            "sku": "",
+            "minCost": 0,
+            "source": "profile",
+            "group": "GF",
+            "segment": "",
+            "bundle": "generic"
+        },
+        {
+            "id": "19070213",
+            "expireAt": 1570578900000,
+            "state": "pending",
+            "payload": {
+                "couponType": "SpinsNCoins",
+                "percentage": 300
+            },
+            "title": "Coupon20190702",
+            "supportedVersion": "3.5.4",
+            "sku": "",
+            "minCost": 0,
+            "source": "profile",
+            "group": "GH",
+            "segment": "",
+            "bundle": "generic"
+        },
+        {
+            "id": "19070214",
+            "expireAt": 1570578900000,
+            "state": "pending",
+            "payload": {
+                "couponType": "SpinsNCoins",
+                "percentage": 500
+            },
+            "title": "Coupon20190702",
+            "supportedVersion": "3.5.4",
+            "sku": "",
+            "minCost": 0,
+            "source": "profile",
+            "group": "GI",
+            "segment": "",
+            "bundle": "generic"
+        },
+        {
+            "id": "19070221",
+            "expireAt": 1570578900000,
+            "state": "pending",
+            "payload": {
+                "couponType": "SpinsNCoins",
+                "percentage": 200
+            },
+            "title": "Coupon20190702",
+            "supportedVersion": "3.5.4",
+            "sku": "",
+            "minCost": 0,
+            "source": "profile",
+            "group": "GB",
+            "segment": "",
+            "bundle": "generic"
+        },
+        {
+            "id": "19070231",
+            "expireAt": 1570578900000,
+            "state": "pending",
+            "payload": {
+                "couponType": "SpinsNCoins",
+                "percentage": 150
+            },
+            "title": "Coupon20190702",
+            "supportedVersion": "3.5.4",
+            "sku": "",
+            "minCost": 0,
+            "source": "profile",
+            "group": "GC",
+            "segment": "",
+            "bundle": "generic"
+        }
+    ]
 }

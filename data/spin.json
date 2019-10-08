@@ -1,11 +1,11 @@
 {
-    "spins": 177,
+    "spins": 159,
     "shields": 3,
-    "seq": 3958,
+    "seq": 3977,
     "village": 14,
-    "coins": 937680,
+    "coins": 994480,
     "Ship": 0,
-    "Farm": 0,
+    "Farm": 1,
     "Crop": 0,
     "Statue": 0,
     "House": 1,
@@ -13,20 +13,20 @@
     "fillTime": 1570487185888,
     "image": "108071973910424",
     "raid": {
-        "name": "Xuong",
-        "id": "rof4__cjzq2ta7s01qgasl87kg5dmro",
-        "image": "159704061873110",
-        "coins": 606000,
-        "raid_target": "f"
+        "name": "Lillie",
+        "id": "rofnf_ck0ov4yp60002ovq9g9uafoqy",
+        "image": "m:392549394",
+        "coins": 330000,
+        "raid_target": "nf"
     },
-    "msToNextDailyBonus": 71495624,
+    "msToNextDailyBonus": 71460105,
     "dailybonusextra": 0,
     "dailybonusextraPurchaseDisabled": false,
     "piggy": {
         "coins": 1000000,
         "productCode": "com.moonactive.cm.piggy.a"
     },
-    "cardsXP": 198,
+    "cardsXP": 199,
     "messages": [
         {
             "t": 1570536590793,
@@ -931,7 +931,7 @@
     "inbox": 6,
     "selectedPet": {
         "type": "fox",
-        "xp": 3682,
+        "xp": 3701,
         "paused": false,
         "level": 6,
         "messages": [],
@@ -945,7 +945,7 @@
     "petTtlBank": 0,
     "DailyMiniSnacksUnlocksAtMiliSec": 1567987791805,
     "activeTriplePromotionIds": [],
-    "score": 538,
+    "score": 540,
     "jp_t": 0,
     "superBet": {
         "betLevel": 2,
@@ -958,10 +958,42 @@
         ]
     },
     "genericRewards": [],
-    "globalChestCounter": 33,
-    "now": 1570537015914,
-    "res": "win",
-    "pay": 101000,
+    "globalChestCounter": 34,
+    "now": 1570537051406,
+    "reward": 2,
+    "pay": 0,
+    "r1": 3,
+    "r2": 3,
+    "r3": 3,
+    "attack": {
+        "id": "rof4__cjzgkbk3s02cib3k76fci3yw6",
+        "name": "Truong",
+        "image": "10156498653158263",
+        "village": {
+            "shields": 2,
+            "village": 73,
+            "Ship": 5,
+            "Farm": 4,
+            "Crop": 3,
+            "Statue": 3,
+            "House": 4
+        }
+    },
+    "random": {
+        "id": "rofnf_ck0ov4yuy00rxovq9hu7we9l8",
+        "image": "m:100000189663158",
+        "name": "Mark",
+        "coins": 4530000,
+        "village": {
+            "shields": 0,
+            "village": 17,
+            "Ship": 0,
+            "Farm": 12,
+            "Crop": 3,
+            "Statue": 13,
+            "House": 13
+        }
+    },
     "coupons": [
         {
             "id": "190821",

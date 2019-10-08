@@ -1,134 +1,89 @@
 {
-    "spins": 1,
-    "shields": 2,
-    "seq": 215,
-    "village": 1,
-    "coins": 338500,
+    "spins": 127,
+    "shields": 3,
+    "seq": 6069,
+    "village": 22,
+    "coins": 1259780,
     "Ship": 1,
     "Farm": 2,
     "Crop": 1,
-    "Statue": 3,
-    "House": 3,
-    "name": "Nguyen",
-    "fillTime": 1570536344020,
-    "image": "2487420421479807",
+    "Statue": 1,
+    "House": 2,
+    "name": "Xuong",
+    "fillTime": 1570529997133,
+    "image": "159704061873110",
     "raid": {
-        "name": "Etta",
-        "id": "rofnf_ck0ov4yqh0063ovq98bi77oq5",
-        "image": "m:798045356",
-        "coins": 960000,
-        "raid_target": "nf"
+        "name": "Amelia",
+        "id": "rofnf_ck0ov4yp70007ovq9b6se51lp",
+        "image": "m:813326180",
+        "coins": 324000,
+        "raid_target": "nf",
+        "village": {
+            "village": 24,
+            "shields": 2,
+            "Ship": 3,
+            "Farm": 11,
+            "Crop": 4,
+            "Statue": 2,
+            "House": 13
+        }
     },
-    "msToNextDailyBonus": 0,
+    "msToNextDailyBonus": 64105125,
     "dailybonusextra": 0,
     "dailybonusextraPurchaseDisabled": false,
     "piggy": {
         "coins": 1000000,
         "productCode": "com.moonactive.cm.piggy.a"
     },
-    "cardsXP": 0,
-    "messages": [
-        {
-            "a": 1,
-            "t": 1570338290084,
-            "u": "rof4__cjzgkbk3s02cib3k76fci3yw6",
-            "n": "Truong",
-            "i": "f:10156498653158263",
-            "xp": 2455,
-            "e": "Crop"
-        },
-        {
-            "a": 2,
-            "t": 1570337060632,
-            "u": "rof4__cjzgkbk3s02cib3k76fci3yw6",
-            "n": "Truong",
-            "i": "f:10156498653158263",
-            "xp": 2446,
-            "e": "Crop"
-        },
-        {
-            "a": 1,
-            "t": 1570336694546,
-            "u": "rof4__cjzgkbk3s02cib3k76fci3yw6",
-            "n": "Truong",
-            "i": "f:10156498653158263",
-            "xp": 2445,
-            "e": "Statue"
-        },
-        {
-            "a": 2,
-            "t": 1570335271140,
-            "u": "rof4__cjzgkbk3s02cib3k76fci3yw6",
-            "n": "Truong",
-            "i": "f:10156498653158263",
-            "xp": 2444,
-            "e": "Statue"
-        },
-        {
-            "a": 2,
-            "t": 1570300082345,
-            "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
-            "n": "Pham",
-            "i": "f:10156799422207762",
-            "xp": 2894,
-            "e": "Statue"
-        },
-        {
-            "a": 1,
-            "t": 1570299583038,
-            "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
-            "n": "Pham",
-            "i": "f:10156799422207762",
-            "xp": 2894,
-            "e": "Farm"
-        },
-        {
-            "a": 2,
-            "t": 1570299535129,
-            "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
-            "n": "Pham",
-            "i": "f:10156799422207762",
-            "xp": 2894,
-            "e": "Farm"
-        },
-        {
-            "a": 1,
-            "t": 1570298946272,
-            "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
-            "n": "Pham",
-            "i": "f:10156799422207762",
-            "xp": 2891,
-            "e": "House"
-        },
-        {
-            "a": 2,
-            "t": 1570298396328,
-            "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
-            "n": "Pham",
-            "i": "f:10156799422207762",
-            "xp": 2888,
-            "e": "House"
-        },
-        {
-            "a": 2,
-            "t": 1570298214237,
-            "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
-            "n": "Pham",
-            "i": "f:10156799422207762",
-            "xp": 2888,
-            "e": "House"
-        }
-    ],
-    "extraShieldsToPay": -1,
-    "inbox": 1,
-    "DailyMiniSnacksUnlocksAtMiliSec": 1570158159744,
+    "cardsXP": 273,
+    "messages": [],
+    "extraShieldsToPay": 0,
+    "inbox": 3,
+    "selectedPet": {
+        "type": "fox",
+        "xp": 16682,
+        "paused": false,
+        "level": 7,
+        "messages": [],
+        "ttl": 0,
+        "nextXp": 12000,
+        "scoreBonus": 5,
+        "currentStealPercent": 28,
+        "nextStealPercent": 30
+    },
+    "petXpBank": 46300,
+    "petTtlBank": 86400000,
+    "DailyMiniSnacksUnlocksAtMiliSec": 1566721960406,
     "activeTriplePromotionIds": [],
-    "score": 30,
+    "score": 822,
     "jp_t": 0,
+    "attackRaidMaster": {
+        "counter": 1,
+        "required": 3,
+        "reward": {
+            "spins": 100
+        }
+    },
+    "tournaments": {
+        "scoreThreshold": 5,
+        "score": 57,
+        "tournamentStartTime": "2019-10-08T06:05:00.000Z",
+        "tournamentId": "11_2331",
+        "rank": 43
+    },
+    "active_events": {
+        "raid_master": 219453,
+        "cards_boom": 3453,
+        "tournaments": 11064
+    },
     "genericRewards": [],
-    "now": 1570536468010,
-    "res": "win",
-    "pay": 92000,
+    "globalChestCounter": 69,
+    "now": 1570532246759,
+    "reward": 4,
+    "pay": 0,
+    "r1": 4,
+    "r2": 4,
+    "r3": 4,
     "coupons": [
         {
             "id": "190821",
@@ -167,7 +122,7 @@
         {
             "id": "19070213",
             "expireAt": 1570578900000,
-            "state": "pending",
+            "state": "received",
             "payload": {
                 "couponType": "SpinsNCoins",
                 "percentage": 300
