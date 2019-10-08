@@ -1,11 +1,11 @@
 {
-    "spins": 144,
+    "spins": 134,
     "shields": 3,
-    "seq": 3992,
+    "seq": 4003,
     "village": 14,
-    "coins": 671280,
+    "coins": 873680,
     "Ship": 0,
-    "Farm": 1,
+    "Farm": 2,
     "Crop": 0,
     "Statue": 0,
     "House": 2,
@@ -17,9 +17,18 @@
         "id": "rofnf_ck0ov4yp60002ovq9g9uafoqy",
         "image": "m:392549394",
         "coins": 330000,
-        "raid_target": "nf"
+        "raid_target": "nf",
+        "village": {
+            "village": 14,
+            "shields": 0,
+            "Ship": 3,
+            "Farm": 1,
+            "Crop": 1,
+            "Statue": 2,
+            "House": 2
+        }
     },
-    "msToNextDailyBonus": 71340413,
+    "msToNextDailyBonus": 71222059,
     "dailybonusextra": 0,
     "dailybonusextraPurchaseDisabled": false,
     "piggy": {
@@ -931,7 +940,7 @@
     "inbox": 6,
     "selectedPet": {
         "type": "fox",
-        "xp": 3716,
+        "xp": 3727,
         "paused": false,
         "level": 6,
         "messages": [],
@@ -945,7 +954,7 @@
     "petTtlBank": 0,
     "DailyMiniSnacksUnlocksAtMiliSec": 1567987791805,
     "activeTriplePromotionIds": [],
-    "score": 541,
+    "score": 542,
     "jp_t": 0,
     "superBet": {
         "betLevel": 2,
@@ -959,42 +968,12 @@
     },
     "genericRewards": [],
     "globalChestCounter": 34,
-    "now": 1570537171009,
-    "reward": 2,
+    "now": 1570537289453,
+    "reward": 4,
     "pay": 0,
-    "r1": 3,
-    "r2": 3,
-    "r3": 3,
-    "attack": {
-        "id": "rofnf_ck0ov4yuy00rxovq9hu7we9l8",
-        "image": "m:100000189663158",
-        "name": "Mark",
-        "coins": 2694000,
-        "village": {
-            "shields": 1,
-            "village": 17,
-            "Ship": 5,
-            "Farm": 11,
-            "Crop": 13,
-            "Statue": 14,
-            "House": 3
-        }
-    },
-    "random": {
-        "id": "rofnf_ck0ov4yuy00rxovq9hu7we9l8",
-        "image": "m:100000189663158",
-        "name": "Mark",
-        "coins": 2694000,
-        "village": {
-            "shields": 1,
-            "village": 17,
-            "Ship": 5,
-            "Farm": 11,
-            "Crop": 13,
-            "Statue": 14,
-            "House": 3
-        }
-    },
+    "r1": 4,
+    "r2": 4,
+    "r3": 4,
     "coupons": [
         {
             "id": "190821",

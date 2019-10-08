@@ -1,9 +1,9 @@
 {
-    "spins": 150,
+    "spins": 143,
     "shields": 3,
-    "seq": 3986,
+    "seq": 3993,
     "village": 14,
-    "coins": 536180,
+    "coins": 765580,
     "Ship": 0,
     "Farm": 1,
     "Crop": 0,
@@ -19,7 +19,7 @@
         "coins": 330000,
         "raid_target": "nf"
     },
-    "msToNextDailyBonus": 71352335,
+    "msToNextDailyBonus": 71242303,
     "dailybonusextra": 0,
     "dailybonusextraPurchaseDisabled": false,
     "piggy": {
@@ -931,7 +931,7 @@
     "inbox": 6,
     "selectedPet": {
         "type": "fox",
-        "xp": 3710,
+        "xp": 3717,
         "paused": false,
         "level": 6,
         "messages": [],
@@ -959,7 +959,7 @@
     },
     "genericRewards": [],
     "globalChestCounter": 34,
-    "now": 1570537159203,
+    "now": 1570537269237,
     "res": "win",
     "pay": 101000,
     "coupons": [

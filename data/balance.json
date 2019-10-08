@@ -1,14 +1,14 @@
 {
-    "spins": 159,
+    "spins": 144,
     "shields": 3,
-    "seq": 3977,
+    "seq": 3992,
     "village": 14,
-    "coins": 994480,
+    "coins": 671280,
     "Ship": 0,
     "Farm": 1,
     "Crop": 0,
     "Statue": 0,
-    "House": 1,
+    "House": 2,
     "name": "Thaopham",
     "fillTime": 1570487185888,
     "image": "108071973910424",
@@ -19,7 +19,7 @@
         "coins": 330000,
         "raid_target": "nf"
     },
-    "msToNextDailyBonus": 71382298,
+    "msToNextDailyBonus": 71248497,
     "dailybonusextra": 0,
     "dailybonusextraPurchaseDisabled": false,
     "piggy": {
@@ -931,7 +931,7 @@
     "inbox": 6,
     "selectedPet": {
         "type": "fox",
-        "xp": 3701,
+        "xp": 3716,
         "paused": false,
         "level": 6,
         "messages": [],
@@ -945,7 +945,7 @@
     "petTtlBank": 0,
     "DailyMiniSnacksUnlocksAtMiliSec": 1567987791805,
     "activeTriplePromotionIds": [],
-    "score": 540,
+    "score": 541,
     "jp_t": 0,
     "superBet": {
         "betLevel": 2,
@@ -959,7 +959,7 @@
     },
     "genericRewards": [],
     "globalChestCounter": 34,
-    "now": 1570537129241,
+    "now": 1570537263043,
     "config": {
         "locale": "en",
         "revenue_usd": 0,
