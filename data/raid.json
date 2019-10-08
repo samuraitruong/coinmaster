@@ -1,32 +1,32 @@
 {
-    "spins": 177,
+    "spins": 150,
     "shields": 3,
-    "seq": 3958,
+    "seq": 3986,
     "village": 14,
-    "coins": 937680,
+    "coins": 536180,
     "Ship": 0,
-    "Farm": 0,
+    "Farm": 1,
     "Crop": 0,
     "Statue": 0,
-    "House": 1,
+    "House": 2,
     "name": "Thaopham",
     "fillTime": 1570487185888,
     "image": "108071973910424",
     "raid": {
-        "name": "Xuong",
-        "id": "rof4__cjzq2ta7s01qgasl87kg5dmro",
-        "image": "159704061873110",
-        "coins": 606000,
-        "raid_target": "f"
+        "name": "Lillie",
+        "id": "rofnf_ck0ov4yp60002ovq9g9uafoqy",
+        "image": "m:392549394",
+        "coins": 330000,
+        "raid_target": "nf"
     },
-    "msToNextDailyBonus": 71497211,
+    "msToNextDailyBonus": 71355269,
     "dailybonusextra": 0,
     "dailybonusextraPurchaseDisabled": false,
     "piggy": {
         "coins": 1000000,
         "productCode": "com.moonactive.cm.piggy.a"
     },
-    "cardsXP": 198,
+    "cardsXP": 199,
     "messages": [
         {
             "t": 1570536590793,
@@ -931,7 +931,7 @@
     "inbox": 6,
     "selectedPet": {
         "type": "fox",
-        "xp": 3682,
+        "xp": 3710,
         "paused": false,
         "level": 6,
         "messages": [],
@@ -945,7 +945,7 @@
     "petTtlBank": 0,
     "DailyMiniSnacksUnlocksAtMiliSec": 1567987791805,
     "activeTriplePromotionIds": [],
-    "score": 538,
+    "score": 541,
     "jp_t": 0,
     "superBet": {
         "betLevel": 2,
@@ -958,8 +958,8 @@
         ]
     },
     "genericRewards": [],
-    "globalChestCounter": 33,
-    "now": 1570537014290,
+    "globalChestCounter": 34,
+    "now": 1570537156214,
     "reward": 1,
     "pay": 94300,
     "r1": 1,

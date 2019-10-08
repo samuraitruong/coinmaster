@@ -421,7 +421,7 @@ class CoinMaster {
     const hash = {};
     if (data.messages) {
       for (const message of data.messages) {
-        if(message.u) continue;
+        if(!message.u) continue;
         // DO NOT ATTACK FRIENDLY EXCLUDES
         if (excludedAttack.some(x => x === message.u) || hash[message.u]) continue;
 

@@ -1,25 +1,25 @@
 {
-    "spins": 177,
+    "spins": 150,
     "shields": 3,
-    "seq": 3958,
+    "seq": 3986,
     "village": 14,
-    "coins": 937680,
+    "coins": 536180,
     "Ship": 0,
-    "Farm": 0,
+    "Farm": 1,
     "Crop": 0,
     "Statue": 0,
-    "House": 1,
+    "House": 2,
     "name": "Thaopham",
     "fillTime": 1570487185888,
     "image": "108071973910424",
     "raid": {
-        "name": "Xuong",
-        "id": "rof4__cjzq2ta7s01qgasl87kg5dmro",
-        "image": "159704061873110",
-        "coins": 606000,
-        "raid_target": "f"
+        "name": "Lillie",
+        "id": "rofnf_ck0ov4yp60002ovq9g9uafoqy",
+        "image": "m:392549394",
+        "coins": 330000,
+        "raid_target": "nf"
     },
-    "msToNextDailyBonus": 71494241,
+    "msToNextDailyBonus": 71353666,
     "dailybonusextra": 0,
     "dailybonusextraPurchaseDisabled": false,
     "piggy": {
@@ -931,7 +931,7 @@
     "inbox": 6,
     "selectedPet": {
         "type": "fox",
-        "xp": 3682,
+        "xp": 3710,
         "paused": false,
         "level": 6,
         "messages": [],
@@ -945,7 +945,7 @@
     "petTtlBank": 0,
     "DailyMiniSnacksUnlocksAtMiliSec": 1567987791805,
     "activeTriplePromotionIds": [],
-    "score": 539,
+    "score": 541,
     "jp_t": 0,
     "superBet": {
         "betLevel": 2,
@@ -959,28 +959,9 @@
     },
     "genericRewards": [],
     "globalChestCounter": 34,
-    "now": 1570537017299,
+    "now": 1570537157872,
     "res": "win",
-    "pay": 0,
-    "chest": {
-        "type": "wooden",
-        "cards": [
-            {
-                "name": "bling_4",
-                "rarity": 2,
-                "deckName": "bling",
-                "swappable": true
-            },
-            {
-                "name": "oz_1",
-                "rarity": 1,
-                "deckName": "oz",
-                "swappable": true
-            }
-        ],
-        "seq": 34
-    },
-    "completedDecksData": [],
+    "pay": 101000,
     "coupons": [
         {
             "id": "190821",
