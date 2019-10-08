@@ -373,14 +373,14 @@ class CoinMaster {
       },
       //i: "1939300993-24"
     };
-    event = {
-      ...event,
+    const finalEvent = { ...event}
+    finalEvent.msg= {...event.msg, 
       device_id: config["Device[udid]"],
       user_id: this.userId,
       change_purpose: config["Device[change]"],
       ...this.profile
-    };
-
+    }
+    
     var data = JSON.stringify(deviceInfo) + "\n" + JSON.stringify(event);
     console.log("Tracking event", event);
     const result = await this.post(
