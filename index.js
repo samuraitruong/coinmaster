@@ -6,7 +6,8 @@ const path = require("path");
 const axios = require("axios");
 var colors = require("colors");
 const axiosRetry = require("axios-retry");
-
+// process.env.VERBOSE = (process.env.VERBOSE === "true");
+// console.log("process.env.VERBOSE", process.env.VERBOSE)
 const excludedAttack = [
   "rof4__cjzn7tig40149hdli9tzz8f7g",
   "rof4__cjzgkbk3s02cib3k76fci3yw6"
@@ -71,7 +72,11 @@ class CoinMaster {
       ...data
     };
     try {
-      console.log(colors.dim(`#${retry + 1} Request Url : ${url}`), data);
+      if(process.env.VERBOSE === "true")
+      {
+        console.log(colors.dim(`#${retry + 1} Request Url : ${url}`), data);
+        console.log("Form data", qs.stringify(formData));
+      }
       const response = await axios.post(
         url,
         qs.stringify(formData),
@@ -89,12 +94,14 @@ class CoinMaster {
   }
   async spin() {
 
-    const response = await this.post("spin", {
+    let response = await this.post("spin", {
       seq: this.seq + 1,
       auto_spin: "True",
       bet: process.env.BET || 1
     });
-
+    if(!response) {
+      response = this.getBalance(true);
+    }
     const { pay, r1, r2, r3, seq, coins, spins } = response;
     this.updateSeq(seq);
     console.log(
@@ -126,8 +133,7 @@ class CoinMaster {
     const data = await this.post(url);
     return data;
   }
-  async getBalance() {
-    console.log("get balance");
+  async getBalance(silient) {
 
     const response = await this.post("balance", {
       extended: "true",
@@ -136,9 +142,11 @@ class CoinMaster {
     });
     this.updateSeq(response.seq);
     const { coins, spins, name, shields } = response;
-    console.log(
-      `Hello ${name}, You have ${spins} spins and ${coins} coins ${shields} shields`
-    );
+    if(!silient) {
+      console.log(
+        `BALANCE: Hello ${name}, You have ${spins} spins and ${coins} coins ${shields} shields`
+      );
+    }
     fs.writeJsonSync(path.join(__dirname, "data", "balance.json"), response, {
       spaces: 4
     });
@@ -151,8 +159,29 @@ class CoinMaster {
   async sleep(ts) {
     return new Promise(resolve => setTimeout(resolve, ts));
   }
+  async update_fb_data(){
+    if(process.env.FB_USER_TOKEN) {
+      const response = await this.post("update_fb_data", {
+        "User[fb_token]": process.env.FB_USER_TOKEN, p: 'fb', fbToken: null
+      });
+      this.fbUser = response;
+      console.log("user data", response);
+    }
+  }
+  async login(useToken) {
+    let data = {seq: 0, fbToken: ""};
+    if(useToken)  data.fbToken = config.fbToken;
+
+    const res = await this.post("https://vik-game.moonactive.net/api/v1/users/login", data);
+    console.log("Login result", res);
+  }
   async play() {
     await this.fetchMetadata();
+
+    //await this.login();
+    await this.update_fb_data();
+    //await this.login(true);
+    await this.getBalance();
     const firstResponse = await this.getAllMessages();
     await this.handleMessage(firstResponse);
     let res = await this.getBalance();
@@ -233,7 +262,8 @@ class CoinMaster {
         baloonsCount++;
       } else {
         // 3 -attack
-        if (!message.data || Object.keys(message.data).length == 0 || message.data.type === "village_complete_bonus" || message.data.type === "raid_master") continue;
+        if (!message.data || Object.keys(message.data).length == 0 || 
+        ["village_complete_bonus","raid_master", "card_swap"].some(x =>x === message.type)) continue;
         console.log("Need Attention: --->UNHANDLED MESSAGE<----", message);
       }
     }
@@ -308,7 +338,7 @@ class CoinMaster {
 
       totalAmount += pay;
       if (chest) {
-        console.log(`You found ${chest.type}:`, chest);
+        console.log(`You found ${chest.type}:`.green, chest);
       }
       fs.writeJsonSync(
         path.join(__dirname, "data", `raid_${slotIndex}.json`),
@@ -319,14 +349,15 @@ class CoinMaster {
       );
 
       console.log(
-        colors.gray(
+        colors.magenta(
           `Raid : index ${slotIndex},  result: ${res} - Pay ${pay} => coins : ${coins}`
         )
       );
-
-      // response = await this.getBalance();
     }
+    response = await this.getBalance();
+
     const afterRaidCoins = response.coins;
+    console.log("Raid amount total: ".green, originalCoins - afterRaidCoins)
     /*if (afterRaidCoins === originalCoins && retry < 2) {
       response = await this.getBalance();
       console.log("Retry raid: ", retry + 1);
@@ -382,7 +413,9 @@ class CoinMaster {
     }
     
     var data = JSON.stringify(deviceInfo) + "\n" + JSON.stringify(event);
+    if(process.env.VERBOSE){
     console.log("Tracking event", event);
+    }
     const result = await this.post(
       "https://vik-analytics.moonactive.net/vikings/track",
       {
@@ -480,7 +513,7 @@ class CoinMaster {
       console.log("Attach target has shield");
     }
 
-    console.log(`Attacking `, desireTarget);
+    //console.log(`Attacking `, desireTarget);
     for (const item of attackPriorities) {
       if (!village[item] || village[item] === 0 || village[item] > 6) continue;
       console.log(
@@ -490,7 +523,7 @@ class CoinMaster {
       );
 
       const response = await this.post(
-        `targets/${targetId}/attack/structures/House`,
+        `targets/${targetId}/attack/structures/${item}`,
         {
           state: village[item],
           item
