@@ -57,7 +57,7 @@ class CoinMaster {
   async getAllMessages() {
     //console.log("********************Spins*******************".green);
     const info = await this.post(`all_messages`);
-    console.log(`All Message:`, info.messages.length);
+    //console.log(`All Message:`, info.messages.length);
     return info;
   }
 
@@ -85,7 +85,7 @@ class CoinMaster {
       const info = response.data;
       return info;
     } catch (err) {
-      console.log("Error", err.response.status, err.response.statusText);
+      console.log("Error".red, err.response.status, err.response.statusText);
       // if (retry < 3) {
       // return this.post(url, data, retry + 1);
       //}
@@ -102,11 +102,11 @@ class CoinMaster {
     if(!response) {
       response = this.getBalance(true);
     }
-    const { pay, r1, r2, r3, seq, coins, spins } = response;
+    const { pay, r1, r2, r3, seq, coins, spins, shields } = response;
     this.updateSeq(seq);
     console.log(
-      colors.gray(
-        `SPIN: ${r1} ${r2} ${r3} - pay ${pay}, coins : ${coins}, spins : ${spins}`
+      colors.green(
+        `SPIN: ${r1} ${r2} ${r3} - pay ${pay}, coins : ${coins}, shields: ${ shields }, spins : ${spins}`
       )
     );
     fs.writeJsonSync(path.join(__dirname, "data", "spin.json"), response, {
@@ -263,7 +263,7 @@ class CoinMaster {
       } else {
         // 3 -attack
         if (!message.data || Object.keys(message.data).length == 0 || 
-        ["village_complete_bonus","raid_master", "card_swap"].some(x =>x === message.type)) continue;
+        ["village_complete_bonus","raid_master", "card_swap", "accumulation", "cards_boom"].some(x =>x === message.data.type)) continue;
         console.log("Need Attention: --->UNHANDLED MESSAGE<----", message);
       }
     }
@@ -357,7 +357,7 @@ class CoinMaster {
     response = await this.getBalance();
 
     const afterRaidCoins = response.coins;
-    console.log("Raid amount total: ".green, originalCoins - afterRaidCoins)
+    console.log("### Raid amount total: ".green, afterRaidCoins - originalCoins)
     /*if (afterRaidCoins === originalCoins && retry < 2) {
       response = await this.getBalance();
       console.log("Retry raid: ", retry + 1);
@@ -383,6 +383,8 @@ class CoinMaster {
     return response;
   }
   async track(event) {
+    if(!process.env.TRACKING_EVENT) return;
+
     console.log("Update tracking data".yellow);
     const deviceInfo = {
       event: "device_info",
@@ -472,7 +474,7 @@ class CoinMaster {
     return null;
   }
   async hammerAttach(spinResult) {
-    console.log("Hammer Attack:".blue);
+    console.log("------------> Hammer Attack <-------------".blue);
     //console.log("attack", spinResult.attack);
     let desireTarget = await this.findRevengeAttack(spinResult);
     desireTarget = desireTarget || spinResult.attack;
@@ -566,16 +568,9 @@ class CoinMaster {
   async upgrade(spinResult) {
     console.log("Running upgrade".magenta);
     const priority = ["Farm", "House", "Ship", "Statue", "Crop"];
-    let { Farm, House, Ship, Statue, Crop } = spinResult;
     for (const item of priority) {
-      console.log("Before upgrade", {
-        Farm,
-        House,
-        Ship,
-        Statue,
-        Crop
-      });
-      console.log(`Upgrade item = ${item} state = ${spinResult[item]}`);
+      
+      console.log(colors.rainbow(`Upgrade item = ${item} state = ${spinResult[item]}`));
 
       spinResult = await this.post("upgrade", {
         item,
@@ -583,12 +578,14 @@ class CoinMaster {
       });
       //this.updateSeq(response.data.seq)
       const data = spinResult;
+    let { Farm, House, Ship, Statue, Crop } = spinResult;
+
       console.log(`Upgrade Result`, {
-        Farm: data.Farm,
-        House: data.House,
-        Ship: data.Ship,
-        Statue: data.Statue,
-        Crop: data.Crop
+        Farm,
+        House,
+        Ship,
+        Statue,
+        Crop
       });
     }
     return spinResult;
