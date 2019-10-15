@@ -41,7 +41,7 @@ class CoinMaster {
     info.village = {
       ...info
     };
-    console.log(`FRIEND: ${friendId}`, info.name);
+    // console.log(`FRIEND: ${friendId}`, info.name);
     return info;
   }
   async fetchMetadata() {
@@ -117,12 +117,12 @@ class CoinMaster {
   async readSyncMessage() {
     return await this.post(`read_sys_messages`);
   }
-  async popBallon(index) {
+  async popBallon(index, currentSpins) {
     console.log("Popping baloon", index);
     const result = await this.post(`balloons/${index}/pop`);
     const { pay, coins, spins } = result;
     console.log(
-      `popping result :  pay ${pay}, coins : ${coins}, spins : ${spins}`
+      `popping result :  pay ${pay}, coins : ${coins}, spins : ${spins} +${spins-currentSpins}`
     );
     return result;
   }
@@ -192,7 +192,7 @@ class CoinMaster {
     var spinCount = 0;
     let spins = res.spins;
     while (spins > 0) {
-      await this.sleep(1000);
+      await this.sleep(process.env.SLEEP || 1000);
       let spinResult = await this.spin();
       const { pay, r1, r2, r3, seq } = spinResult;
       const result = `${r1}${r2}${r3}`;
@@ -253,10 +253,11 @@ class CoinMaster {
       const { data } = message;
       let baloonsCount = 0;
       if (data && data.status === "PENDING_COLLECT" && data.collectUrl) {
-        console.log("Collect rewards ", data.rewardId, data.reason);
+        console.log("Collect rewards ", data.rewardId, data.reason, data.reward);
         spinResult = await this.post(
           "https://vik-game.moonactive.net" + data.collectUrl
         );
+
       } else if (data && data.type === "baloons") {
         await this.popBallon(baloonsCount);
         baloonsCount++;
@@ -267,10 +268,11 @@ class CoinMaster {
         console.log("Need Attention: --->UNHANDLED MESSAGE<----", message);
       }
     }
+    let spins = spinResult.spins;
     if (spinResult.balloons) {
       for (const key in spinResult.balloons) {
         if (spinResult.balloons.hasOwnProperty(key)) {
-          await this.popBallon(key);
+          spins = (await this.popBallon(key, spins)).spins;
         }
       }
     }
@@ -376,6 +378,8 @@ class CoinMaster {
         dig_3_type: raided[2] > 0 ? "coins" : "no coins",
         dig_3_amount: raided[2].toString(),
         duration: (new Date().getTime()) - ts,
+        "target_name": spinResult.raid.name,
+        "attackedPerson": spinResult.raid.id,
         amount_total: parseInt(raided[0], 10) + parseInt(raided[1], 10) + parseInt(raided[2], 10)
       },
       time

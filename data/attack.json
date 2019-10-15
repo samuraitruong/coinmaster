@@ -1,235 +1,231 @@
 {
-    "spins": 9,
-    "shields": 1,
-    "seq": 706,
-    "village": 2,
-    "coins": 649600,
-    "Ship": 3,
-    "Farm": 4,
-    "Crop": 4,
+    "spins": 644,
+    "shields": 3,
+    "seq": 10164,
+    "village": 33,
+    "coins": 490140,
+    "Ship": 2,
+    "Farm": 3,
+    "Crop": 3,
     "Statue": 4,
-    "House": 4,
-    "name": "Angela",
-    "fillTime": 1570791067582,
-    "image": "123619322369397",
+    "House": 5,
+    "name": "Xuong",
+    "fillTime": 1571132410194,
+    "image": "159704061873110",
     "raid": {
-        "name": "Bess",
-        "id": "rofnf_ck0ov4yvi00u9ovq9h9e7gg97",
-        "image": "m:100000607189869",
-        "coins": 708000,
-        "raid_target": "nf"
+        "name": "Thaopham",
+        "id": "rof4__ck09czjio03i2aulcfp5d1653",
+        "image": "108071973910424",
+        "coins": 1656000,
+        "raid_target": "f"
     },
-    "msToNextDailyBonus": 0,
+    "msToNextDailyBonus": 79098846,
     "dailybonusextra": 0,
     "dailybonusextraPurchaseDisabled": false,
     "piggy": {
         "coins": 1000000,
         "productCode": "com.moonactive.cm.piggy.a"
     },
-    "cardsXP": 10,
+    "cardsXP": 297,
     "messages": [
         {
-            "a": 2,
-            "t": 1570777548453,
-            "u": "rofnf_ck0ov4ypt0031ovq96ug2elgl",
-            "n": "Veronica",
-            "i": "m:1188292969",
-            "xp": 46,
-            "e": "Farm",
-            "r": 1
+            "a": 4,
+            "t": 1571142370904,
+            "u": "rof4__ck09czjio03i2aulcfp5d1653",
+            "n": "Thaopham",
+            "i": "f:108071973910424",
+            "xp": 660,
+            "e": 740000,
+            "data": {}
         },
         {
-            "a": 3,
-            "t": 1570767519272,
-            "u": "rofnf_ck0ov4yst00idovq9been8c9i",
-            "n": "Leila",
-            "i": "m:100000181664346",
-            "xp": 48,
-            "e": "Farm"
+            "t": 1571141004783,
+            "a": 110,
+            "e": {
+                "chest": {
+                    "type": "wooden",
+                    "cards": [
+                        {
+                            "name": "vikings_1",
+                            "rarity": 1,
+                            "deckName": "vikings",
+                            "swappable": true
+                        },
+                        {
+                            "name": "bling_6",
+                            "rarity": 3,
+                            "deckName": "bling",
+                            "swappable": true
+                        }
+                    ],
+                    "seq": 102
+                },
+                "completedDecksData": [],
+                "cardsXpDelta": 0
+            }
         },
         {
-            "a": 3,
-            "t": 1570759344373,
-            "u": "rofnf_ck0ov4yso00hhovq98u9zfc7q",
-            "n": "Adele",
-            "i": "m:100000164875943",
-            "xp": 49,
-            "e": "Farm",
-            "r": 1
-        },
-        {
-            "a": 3,
-            "t": 1570750841987,
-            "u": "rofnf_ck0ov4yqt007povq99nuw2cvt",
-            "n": "Emma",
-            "i": "m:100001403351243",
-            "xp": 109,
-            "e": "Farm"
+            "t": 1571138983693,
+            "a": 110,
+            "e": {
+                "chest": {
+                    "type": "wooden",
+                    "cards": [
+                        {
+                            "name": "statues_5",
+                            "rarity": 2,
+                            "deckName": "statues",
+                            "swappable": true
+                        },
+                        {
+                            "name": "statues_6",
+                            "rarity": 3,
+                            "deckName": "statues",
+                            "swappable": true
+                        }
+                    ],
+                    "seq": 94
+                },
+                "completedDecksData": [],
+                "cardsXpDelta": 0
+            }
         }
     ],
-    "lastName": "Smith",
-    "extraShieldsToPay": -2,
-    "inbox": 0,
-    "DailyMiniSnacksUnlocksAtMiliSec": 1569774605467,
+    "extraShieldsToPay": 1,
+    "inbox": 3,
+    "selectedPet": {
+        "type": "fox",
+        "xp": 19210,
+        "paused": false,
+        "level": 11,
+        "messages": [
+            {
+                "id": "17519c34-717f-4c5c-8a79-bd28c0407f12",
+                "createdAt": 1571140783864,
+                "expireAt": 1572350383864,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "f008a620-4d14-4788-b517-4a8343bceb15",
+                "createdAt": 1571141002172,
+                "expireAt": 1572350602172,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "264619d9-c3eb-4494-974a-78b30c88656b",
+                "createdAt": 1571141041293,
+                "expireAt": 1572350641293,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "fa90983b-f1d8-4a76-8f05-bcfbde7f529c",
+                "createdAt": 1571141193804,
+                "expireAt": 1572350793804,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "a8d4ae58-6439-4350-9657-cc76f2d434a2",
+                "createdAt": 1571141431609,
+                "expireAt": 1572351031609,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "59ffd09e-a28b-4603-bc91-d50e2bdf040d",
+                "createdAt": 1571141556975,
+                "expireAt": 1572351156975,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            }
+        ],
+        "ttl": 0,
+        "nextXp": 28000,
+        "scoreBonus": 11,
+        "currentStealPercent": 36,
+        "nextStealPercent": 38
+    },
+    "petXpBank": 35000,
+    "petTtlBank": 57600000,
+    "DailyMiniSnacksUnlocksAtMiliSec": 1571227068893,
     "activeTriplePromotionIds": [],
-    "score": 69,
+    "score": 1160,
     "jp_t": 0,
+    "attackRaidMaster": {
+        "counter": 5,
+        "required": 30,
+        "reward": {
+            "coins": 275000000
+        }
+    },
+    "balloons": [
+        1
+    ],
+    "active_events": {
+        "attack_master": 213959,
+        "baloons": 5159
+    },
+    "superBet": {
+        "betLevel": 2,
+        "betOptions": [
+            1,
+            2,
+            3,
+            5,
+            8
+        ]
+    },
     "genericRewards": [],
-    "globalChestCounter": 1,
-    "now": 1570791172598,
+    "globalChestCounter": 105,
+    "now": 1571142541005,
     "reward": 2,
     "pay": 0,
     "r1": 3,
     "r2": 3,
     "r3": 3,
     "attack": {
-        "id": "rof4__cjzn7tig40149hdli9tzz8f7g",
-        "name": "Pham",
-        "image": "10156799422207762",
+        "id": "rof4__cjzgkbk3s02cib3k76fci3yw6",
+        "name": "Truong",
+        "image": "10156498653158263",
         "village": {
             "shields": 3,
-            "village": 87,
-            "Ship": 2,
-            "Farm": 2,
-            "Crop": 1,
-            "Statue": 0,
+            "village": 83,
+            "Ship": 3,
+            "Farm": 3,
+            "Crop": 3,
+            "Statue": 1,
             "House": 2
         }
     },
     "random": {
-        "id": "rofnf_ck0ov4yqd005kovq926yw4siu",
-        "image": "m:1136573822",
-        "name": "Wesley",
-        "coins": 672000,
+        "id": "rofnf_ck0ov4yu200n6ovq9aimc0mgc",
+        "image": "m:100000006855573",
+        "name": "Katharine",
+        "coins": 4038000,
         "village": {
-            "shields": 0,
-            "village": 5,
-            "Ship": 1,
-            "Farm": 11,
-            "Crop": 15,
-            "Statue": 0,
+            "shields": 1,
+            "village": 35,
+            "Ship": 14,
+            "Farm": 2,
+            "Crop": 12,
+            "Statue": 5,
             "House": 11
         }
     },
-    "coupons": [
-        {
-            "id": "190821",
-            "expireAt": 1570838100000,
-            "state": "pending",
-            "payload": {
-                "couponType": "SpinsNCoins",
-                "percentage": 70
-            },
-            "title": "Coupon20190821",
-            "supportedVersion": "3.5.4",
-            "sku": "",
-            "minCost": 0,
-            "source": "profile",
-            "group": "GE",
-            "segment": "",
-            "bundle": "generic"
-        },
-        {
-            "id": "191011",
-            "expireAt": 1570838100000,
-            "state": "pending",
-            "payload": {
-                "couponType": "SpinsNCoins",
-                "percentage": 200
-            },
-            "title": "Coupon20191011",
-            "supportedVersion": "3.5.4",
-            "sku": "",
-            "minCost": 0,
-            "source": "profile",
-            "group": "PGOLD",
-            "segment": "",
-            "bundle": "generic"
-        },
-        {
-            "id": "1908212",
-            "expireAt": 1570838100000,
-            "state": "pending",
-            "payload": {
-                "couponType": "SpinsNCoins",
-                "percentage": 100
-            },
-            "title": "Coupon20190821",
-            "supportedVersion": "3.5.4",
-            "sku": "",
-            "minCost": 0,
-            "source": "profile",
-            "group": "GF",
-            "segment": "",
-            "bundle": "generic"
-        },
-        {
-            "id": "19070213",
-            "expireAt": 1570838100000,
-            "state": "pending",
-            "payload": {
-                "couponType": "SpinsNCoins",
-                "percentage": 300
-            },
-            "title": "Coupon20190702",
-            "supportedVersion": "3.5.4",
-            "sku": "",
-            "minCost": 0,
-            "source": "profile",
-            "group": "GH",
-            "segment": "",
-            "bundle": "generic"
-        },
-        {
-            "id": "19070214",
-            "expireAt": 1570838100000,
-            "state": "pending",
-            "payload": {
-                "couponType": "SpinsNCoins",
-                "percentage": 500
-            },
-            "title": "Coupon20190702",
-            "supportedVersion": "3.5.4",
-            "sku": "",
-            "minCost": 0,
-            "source": "profile",
-            "group": "GI",
-            "segment": "",
-            "bundle": "generic"
-        },
-        {
-            "id": "19070221",
-            "expireAt": 1570838100000,
-            "state": "pending",
-            "payload": {
-                "couponType": "SpinsNCoins",
-                "percentage": 200
-            },
-            "title": "Coupon20190702",
-            "supportedVersion": "3.5.4",
-            "sku": "",
-            "minCost": 0,
-            "source": "profile",
-            "group": "GB",
-            "segment": "",
-            "bundle": "generic"
-        },
-        {
-            "id": "19070231",
-            "expireAt": 1570838100000,
-            "state": "pending",
-            "payload": {
-                "couponType": "SpinsNCoins",
-                "percentage": 150
-            },
-            "title": "Coupon20190702",
-            "supportedVersion": "3.5.4",
-            "sku": "",
-            "minCost": 0,
-            "source": "profile",
-            "group": "GC",
-            "segment": "",
-            "bundle": "generic"
-        }
-    ]
+    "coupons": []
 }
