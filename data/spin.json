@@ -1,23 +1,31 @@
 {
-    "spins": 0,
+    "spins": 41,
     "shields": 2,
-    "seq": 314,
+    "seq": 996,
     "village": 2,
-    "coins": 966300,
-    "Ship": 2,
-    "Farm": 4,
-    "Crop": 0,
-    "Statue": 2,
+    "coins": 287500,
+    "Ship": 3,
+    "Farm": 13,
+    "Crop": 4,
+    "Statue": 4,
     "House": 4,
-    "name": "Trau",
-    "fillTime": 1571432331235,
-    "image": "113041823433674",
+    "name": "Angela",
+    "fillTime": 1571439729972,
+    "image": "123619322369397",
     "raid": {
-        "name": "Mable",
-        "id": "rofnf_ck0ov4yr5009bovq999hfgjeu",
-        "image": "m:100000502458629",
-        "coins": 972000,
-        "raid_target": "nf"
+        "name": "Pham",
+        "id": "rof4__cjzn7tig40149hdli9tzz8f7g",
+        "image": "10156799422207762",
+        "coins": 4848000,
+        "raid_target": "f",
+        "village": {
+            "village": 89,
+            "Ship": 4,
+            "Farm": 5,
+            "Crop": 5,
+            "Statue": 4,
+            "House": 5
+        }
     },
     "msToNextDailyBonus": 0,
     "dailybonusextra": 0,
@@ -26,35 +34,15 @@
         "coins": 1000000,
         "productCode": "com.moonactive.cm.piggy.a"
     },
-    "cardsXP": 2,
+    "cardsXP": 31,
     "messages": [
         {
-            "a": 3,
-            "t": 1571429819615,
-            "u": "rofnf_ck0ov4yux00rnovq91n6n0ad5",
-            "n": "Brett",
-            "i": "m:100000469454683",
-            "xp": 48,
-            "e": "Farm",
-            "r": 1
-        },
-        {
-            "a": 3,
-            "t": 1571420321795,
-            "u": "rofnf_ck0ov4yqv0080ovq9fs7vhqqh",
-            "n": "Isabelle",
-            "i": "m:100000097488235",
-            "xp": 70,
-            "e": "House",
-            "r": 1
-        },
-        {
-            "t": 1571420321647,
+            "t": 1571439729962,
             "a": 114,
             "data": {
                 "id": "baloons_2019-10-18T16:05",
                 "type": "baloons",
-                "remainingSeconds": 22578,
+                "remainingSeconds": 3170,
                 "config": {},
                 "clientOptions": {
                     "timer": "true",
@@ -66,94 +54,113 @@
             }
         },
         {
-            "a": 3,
-            "t": 1571409985645,
-            "u": "rofnf_ck0ov4yuo00q8ovq941fm7m7h",
-            "n": "Emma",
-            "i": "m:100000078770955",
-            "xp": 111,
-            "e": "House",
-            "r": 1
-        },
-        {
             "a": 2,
-            "t": 1570619837078,
-            "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
-            "n": "Pham",
-            "i": "f:10156799422207762",
-            "xp": 3062,
-            "e": "House"
-        },
-        {
-            "a": 2,
-            "t": 1570498720159,
-            "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
-            "n": "Pham",
-            "i": "f:10156799422207762",
-            "xp": 2988,
-            "e": "House"
-        },
-        {
-            "a": 1,
-            "t": 1570464370788,
-            "u": "rofnf_ck0ov4yw100wvovq90qzj0n5l",
-            "n": "Emilia",
-            "i": "m:100000137900794",
-            "xp": 137,
-            "e": "Ship",
-            "r": 1
-        },
-        {
-            "a": 1,
-            "t": 1570400180468,
-            "u": "rofnf_ck0ov4yqp0076ovq98trrgvn2",
-            "n": "Rosetta",
-            "i": "m:410133446",
-            "xp": 48,
-            "e": "Statue",
-            "r": 1
-        },
-        {
-            "a": 3,
-            "t": 1570389975456,
-            "u": "rofnf_ck0ov4yqs007lovq97kxv0ggj",
-            "n": "Joseph",
-            "i": "m:100000286267061",
-            "xp": 63,
-            "e": "House"
-        },
-        {
-            "a": 3,
-            "t": 1570375753729,
-            "u": "rofnf_ck0ov4yte00klovq92dmr1mzh",
-            "n": "Roger",
-            "i": "m:100000091809983",
-            "xp": 70,
-            "e": "Statue",
-            "r": 1
-        },
-        {
-            "a": 3,
-            "t": 1570367151618,
-            "u": "rofnf_ck0ov4ytq00luovq9b4jbhakx",
-            "n": "Ruth",
-            "i": "m:100000156327844",
-            "xp": 87,
+            "t": 1571400997775,
+            "u": "rofnf_ck0ov4yua00o8ovq94lxj02ne",
+            "n": "Janie",
+            "i": "m:100000279882351",
+            "xp": 45,
             "e": "Farm"
+        },
+        {
+            "a": 4,
+            "t": 1571395197891,
+            "u": "rofnf_ck0ov4yuc00ogovq976oc4tl6",
+            "n": "Etta",
+            "i": "m:99999927615603",
+            "xp": 111,
+            "e": 732000,
+            "data": {}
+        },
+        {
+            "a": 2,
+            "t": 1571390329711,
+            "u": "rofnf_ck0ov4yqh0063ovq98bi77oq5",
+            "n": "Etta",
+            "i": "m:798045356",
+            "xp": 44,
+            "e": "Farm"
+        },
+        {
+            "a": 3,
+            "t": 1571379728744,
+            "u": "rofnf_ck0ov4yst00idovq9been8c9i",
+            "n": "Leila",
+            "i": "m:100000181664346",
+            "xp": 46,
+            "e": "Farm"
+        },
+        {
+            "a": 3,
+            "t": 1571370422829,
+            "u": "rofnf_ck0ov4yse00g3ovq9djojg35q",
+            "n": "Mildred",
+            "i": "m:100000163487413",
+            "xp": 111,
+            "e": "Farm"
+        },
+        {
+            "a": 2,
+            "t": 1571340936918,
+            "u": "rofnf_ck0ov4yud00omovq92szo73jc",
+            "n": "Tillie",
+            "i": "m:100000192191705",
+            "xp": 87,
+            "e": "Crop"
+        },
+        {
+            "a": 2,
+            "t": 1571331562168,
+            "u": "rofnf_ck0ov4yu800nzovq9cc7884mm",
+            "n": "Lloyd",
+            "i": "m:100000062239312",
+            "xp": 46,
+            "e": "Crop"
+        },
+        {
+            "a": 3,
+            "t": 1571321148858,
+            "u": "rofnf_ck0ov4yqd005kovq926yw4siu",
+            "n": "Wesley",
+            "i": "m:1136573822",
+            "xp": 118,
+            "e": "Crop",
+            "r": 1
+        },
+        {
+            "a": 3,
+            "t": 1571311522726,
+            "u": "rofnf_ck0ov4yr8009rovq90rr13j0k",
+            "n": "Katherine",
+            "i": "m:100000668549975",
+            "xp": 48,
+            "e": "Crop",
+            "r": 1
+        },
+        {
+            "a": 2,
+            "t": 1571283532610,
+            "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
+            "n": "Pham",
+            "i": "f:10156799422207762",
+            "xp": 3223,
+            "e": "Ship"
         }
     ],
+    "lastName": "Smith",
     "extraShieldsToPay": -1,
     "inbox": 0,
-    "DailyMiniSnacksUnlocksAtMiliSec": 1570135057441,
+    "DailyMiniSnacksUnlocksAtMiliSec": 1569774605467,
     "activeTriplePromotionIds": [],
-    "score": 54,
+    "score": 88,
     "jp_t": 0,
     "genericRewards": [],
-    "now": 1571432918644,
-    "reward": 1,
-    "pay": 32000,
-    "r1": 1,
-    "r2": 1,
-    "r3": 1,
+    "globalChestCounter": 4,
+    "now": 1571440085870,
+    "reward": 4,
+    "pay": 0,
+    "r1": 4,
+    "r2": 4,
+    "r3": 4,
     "coupons": []
 }

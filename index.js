@@ -41,7 +41,7 @@ class CoinMaster {
     info.village = {
       ...info
     };
-    console.log(`FRIEND: ${friendId}`, info.name);
+    // console.log(`FRIEND: ${friendId}`, info.name);
     return info;
   }
   async fetchMetadata() {
@@ -125,7 +125,7 @@ class CoinMaster {
   async readSyncMessage() {
     return await this.post(`read_sys_messages`);
   }
-  async popBallon(index) {
+  async popBallon(index, currentSpins) {
     console.log("Popping baloon", index);
     const result = await this.post(`balloons/${index}/pop`);
     const {
@@ -134,8 +134,10 @@ class CoinMaster {
       spins
     } = result;
     console.log(
-      `popping result :  pay ${pay}, coins : ${coins}, spins : ${spins}`
+      `popping result :  pay ${pay}, coins : ${coins}, spins : ${spins} +${spins-currentSpins}`
     );
+    console.log("### RESULT", result);
+    throw new Error("Kill ME")
     return result;
   }
   // apart of handle messages list
@@ -252,6 +254,11 @@ class CoinMaster {
       }
     }
     console.log("No more spins, no more fun, good bye!".yellow);
+
+    res = await this.collectGift(res);
+    if(res.spins >0) {
+      await this.play();
+    }
   }
   async handleMessage(spinResult) {
     if (!spinResult) {
@@ -278,6 +285,7 @@ class CoinMaster {
     //         }
     //     }
     // ],
+    let spins = spinResult.spins;
 
     for (const message of messages) {
       const {
@@ -285,12 +293,13 @@ class CoinMaster {
       } = message;
       let baloonsCount = 0;
       if (data && data.status === "PENDING_COLLECT" && data.collectUrl) {
-        console.log("Collect rewards ", data.rewardId, data.reason);
+        console.log("Collect rewards ", data.rewardId, data.reason, data.reward);
         spinResult = await this.post(
           "https://vik-game.moonactive.net" + data.collectUrl
         );
+
       } else if (data && data.type === "baloons") {
-        await this.popBallon(baloonsCount);
+        spins = await this.popBallon(baloonsCount, spins);
         baloonsCount++;
       } else {
         // 3 -attack
@@ -301,10 +310,11 @@ class CoinMaster {
     if (spinResult.balloons) {
       for (const key in spinResult.balloons) {
         if (spinResult.balloons.hasOwnProperty(key)) {
-          await this.popBallon(key);
+          spins = (await this.popBallon(key, spins)).spins;
         }
       }
     }
+    spinResult = await this.getBalance();
     return spinResult;
   }
   async raid(spinResult, retry) {
@@ -361,7 +371,7 @@ class CoinMaster {
     const list = [1, 2, 3, 4].sort(() => Math.random() - 0.5);
     const raided = [];
     for (var i = 0; i < 3; i++) {
-      await this.sleep(1000);
+      //await this.sleep(1000);
       const slotIndex = list[i];
       response = await this.post(`raid/dig/${slotIndex}`);
       //this.updateSeq(response.data.seq)
@@ -412,6 +422,8 @@ class CoinMaster {
         dig_3_type: raided[2] > 0 ? "coins" : "no coins",
         dig_3_amount: raided[2].toString(),
         duration: (new Date().getTime()) - ts,
+        "target_name": spinResult.raid.name,
+        "attackedPerson": spinResult.raid.id,
         amount_total: parseInt(raided[0], 10) + parseInt(raided[1], 10) + parseInt(raided[2], 10)
       },
       time
@@ -467,18 +479,16 @@ class CoinMaster {
   async collectGift(spinResult) {
     console.log("Collect gift");
 
-    const response = await this.post("inbox/pending");
-    const {
-      messages
-    } = response;
+    let response = await this.post("inbox/pending");
+    const { messages } = response;
     if (messages && messages.length > 0) {
       console.log("Your have gifts", messages);
 
       for (const message of messages) {
-        if (message.type !== "gift") continue;
+        if (message.type !== "gift" && message.type!= "send_cards") continue;
         console.log("Collect gift", message);
         try {
-          await this.post(`inbox/pending/${message.id}/collect`);
+          response = await this.post(`inbox/pending/${message.id}/collect`);
         } catch (err) {
           console.log("Error to collect gift", err.response || "Unknow");
         }
@@ -486,6 +496,7 @@ class CoinMaster {
     } else {
       console.log("No gift pending");
     }
+    return response;
   }
   //return the target
   async findRevengeAttack(spinResult) {
