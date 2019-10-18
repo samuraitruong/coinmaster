@@ -1,42 +1,168 @@
 {
-    "spins": 660,
-    "shields": 3,
-    "seq": 10148,
-    "village": 33,
-    "coins": 5195640,
-    "Ship": 2,
-    "Farm": 3,
-    "Crop": 3,
-    "Statue": 3,
+    "spins": 0,
+    "shields": 1,
+    "seq": 13888,
+    "village": 42,
+    "coins": 524090,
+    "Ship": 12,
+    "Farm": 5,
+    "Crop": 4,
+    "Statue": 5,
     "House": 5,
     "name": "Xuong",
-    "fillTime": 1571132410194,
+    "fillTime": 1571361149930,
     "image": "159704061873110",
     "raid": {
-        "name": "Thaopham",
-        "id": "rof4__ck09czjio03i2aulcfp5d1653",
-        "image": "108071973910424",
-        "coins": 1104000,
+        "name": "Truong",
+        "id": "rof4__cjzgkbk3s02cib3k76fci3yw6",
+        "image": "10156498653158263",
+        "coins": 2460000,
         "raid_target": "f"
     },
-    "msToNextDailyBonus": 79116470,
+    "msToNextDailyBonus": 5031499,
     "dailybonusextra": 0,
     "dailybonusextraPurchaseDisabled": false,
     "piggy": {
         "coins": 1000000,
         "productCode": "com.moonactive.cm.piggy.a"
     },
-    "cardsXP": 297,
+    "cardsXP": 332,
     "messages": [
         {
+            "a": 3,
+            "t": 1571363908115,
+            "u": "rofnf_ck0ov4yu300nfovq940h2agqp",
+            "n": "Esther",
+            "i": "m:100000091722869",
+            "xp": 1065,
+            "e": "Ship"
+        },
+        {
             "a": 4,
-            "t": 1571142370904,
+            "t": 1571363647122,
             "u": "rof4__ck09czjio03i2aulcfp5d1653",
             "n": "Thaopham",
             "i": "f:108071973910424",
-            "xp": 660,
-            "e": 740000,
+            "xp": 742,
+            "e": 100000,
             "data": {}
+        },
+        {
+            "a": 3,
+            "t": 1571362585637,
+            "u": "rof4__cjzgkbk3s02cib3k76fci3yw6",
+            "n": "Truong",
+            "i": "f:10156498653158263",
+            "xp": 2951,
+            "e": "Ship"
+        },
+        {
+            "a": 4,
+            "t": 1571362435864,
+            "u": "rof4__cjzgkbk3s02cib3k76fci3yw6",
+            "n": "Truong",
+            "i": "f:10156498653158263",
+            "xp": 2951,
+            "e": 1194000,
+            "data": {}
+        },
+        {
+            "a": 4,
+            "t": 1571359858825,
+            "u": "rofnf_ck0ov4yt500juovq954pg50f0",
+            "n": "Edward",
+            "i": "m:100000116909391",
+            "xp": 1040,
+            "e": 528000,
+            "data": {}
+        },
+        {
+            "t": 1571143517806,
+            "a": 110,
+            "e": {
+                "chest": {
+                    "type": "wooden",
+                    "cards": [
+                        {
+                            "name": "vikings_3",
+                            "rarity": 2,
+                            "deckName": "vikings",
+                            "swappable": true
+                        },
+                        {
+                            "name": "creatures_5",
+                            "rarity": 2,
+                            "deckName": "creatures",
+                            "swappable": true
+                        }
+                    ],
+                    "seq": 110
+                },
+                "completedDecksData": [],
+                "cardsXpDelta": 0
+            }
+        },
+        {
+            "t": 1571143346479,
+            "a": 110,
+            "e": {
+                "chest": {
+                    "type": "magical",
+                    "cards": [
+                        {
+                            "name": "alice_4",
+                            "rarity": 3,
+                            "deckName": "alice",
+                            "swappable": true
+                        },
+                        {
+                            "name": "rides_7",
+                            "rarity": 4,
+                            "deckName": "rides",
+                            "swappable": true
+                        },
+                        {
+                            "name": "beasts_7",
+                            "rarity": 3,
+                            "deckName": "beasts",
+                            "swappable": true
+                        },
+                        {
+                            "name": "statues_6",
+                            "rarity": 3,
+                            "deckName": "statues",
+                            "swappable": true
+                        },
+                        {
+                            "name": "bling_4",
+                            "rarity": 2,
+                            "deckName": "bling",
+                            "swappable": true
+                        },
+                        {
+                            "name": "sweets_1",
+                            "rarity": 1,
+                            "deckName": "sweets",
+                            "swappable": true
+                        },
+                        {
+                            "name": "sweets_7",
+                            "rarity": 3,
+                            "deckName": "sweets",
+                            "swappable": true
+                        },
+                        {
+                            "name": "items_4",
+                            "rarity": 2,
+                            "deckName": "items",
+                            "swappable": true
+                        }
+                    ],
+                    "seq": 109
+                },
+                "completedDecksData": [],
+                "cardsXpDelta": 0
+            }
         },
         {
             "t": 1571141004783,
@@ -91,106 +217,46 @@
             }
         }
     ],
-    "extraShieldsToPay": 1,
-    "inbox": 3,
+    "extraShieldsToPay": 0,
+    "hiddenShields": 2,
+    "inbox": 2,
     "selectedPet": {
         "type": "fox",
-        "xp": 19210,
+        "xp": 19690,
         "paused": false,
         "level": 11,
-        "messages": [
-            {
-                "id": "17519c34-717f-4c5c-8a79-bd28c0407f12",
-                "createdAt": 1571140783864,
-                "expireAt": 1572350383864,
-                "type": "increasedXp",
-                "value": 200,
-                "removeOnAppStart": true,
-                "minVersion": "3.5.8"
-            },
-            {
-                "id": "f008a620-4d14-4788-b517-4a8343bceb15",
-                "createdAt": 1571141002172,
-                "expireAt": 1572350602172,
-                "type": "increasedXp",
-                "value": 200,
-                "removeOnAppStart": true,
-                "minVersion": "3.5.8"
-            },
-            {
-                "id": "264619d9-c3eb-4494-974a-78b30c88656b",
-                "createdAt": 1571141041293,
-                "expireAt": 1572350641293,
-                "type": "increasedXp",
-                "value": 200,
-                "removeOnAppStart": true,
-                "minVersion": "3.5.8"
-            },
-            {
-                "id": "fa90983b-f1d8-4a76-8f05-bcfbde7f529c",
-                "createdAt": 1571141193804,
-                "expireAt": 1572350793804,
-                "type": "increasedXp",
-                "value": 200,
-                "removeOnAppStart": true,
-                "minVersion": "3.5.8"
-            },
-            {
-                "id": "a8d4ae58-6439-4350-9657-cc76f2d434a2",
-                "createdAt": 1571141431609,
-                "expireAt": 1572351031609,
-                "type": "increasedXp",
-                "value": 200,
-                "removeOnAppStart": true,
-                "minVersion": "3.5.8"
-            },
-            {
-                "id": "59ffd09e-a28b-4603-bc91-d50e2bdf040d",
-                "createdAt": 1571141556975,
-                "expireAt": 1572351156975,
-                "type": "increasedXp",
-                "value": 200,
-                "removeOnAppStart": true,
-                "minVersion": "3.5.8"
-            }
-        ],
+        "messages": [],
         "ttl": 0,
         "nextXp": 28000,
         "scoreBonus": 11,
         "currentStealPercent": 36,
         "nextStealPercent": 38
     },
-    "petXpBank": 35000,
+    "petXpBank": 60000,
     "petTtlBank": 57600000,
-    "DailyMiniSnacksUnlocksAtMiliSec": 1571227068893,
+    "DailyMiniSnacksUnlocksAtMiliSec": 1571368467866,
     "activeTriplePromotionIds": [],
-    "score": 1159,
+    "score": 1423,
     "jp_t": 0,
-    "attackRaidMaster": {
-        "counter": 3,
-        "required": 30,
+    "accumulation": {
+        "missionIndex": 3,
+        "currentAmount": 11,
+        "currentAmountNonCapped": 11,
+        "totalAmount": 36,
         "reward": {
-            "coins": 275000000
-        }
+            "spins": 75
+        },
+        "id": "accumulation_2019-10-18T00:05"
     },
     "active_events": {
-        "attack_master": 213977,
-        "baloons": 5177
-    },
-    "superBet": {
-        "betLevel": 2,
-        "betOptions": [
-            1,
-            2,
-            3,
-            5,
-            8
-        ]
+        "village_complete_bonus": 6907,
+        "accumulation": 366907,
+        "set_blast": 6907
     },
     "genericRewards": [],
-    "globalChestCounter": 105,
-    "now": 1571142523405,
+    "globalChestCounter": 135,
+    "now": 1571363992930,
     "res": "win",
-    "pay": 176000,
+    "pay": 1120000,
     "coupons": []
 }

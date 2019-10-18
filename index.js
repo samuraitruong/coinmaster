@@ -224,6 +224,11 @@ class CoinMaster {
       }
     }
     console.log("No more spins, no more fun, good bye!".yellow);
+
+    res = await this.collectGift(res);
+    if(res.spins >0) {
+      await this.play();
+    }
   }
   async handleMessage(spinResult) {
     if (!spinResult) {
@@ -331,7 +336,7 @@ class CoinMaster {
     const list = [1, 2, 3, 4].sort(() => Math.random() - 0.5);
     const raided = [];
     for (var i = 0; i < 3; i++) {
-      await this.sleep(1000);
+      //await this.sleep(1000);
       const slotIndex = list[i];
       response = await this.post(`raid/dig/${slotIndex}`);
       //this.updateSeq(response.data.seq)
@@ -433,16 +438,16 @@ class CoinMaster {
   async collectGift(spinResult) {
     console.log("Collect gift");
 
-    const response = await this.post("inbox/pending");
+    let response = await this.post("inbox/pending");
     const { messages } = response;
     if (messages && messages.length > 0) {
       console.log("Your have gifts", messages);
 
       for (const message of messages) {
-        if (message.type !== "gift") continue;
+        if (message.type !== "gift" && message.type!= "send_cards") continue;
         console.log("Collect gift", message);
         try {
-          await this.post(`inbox/pending/${message.id}/collect`);
+          response = await this.post(`inbox/pending/${message.id}/collect`);
         } catch (err) {
           console.log("Error to collect gift", err.response || "Unknow");
         }
@@ -450,6 +455,7 @@ class CoinMaster {
     } else {
       console.log("No gift pending");
     }
+    return response;
   }
   //return the target
   async findRevengeAttack(spinResult) {
