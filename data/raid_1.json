@@ -1,285 +1,156 @@
 {
-    "spins": 1,
-    "shields": 3,
-    "seq": 4471,
-    "village": 14,
-    "coins": 966620,
-    "Ship": 4,
-    "Farm": 5,
-    "Crop": 5,
-    "Statue": 5,
-    "House": 5,
-    "name": "Thaopham",
-    "fillTime": 1570788922652,
-    "image": "108071973910424",
+    "spins": 14,
+    "shields": 1,
+    "seq": 300,
+    "village": 2,
+    "coins": 470200,
+    "Ship": 2,
+    "Farm": 4,
+    "Crop": 0,
+    "Statue": 1,
+    "House": 4,
+    "name": "Trau",
+    "fillTime": 1571432331235,
+    "image": "113041823433674",
     "raid": {
-        "name": "Leila",
-        "id": "rofnf_ck0ov4yqq0079ovq9f9px6qdq",
-        "image": "m:530750548",
-        "coins": 966000,
+        "name": "Ray",
+        "id": "rofnf_ck0ov4ysh00giovq9h4bw35kr",
+        "image": "m:100000324326871",
+        "coins": 480000,
         "raid_target": "nf"
     },
-    "msToNextDailyBonus": 41193689,
+    "msToNextDailyBonus": 0,
     "dailybonusextra": 0,
     "dailybonusextraPurchaseDisabled": false,
     "piggy": {
         "coins": 1000000,
         "productCode": "com.moonactive.cm.piggy.a"
     },
-    "cardsXP": 222,
+    "cardsXP": 2,
     "messages": [
         {
-            "a": 4,
-            "t": 1570784444472,
-            "u": "rof4__cjzq2ta7s01qgasl87kg5dmro",
-            "n": "Xuong",
-            "i": "f:159704061873110",
-            "xp": 892,
-            "e": 596300,
-            "data": {
-                "foxFound": 151300
-            }
+            "a": 3,
+            "t": 1571429819615,
+            "u": "rofnf_ck0ov4yux00rnovq91n6n0ad5",
+            "n": "Brett",
+            "i": "m:100000469454683",
+            "xp": 48,
+            "e": "Farm",
+            "r": 1
         },
         {
-            "t": 1570781448749,
+            "a": 3,
+            "t": 1571420321795,
+            "u": "rofnf_ck0ov4yqv0080ovq9fs7vhqqh",
+            "n": "Isabelle",
+            "i": "m:100000097488235",
+            "xp": 70,
+            "e": "House",
+            "r": 1
+        },
+        {
+            "t": 1571420321647,
             "a": 114,
             "data": {
-                "id": "cards_boom_2019-10-11T08:05",
-                "type": "cards_boom",
-                "remainingSeconds": 20651,
+                "id": "baloons_2019-10-18T16:05",
+                "type": "baloons",
+                "remainingSeconds": 22578,
                 "config": {},
                 "clientOptions": {
-                    "scene_name": "CardsBoomEvent",
-                    "scene_bundle_name": "event-scene-cardboom",
-                    "badge_bundle_name": "event-button-cardboom2",
-                    "badge_prefab_name": "CardsBoomEventHudBadge",
                     "timer": "true",
-                    "ButtonText": "Buy Chests"
-                },
-                "options": {
-                    "wooden": 3,
-                    "golden": 6,
-                    "magical": 12,
-                    "mystery": 9
+                    "scene_name": "BalloonFrenzyEvent",
+                    "scene_bundle_name": "event-scene-balloons_v2_1903",
+                    "badge_bundle_name": "event-button-balloons_v2_1903",
+                    "badge_prefab_name": "BalloonFrenzyEventHudBadge"
                 }
             }
         },
         {
-            "t": 1570753689765,
-            "a": 114,
-            "data": {
-                "id": "accumulation_2019-10-11T00:05",
-                "type": "accumulation",
-                "remainingSeconds": 343610,
-                "config": {},
-                "clientOptions": {
-                    "button_bundle_name": "event-button-columbusbonus",
-                    "badge_prefab_name": "ColumbusBonusSpecialEventHudBadge",
-                    "skin_prefab_name": "ColumbusBonus",
-                    "skin_bundle_name": "event-skin-columbusbonus",
-                    "scene_bundle_name": "event-scene-columbusbonus",
-                    "scene_name": "GenericAccumulationSpecialEventPopup",
-                    "reward_animation_name": "GenericAccumulationWinItem",
-                    "3d_reward_animation": "false",
-                    "admin_config_id": "01_09_19_Columbus",
-                    "min_supported_version": "3.5.25",
-                    "scene_bundle_name_unsupported": "event-scene-columbusbonus-update",
-                    "scene_name_unsupported": "ColumbusBonusUpdatePopup",
-                    "badge_bundle_name_unsupported": "event-button-columbusbonus-update",
-                    "badge_prefab_name_unsupported": "ColumbusBonusSpecialEventHudBadge"
-                },
-                "options": {
-                    "missionIndex": 0,
-                    "currentAmount": 0,
-                    "totalAmount": 5,
-                    "reward": {
-                        "spins": 50
-                    },
-                    "paytable": [
-                        {
-                            "action": "raid",
-                            "points": 4,
-                            "blockIndex": 2,
-                            "rowIndex": 1,
-                            "description": "gae_eventpopup_paytable_raid"
-                        },
-                        {
-                            "action": "match_3",
-                            "points": 10,
-                            "blockIndex": 3,
-                            "rowIndex": 1,
-                            "description": "gae_eventpopup_paytable_hit3"
-                        },
-                        {
-                            "action": "attack_block",
-                            "points": 3,
-                            "blockIndex": 1,
-                            "rowIndex": 2,
-                            "description": "gae_eventpopup_paytable_attackblock"
-                        },
-                        {
-                            "action": "perfect_raid",
-                            "points": 5,
-                            "blockIndex": 2,
-                            "rowIndex": 2,
-                            "description": "gae_eventpopup_paytable_perfectraid"
-                        },
-                        {
-                            "action": "attack",
-                            "points": 2,
-                            "blockIndex": 1,
-                            "rowIndex": 1,
-                            "description": "gae_eventpopup_paytable_attack"
-                        }
-                    ]
-                }
-            }
+            "a": 3,
+            "t": 1571409985645,
+            "u": "rofnf_ck0ov4yuo00q8ovq941fm7m7h",
+            "n": "Emma",
+            "i": "m:100000078770955",
+            "xp": 111,
+            "e": "House",
+            "r": 1
+        },
+        {
+            "a": 2,
+            "t": 1570619837078,
+            "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
+            "n": "Pham",
+            "i": "f:10156799422207762",
+            "xp": 3062,
+            "e": "House"
+        },
+        {
+            "a": 2,
+            "t": 1570498720159,
+            "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
+            "n": "Pham",
+            "i": "f:10156799422207762",
+            "xp": 2988,
+            "e": "House"
+        },
+        {
+            "a": 1,
+            "t": 1570464370788,
+            "u": "rofnf_ck0ov4yw100wvovq90qzj0n5l",
+            "n": "Emilia",
+            "i": "m:100000137900794",
+            "xp": 137,
+            "e": "Ship",
+            "r": 1
+        },
+        {
+            "a": 1,
+            "t": 1570400180468,
+            "u": "rofnf_ck0ov4yqp0076ovq98trrgvn2",
+            "n": "Rosetta",
+            "i": "m:410133446",
+            "xp": 48,
+            "e": "Statue",
+            "r": 1
+        },
+        {
+            "a": 3,
+            "t": 1570389975456,
+            "u": "rofnf_ck0ov4yqs007lovq97kxv0ggj",
+            "n": "Joseph",
+            "i": "m:100000286267061",
+            "xp": 63,
+            "e": "House"
+        },
+        {
+            "a": 3,
+            "t": 1570375753729,
+            "u": "rofnf_ck0ov4yte00klovq92dmr1mzh",
+            "n": "Roger",
+            "i": "m:100000091809983",
+            "xp": 70,
+            "e": "Statue",
+            "r": 1
+        },
+        {
+            "a": 3,
+            "t": 1570367151618,
+            "u": "rofnf_ck0ov4ytq00luovq9b4jbhakx",
+            "n": "Ruth",
+            "i": "m:100000156327844",
+            "xp": 87,
+            "e": "Farm"
         }
     ],
-    "extraShieldsToPay": 0,
+    "extraShieldsToPay": -2,
     "inbox": 0,
-    "selectedPet": {
-        "type": "fox",
-        "xp": 4195,
-        "paused": false,
-        "level": 6,
-        "messages": [],
-        "ttl": 0,
-        "nextXp": 8000,
-        "scoreBonus": 3,
-        "currentStealPercent": 26,
-        "nextStealPercent": 28
-    },
-    "petXpBank": 200,
-    "petTtlBank": 0,
-    "DailyMiniSnacksUnlocksAtMiliSec": 1567987791805,
+    "DailyMiniSnacksUnlocksAtMiliSec": 1570135057441,
     "activeTriplePromotionIds": [],
-    "score": 585,
+    "score": 53,
     "jp_t": 0,
     "genericRewards": [],
-    "globalChestCounter": 40,
-    "now": 1570791326525,
+    "now": 1571432896286,
     "res": "win",
-    "pay": 56000,
-    "coupons": [
-        {
-            "id": "190821",
-            "expireAt": 1570838100000,
-            "state": "pending",
-            "payload": {
-                "couponType": "SpinsNCoins",
-                "percentage": 70
-            },
-            "title": "Coupon20190821",
-            "supportedVersion": "3.5.4",
-            "sku": "",
-            "minCost": 0,
-            "source": "profile",
-            "group": "GE",
-            "segment": "",
-            "bundle": "generic"
-        },
-        {
-            "id": "191011",
-            "expireAt": 1570838100000,
-            "state": "pending",
-            "payload": {
-                "couponType": "SpinsNCoins",
-                "percentage": 200
-            },
-            "title": "Coupon20191011",
-            "supportedVersion": "3.5.4",
-            "sku": "",
-            "minCost": 0,
-            "source": "profile",
-            "group": "PGOLD",
-            "segment": "",
-            "bundle": "generic"
-        },
-        {
-            "id": "1908212",
-            "expireAt": 1570838100000,
-            "state": "pending",
-            "payload": {
-                "couponType": "SpinsNCoins",
-                "percentage": 100
-            },
-            "title": "Coupon20190821",
-            "supportedVersion": "3.5.4",
-            "sku": "",
-            "minCost": 0,
-            "source": "profile",
-            "group": "GF",
-            "segment": "",
-            "bundle": "generic"
-        },
-        {
-            "id": "19070213",
-            "expireAt": 1570838100000,
-            "state": "received",
-            "payload": {
-                "couponType": "SpinsNCoins",
-                "percentage": 300
-            },
-            "title": "Coupon20190702",
-            "supportedVersion": "3.5.4",
-            "sku": "",
-            "minCost": 0,
-            "source": "profile",
-            "group": "GH",
-            "segment": "",
-            "bundle": "generic"
-        },
-        {
-            "id": "19070214",
-            "expireAt": 1570838100000,
-            "state": "pending",
-            "payload": {
-                "couponType": "SpinsNCoins",
-                "percentage": 500
-            },
-            "title": "Coupon20190702",
-            "supportedVersion": "3.5.4",
-            "sku": "",
-            "minCost": 0,
-            "source": "profile",
-            "group": "GI",
-            "segment": "",
-            "bundle": "generic"
-        },
-        {
-            "id": "19070221",
-            "expireAt": 1570838100000,
-            "state": "pending",
-            "payload": {
-                "couponType": "SpinsNCoins",
-                "percentage": 200
-            },
-            "title": "Coupon20190702",
-            "supportedVersion": "3.5.4",
-            "sku": "",
-            "minCost": 0,
-            "source": "profile",
-            "group": "GB",
-            "segment": "",
-            "bundle": "generic"
-        },
-        {
-            "id": "19070231",
-            "expireAt": 1570838100000,
-            "state": "pending",
-            "payload": {
-                "couponType": "SpinsNCoins",
-                "percentage": 150
-            },
-            "title": "Coupon20190702",
-            "supportedVersion": "3.5.4",
-            "sku": "",
-            "minCost": 0,
-            "source": "profile",
-            "group": "GC",
-            "segment": "",
-            "bundle": "generic"
-        }
-    ]
+    "pay": 376000,
+    "coupons": []
 }
