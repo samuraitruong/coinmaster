@@ -1,31 +1,23 @@
 {
-    "spins": 41,
-    "shields": 2,
-    "seq": 996,
-    "village": 2,
-    "coins": 287500,
-    "Ship": 3,
-    "Farm": 13,
-    "Crop": 4,
-    "Statue": 4,
-    "House": 4,
-    "name": "Angela",
-    "fillTime": 1571439729972,
-    "image": "123619322369397",
+    "spins": 0,
+    "shields": 3,
+    "seq": 1057,
+    "village": 3,
+    "coins": 799300,
+    "Ship": 0,
+    "Farm": 1,
+    "Crop": 0,
+    "Statue": 0,
+    "House": 1,
+    "name": "Truong",
+    "fillTime": 1571441447179,
+    "image": "1204676683057655",
     "raid": {
-        "name": "Pham",
-        "id": "rof4__cjzn7tig40149hdli9tzz8f7g",
-        "image": "10156799422207762",
-        "coins": 4848000,
-        "raid_target": "f",
-        "village": {
-            "village": 89,
-            "Ship": 4,
-            "Farm": 5,
-            "Crop": 5,
-            "Statue": 4,
-            "House": 5
-        }
+        "name": "Helen",
+        "id": "rofnf_ck0ov4ysu00ijovq99bmw06ew",
+        "image": "m:100000060742580",
+        "coins": 312000,
+        "raid_target": "nf"
     },
     "msToNextDailyBonus": 0,
     "dailybonusextra": 0,
@@ -34,15 +26,111 @@
         "coins": 1000000,
         "productCode": "com.moonactive.cm.piggy.a"
     },
-    "cardsXP": 31,
     "messages": [
         {
-            "t": 1571439729962,
+            "t": 1571441517819,
+            "a": 114,
+            "data": {
+                "id": "accumulation_2019-10-18T00:05",
+                "type": "accumulation",
+                "remainingSeconds": 289382,
+                "config": {},
+                "clientOptions": {
+                    "button_bundle_name": "event-button-halloweenbonus",
+                    "badge_prefab_name": "HalloweenBonusSpecialEventHudBadge",
+                    "skin_prefab_name": "HalloweenBonus",
+                    "skin_bundle_name": "event-skin-halloweenbonus",
+                    "scene_bundle_name": "event-scene-halloweenbonus",
+                    "scene_name": "GenericAccumulationSpecialEventPopup",
+                    "reward_animation_name": "GenericAccumulationWinItem",
+                    "3d_reward_animation": "false",
+                    "admin_config_id": "halloween_2019_10_15",
+                    "min_supported_version": "3.5.25",
+                    "scene_bundle_name_unsupported": "event-scene-halloweenbonus-update",
+                    "scene_name_unsupported": "HalloweenBonusUpdatePopup",
+                    "badge_bundle_name_unsupported": "event-button-halloweenbonus-update",
+                    "badge_prefab_name_unsupported": "HalloweenBonusSpecialEventHudBadge"
+                },
+                "options": {
+                    "missionIndex": 0,
+                    "currentAmount": 0,
+                    "totalAmount": 5,
+                    "reward": {
+                        "spins": 50
+                    },
+                    "paytable": [
+                        {
+                            "action": "match_3",
+                            "points": 10,
+                            "blockIndex": 3,
+                            "rowIndex": 1,
+                            "description": "gae_eventpopup_paytable_hit3"
+                        },
+                        {
+                            "action": "raid",
+                            "points": 4,
+                            "blockIndex": 2,
+                            "rowIndex": 1,
+                            "description": "gae_eventpopup_paytable_raid"
+                        },
+                        {
+                            "action": "perfect_raid",
+                            "points": 5,
+                            "blockIndex": 2,
+                            "rowIndex": 2,
+                            "description": "gae_eventpopup_paytable_perfectraid"
+                        },
+                        {
+                            "action": "attack_block",
+                            "points": 3,
+                            "blockIndex": 1,
+                            "rowIndex": 2,
+                            "description": "gae_eventpopup_paytable_attackblock"
+                        },
+                        {
+                            "action": "attack",
+                            "points": 2,
+                            "blockIndex": 1,
+                            "rowIndex": 1,
+                            "description": "gae_eventpopup_paytable_attack"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "t": 1571441497759,
+            "a": 110,
+            "e": {
+                "chest": {
+                    "type": "wooden",
+                    "cards": [
+                        {
+                            "name": "pets_4",
+                            "rarity": 1,
+                            "deckName": "pets",
+                            "swappable": true
+                        },
+                        {
+                            "name": "statues_5",
+                            "rarity": 2,
+                            "deckName": "statues",
+                            "swappable": true
+                        }
+                    ],
+                    "seq": 4
+                },
+                "completedDecksData": [],
+                "cardsXpDelta": 2
+            }
+        },
+        {
+            "t": 1571441447167,
             "a": 114,
             "data": {
                 "id": "baloons_2019-10-18T16:05",
                 "type": "baloons",
-                "remainingSeconds": 3170,
+                "remainingSeconds": 1453,
                 "config": {},
                 "clientOptions": {
                     "timer": "true",
@@ -55,112 +143,126 @@
         },
         {
             "a": 2,
-            "t": 1571400997775,
-            "u": "rofnf_ck0ov4yua00o8ovq94lxj02ne",
-            "n": "Janie",
-            "i": "m:100000279882351",
-            "xp": 45,
-            "e": "Farm"
-        },
-        {
-            "a": 4,
-            "t": 1571395197891,
-            "u": "rofnf_ck0ov4yuc00ogovq976oc4tl6",
-            "n": "Etta",
-            "i": "m:99999927615603",
-            "xp": 111,
-            "e": 732000,
-            "data": {}
-        },
-        {
-            "a": 2,
-            "t": 1571390329711,
-            "u": "rofnf_ck0ov4yqh0063ovq98bi77oq5",
-            "n": "Etta",
-            "i": "m:798045356",
-            "xp": 44,
-            "e": "Farm"
+            "t": 1571394685386,
+            "u": "rofnf_ck0ov4yps002wovq94ro4hux2",
+            "n": "Julian",
+            "i": "m:304208459",
+            "xp": 113,
+            "e": "Ship",
+            "r": 1
         },
         {
             "a": 3,
-            "t": 1571379728744,
+            "t": 1571388785619,
+            "u": "rofnf_ck0ov4yus00qyovq97is50ria",
+            "n": "Ryan",
+            "i": "m:100000110752157",
+            "xp": 48,
+            "e": "Ship",
+            "r": 1
+        },
+        {
+            "a": 3,
+            "t": 1571386777194,
+            "u": "rof4__cjzgkbk3s02cib3k76fci3yw6",
+            "n": "Truong",
+            "i": "f:10156498653158263",
+            "xp": 2955,
+            "e": "House"
+        },
+        {
+            "a": 3,
+            "t": 1571377703371,
             "u": "rofnf_ck0ov4yst00idovq9been8c9i",
             "n": "Leila",
             "i": "m:100000181664346",
-            "xp": 46,
-            "e": "Farm"
+            "xp": 54,
+            "e": "Ship"
+        },
+        {
+            "a": 2,
+            "t": 1571348187624,
+            "u": "rofnf_ck0ov4yqo006yovq93bg40cvd",
+            "n": "Mary",
+            "i": "m:1454488787",
+            "xp": 63,
+            "e": "House",
+            "r": 1
         },
         {
             "a": 3,
-            "t": 1571370422829,
-            "u": "rofnf_ck0ov4yse00g3ovq9djojg35q",
-            "n": "Mildred",
-            "i": "m:100000163487413",
+            "t": 1571342555285,
+            "u": "rofnf_ck0ov4yt600jxovq9bvck1wdh",
+            "n": "Ivona",
+            "i": "m:100000096206273",
+            "xp": 91,
+            "e": "Statue",
+            "r": 1
+        },
+        {
+            "a": 3,
+            "t": 1571330621265,
+            "u": "rofnf_ck0ov4yvd00tqovq94ohh8o4k",
+            "n": "Sophia",
+            "i": "m:100000539492141",
+            "xp": 47,
+            "e": "Statue"
+        },
+        {
+            "a": 3,
+            "t": 1571317066670,
+            "u": "rofnf_ck0ov4ytm00lfovq9g2kw2vd4",
+            "n": "Sally",
+            "i": "m:100000100154222",
             "xp": 111,
-            "e": "Farm"
-        },
-        {
-            "a": 2,
-            "t": 1571340936918,
-            "u": "rofnf_ck0ov4yud00omovq92szo73jc",
-            "n": "Tillie",
-            "i": "m:100000192191705",
-            "xp": 87,
             "e": "Crop"
         },
         {
-            "a": 2,
-            "t": 1571331562168,
-            "u": "rofnf_ck0ov4yu800nzovq9cc7884mm",
-            "n": "Lloyd",
-            "i": "m:100000062239312",
-            "xp": 46,
-            "e": "Crop"
-        },
-        {
-            "a": 3,
-            "t": 1571321148858,
-            "u": "rofnf_ck0ov4yqd005kovq926yw4siu",
-            "n": "Wesley",
-            "i": "m:1136573822",
-            "xp": 118,
-            "e": "Crop",
-            "r": 1
-        },
-        {
-            "a": 3,
-            "t": 1571311522726,
-            "u": "rofnf_ck0ov4yr8009rovq90rr13j0k",
-            "n": "Katherine",
-            "i": "m:100000668549975",
-            "xp": 48,
-            "e": "Crop",
-            "r": 1
-        },
-        {
-            "a": 2,
-            "t": 1571283532610,
+            "a": 1,
+            "t": 1571188622126,
             "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
             "n": "Pham",
             "i": "f:10156799422207762",
-            "xp": 3223,
+            "xp": 3192,
+            "e": "Farm"
+        },
+        {
+            "a": 1,
+            "t": 1571184107814,
+            "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
+            "n": "Pham",
+            "i": "f:10156799422207762",
+            "xp": 3192,
             "e": "Ship"
         }
     ],
-    "lastName": "Smith",
-    "extraShieldsToPay": -1,
+    "extraShieldsToPay": 1,
+    "cardsXP": 15,
     "inbox": 0,
-    "DailyMiniSnacksUnlocksAtMiliSec": 1569774605467,
+    "selectedPet": {
+        "type": "fox",
+        "xp": 0,
+        "paused": false,
+        "level": 0,
+        "messages": [],
+        "ttl": 0,
+        "scoreBonus": 0,
+        "currentStealPercent": 0,
+        "nextStealPercent": 16
+    },
+    "petXpBank": 140,
+    "petTtlBank": 43200000,
+    "DailyMiniSnacksUnlocksAtMiliSec": 1570107116276,
     "activeTriplePromotionIds": [],
-    "score": 88,
+    "score": 79,
     "jp_t": 0,
     "genericRewards": [],
     "globalChestCounter": 4,
-    "now": 1571440085870,
-    "reward": 4,
-    "pay": 0,
-    "r1": 4,
-    "r2": 4,
-    "r3": 4,
+    "now": 1571441531546,
+    "reward": 1,
+    "pay": 110000,
+    "r1": 2,
+    "r2": 2,
+    "r3": 2,
     "coupons": []
 }

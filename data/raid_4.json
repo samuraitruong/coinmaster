@@ -1,22 +1,22 @@
 {
-    "spins": 10,
-    "shields": 1,
-    "seq": 14064,
-    "village": 42,
-    "coins": 7781750,
-    "Ship": 3,
-    "Farm": 5,
-    "Crop": 5,
-    "Statue": 5,
-    "House": 5,
-    "name": "Xuong",
-    "fillTime": 1571432047658,
-    "image": "159704061873110",
+    "spins": 1,
+    "shields": 3,
+    "seq": 1056,
+    "village": 3,
+    "coins": 689300,
+    "Ship": 0,
+    "Farm": 1,
+    "Crop": 0,
+    "Statue": 0,
+    "House": 1,
+    "name": "Truong",
+    "fillTime": 1571441447179,
+    "image": "1204676683057655",
     "raid": {
-        "name": "jackson",
-        "id": "rofnf_ck0ov4yrx00daovq9bg05gfhw",
-        "image": "m:100000288999182",
-        "coins": 324000,
+        "name": "Helen",
+        "id": "rofnf_ck0ov4ysu00ijovq99bmw06ew",
+        "image": "m:100000060742580",
+        "coins": 312000,
         "raid_target": "nf"
     },
     "msToNextDailyBonus": 0,
@@ -26,74 +26,111 @@
         "coins": 1000000,
         "productCode": "com.moonactive.cm.piggy.a"
     },
-    "cardsXP": 346,
     "messages": [
         {
-            "a": 4,
-            "t": 1571431672985,
-            "u": "rof4__cjzgkbk3s02cib3k76fci3yw6",
-            "n": "Truong",
-            "i": "f:10156498653158263",
-            "xp": 2967,
-            "e": 882000,
-            "data": {}
+            "t": 1571441517819,
+            "a": 114,
+            "data": {
+                "id": "accumulation_2019-10-18T00:05",
+                "type": "accumulation",
+                "remainingSeconds": 289382,
+                "config": {},
+                "clientOptions": {
+                    "button_bundle_name": "event-button-halloweenbonus",
+                    "badge_prefab_name": "HalloweenBonusSpecialEventHudBadge",
+                    "skin_prefab_name": "HalloweenBonus",
+                    "skin_bundle_name": "event-skin-halloweenbonus",
+                    "scene_bundle_name": "event-scene-halloweenbonus",
+                    "scene_name": "GenericAccumulationSpecialEventPopup",
+                    "reward_animation_name": "GenericAccumulationWinItem",
+                    "3d_reward_animation": "false",
+                    "admin_config_id": "halloween_2019_10_15",
+                    "min_supported_version": "3.5.25",
+                    "scene_bundle_name_unsupported": "event-scene-halloweenbonus-update",
+                    "scene_name_unsupported": "HalloweenBonusUpdatePopup",
+                    "badge_bundle_name_unsupported": "event-button-halloweenbonus-update",
+                    "badge_prefab_name_unsupported": "HalloweenBonusSpecialEventHudBadge"
+                },
+                "options": {
+                    "missionIndex": 0,
+                    "currentAmount": 0,
+                    "totalAmount": 5,
+                    "reward": {
+                        "spins": 50
+                    },
+                    "paytable": [
+                        {
+                            "action": "match_3",
+                            "points": 10,
+                            "blockIndex": 3,
+                            "rowIndex": 1,
+                            "description": "gae_eventpopup_paytable_hit3"
+                        },
+                        {
+                            "action": "raid",
+                            "points": 4,
+                            "blockIndex": 2,
+                            "rowIndex": 1,
+                            "description": "gae_eventpopup_paytable_raid"
+                        },
+                        {
+                            "action": "perfect_raid",
+                            "points": 5,
+                            "blockIndex": 2,
+                            "rowIndex": 2,
+                            "description": "gae_eventpopup_paytable_perfectraid"
+                        },
+                        {
+                            "action": "attack_block",
+                            "points": 3,
+                            "blockIndex": 1,
+                            "rowIndex": 2,
+                            "description": "gae_eventpopup_paytable_attackblock"
+                        },
+                        {
+                            "action": "attack",
+                            "points": 2,
+                            "blockIndex": 1,
+                            "rowIndex": 1,
+                            "description": "gae_eventpopup_paytable_attack"
+                        }
+                    ]
+                }
+            }
         },
         {
-            "a": 3,
-            "t": 1571431626442,
-            "u": "rof4__cjzgkbk3s02cib3k76fci3yw6",
-            "n": "Truong",
-            "i": "f:10156498653158263",
-            "xp": 2967,
-            "e": "Farm"
+            "t": 1571441497759,
+            "a": 110,
+            "e": {
+                "chest": {
+                    "type": "wooden",
+                    "cards": [
+                        {
+                            "name": "pets_4",
+                            "rarity": 1,
+                            "deckName": "pets",
+                            "swappable": true
+                        },
+                        {
+                            "name": "statues_5",
+                            "rarity": 2,
+                            "deckName": "statues",
+                            "swappable": true
+                        }
+                    ],
+                    "seq": 4
+                },
+                "completedDecksData": [],
+                "cardsXpDelta": 2
+            }
         },
         {
-            "a": 4,
-            "t": 1571431366350,
-            "u": "rof4__cjzgkbk3s02cib3k76fci3yw6",
-            "n": "Truong",
-            "i": "f:10156498653158263",
-            "xp": 2966,
-            "e": 392000,
-            "data": {}
-        },
-        {
-            "a": 4,
-            "t": 1571431111727,
-            "u": "rof4__cjzgkbk3s02cib3k76fci3yw6",
-            "n": "Truong",
-            "i": "f:10156498653158263",
-            "xp": 2965,
-            "e": 2610000,
-            "data": {}
-        },
-        {
-            "a": 4,
-            "t": 1571427089236,
-            "u": "rofnf_ck0ov4ytz00muovq93szbdimc",
-            "n": "Augusta",
-            "i": "m:100000094587617",
-            "xp": 1070,
-            "e": 4170000,
-            "data": {},
-            "r": 1
-        },
-        {
-            "a": 3,
-            "t": 1571423942269,
-            "u": "rofnf_ck0ov4ysb00fkovq9dy4d0i4c",
-            "n": "Oliver",
-            "i": "m:100000334428840",
-            "xp": 1115,
-            "e": "Ship"
-        },
-        {
-            "t": 1571423942169,
+            "t": 1571441447167,
             "a": 114,
             "data": {
                 "id": "baloons_2019-10-18T16:05",
                 "type": "baloons",
-                "remainingSeconds": 18958,
+                "remainingSeconds": 1453,
                 "config": {},
                 "clientOptions": {
                     "timer": "true",
@@ -105,234 +142,124 @@
             }
         },
         {
+            "a": 2,
+            "t": 1571394685386,
+            "u": "rofnf_ck0ov4yps002wovq94ro4hux2",
+            "n": "Julian",
+            "i": "m:304208459",
+            "xp": 113,
+            "e": "Ship",
+            "r": 1
+        },
+        {
             "a": 3,
-            "t": 1571411604814,
-            "u": "rofnf_ck0ov4yqm006oovq91h3b0fub",
-            "n": "Noah",
-            "i": "m:1065609278",
-            "xp": 1092,
+            "t": 1571388785619,
+            "u": "rofnf_ck0ov4yus00qyovq97is50ria",
+            "n": "Ryan",
+            "i": "m:100000110752157",
+            "xp": 48,
+            "e": "Ship",
+            "r": 1
+        },
+        {
+            "a": 3,
+            "t": 1571386777194,
+            "u": "rof4__cjzgkbk3s02cib3k76fci3yw6",
+            "n": "Truong",
+            "i": "f:10156498653158263",
+            "xp": 2955,
+            "e": "House"
+        },
+        {
+            "a": 3,
+            "t": 1571377703371,
+            "u": "rofnf_ck0ov4yst00idovq9been8c9i",
+            "n": "Leila",
+            "i": "m:100000181664346",
+            "xp": 54,
+            "e": "Ship"
+        },
+        {
+            "a": 2,
+            "t": 1571348187624,
+            "u": "rofnf_ck0ov4yqo006yovq93bg40cvd",
+            "n": "Mary",
+            "i": "m:1454488787",
+            "xp": 63,
+            "e": "House",
+            "r": 1
+        },
+        {
+            "a": 3,
+            "t": 1571342555285,
+            "u": "rofnf_ck0ov4yt600jxovq9bvck1wdh",
+            "n": "Ivona",
+            "i": "m:100000096206273",
+            "xp": 91,
+            "e": "Statue",
+            "r": 1
+        },
+        {
+            "a": 3,
+            "t": 1571330621265,
+            "u": "rofnf_ck0ov4yvd00tqovq94ohh8o4k",
+            "n": "Sophia",
+            "i": "m:100000539492141",
+            "xp": 47,
+            "e": "Statue"
+        },
+        {
+            "a": 3,
+            "t": 1571317066670,
+            "u": "rofnf_ck0ov4ytm00lfovq9g2kw2vd4",
+            "n": "Sally",
+            "i": "m:100000100154222",
+            "xp": 111,
+            "e": "Crop"
+        },
+        {
+            "a": 1,
+            "t": 1571188622126,
+            "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
+            "n": "Pham",
+            "i": "f:10156799422207762",
+            "xp": 3192,
             "e": "Farm"
         },
         {
-            "a": 4,
-            "t": 1571408646006,
-            "u": "rofnf_ck0ov4yqg005vovq98vry8s0t",
-            "n": "Rosie",
-            "i": "m:1346110215",
-            "xp": 993,
-            "e": 3403440,
-            "data": {
-                "foxFound": 469440
-            },
-            "r": 1
-        },
-        {
-            "a": 3,
-            "t": 1571400562502,
-            "u": "rofnf_ck0ov4ysf00g8ovq901y1b9cm",
-            "n": "Johanna",
-            "i": "m:100000263890420",
-            "xp": 1061,
-            "e": "Farm",
-            "r": 1
-        },
-        {
-            "a": 3,
-            "t": 1571391712413,
-            "u": "rofnf_ck0ov4yup00qgovq9cuxycqd0",
-            "n": "Guy",
-            "i": "m:100000337256438",
-            "xp": 1014,
-            "e": "Crop",
-            "r": 1
-        },
-        {
-            "t": 1571143517806,
-            "a": 110,
-            "e": {
-                "chest": {
-                    "type": "wooden",
-                    "cards": [
-                        {
-                            "name": "vikings_3",
-                            "rarity": 2,
-                            "deckName": "vikings",
-                            "swappable": true
-                        },
-                        {
-                            "name": "creatures_5",
-                            "rarity": 2,
-                            "deckName": "creatures",
-                            "swappable": true
-                        }
-                    ],
-                    "seq": 110
-                },
-                "completedDecksData": [],
-                "cardsXpDelta": 0
-            }
-        },
-        {
-            "t": 1571143346479,
-            "a": 110,
-            "e": {
-                "chest": {
-                    "type": "magical",
-                    "cards": [
-                        {
-                            "name": "alice_4",
-                            "rarity": 3,
-                            "deckName": "alice",
-                            "swappable": true
-                        },
-                        {
-                            "name": "rides_7",
-                            "rarity": 4,
-                            "deckName": "rides",
-                            "swappable": true
-                        },
-                        {
-                            "name": "beasts_7",
-                            "rarity": 3,
-                            "deckName": "beasts",
-                            "swappable": true
-                        },
-                        {
-                            "name": "statues_6",
-                            "rarity": 3,
-                            "deckName": "statues",
-                            "swappable": true
-                        },
-                        {
-                            "name": "bling_4",
-                            "rarity": 2,
-                            "deckName": "bling",
-                            "swappable": true
-                        },
-                        {
-                            "name": "sweets_1",
-                            "rarity": 1,
-                            "deckName": "sweets",
-                            "swappable": true
-                        },
-                        {
-                            "name": "sweets_7",
-                            "rarity": 3,
-                            "deckName": "sweets",
-                            "swappable": true
-                        },
-                        {
-                            "name": "items_4",
-                            "rarity": 2,
-                            "deckName": "items",
-                            "swappable": true
-                        }
-                    ],
-                    "seq": 109
-                },
-                "completedDecksData": [],
-                "cardsXpDelta": 0
-            }
-        },
-        {
-            "t": 1571141004783,
-            "a": 110,
-            "e": {
-                "chest": {
-                    "type": "wooden",
-                    "cards": [
-                        {
-                            "name": "vikings_1",
-                            "rarity": 1,
-                            "deckName": "vikings",
-                            "swappable": true
-                        },
-                        {
-                            "name": "bling_6",
-                            "rarity": 3,
-                            "deckName": "bling",
-                            "swappable": true
-                        }
-                    ],
-                    "seq": 102
-                },
-                "completedDecksData": [],
-                "cardsXpDelta": 0
-            }
-        },
-        {
-            "t": 1571138983693,
-            "a": 110,
-            "e": {
-                "chest": {
-                    "type": "wooden",
-                    "cards": [
-                        {
-                            "name": "statues_5",
-                            "rarity": 2,
-                            "deckName": "statues",
-                            "swappable": true
-                        },
-                        {
-                            "name": "statues_6",
-                            "rarity": 3,
-                            "deckName": "statues",
-                            "swappable": true
-                        }
-                    ],
-                    "seq": 94
-                },
-                "completedDecksData": [],
-                "cardsXpDelta": 0
-            }
+            "a": 1,
+            "t": 1571184107814,
+            "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
+            "n": "Pham",
+            "i": "f:10156799422207762",
+            "xp": 3192,
+            "e": "Ship"
         }
     ],
-    "extraShieldsToPay": -2,
-    "hiddenShields": 0,
+    "extraShieldsToPay": 1,
+    "cardsXP": 15,
     "inbox": 0,
     "selectedPet": {
         "type": "fox",
-        "xp": 19690,
+        "xp": 0,
         "paused": false,
-        "level": 11,
+        "level": 0,
         "messages": [],
         "ttl": 0,
-        "nextXp": 28000,
-        "scoreBonus": 11,
-        "currentStealPercent": 36,
-        "nextStealPercent": 38
+        "scoreBonus": 0,
+        "currentStealPercent": 0,
+        "nextStealPercent": 16
     },
-    "petXpBank": 60000,
-    "petTtlBank": 57600000,
-    "DailyMiniSnacksUnlocksAtMiliSec": 1571368467866,
+    "petXpBank": 140,
+    "petTtlBank": 43200000,
+    "DailyMiniSnacksUnlocksAtMiliSec": 1570107116276,
     "activeTriplePromotionIds": [],
-    "score": 1440,
+    "score": 79,
     "jp_t": 0,
-    "accumulation": {
-        "missionIndex": 5,
-        "currentAmount": 34,
-        "currentAmountNonCapped": 34,
-        "totalAmount": 80,
-        "reward": {
-            "spins": 150
-        },
-        "id": "accumulation_2019-10-18T00:05"
-    },
-    "tournaments": {
-        "scoreThreshold": 5,
-        "score": 81,
-        "tournamentStartTime": "2019-10-18T04:05:00.000Z",
-        "tournamentId": "0_55433",
-        "rank": 20
-    },
-    "active_events": {
-        "accumulation": 297505,
-        "tournaments": 2538
-    },
     "genericRewards": [],
-    "globalChestCounter": 135,
-    "now": 1571433394555,
+    "globalChestCounter": 4,
+    "now": 1571441529874,
     "res": "win",
-    "pay": 207000,
+    "pay": 51000,
     "coupons": []
 }

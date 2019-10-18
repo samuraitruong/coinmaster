@@ -293,17 +293,20 @@ class CoinMaster {
       } = message;
       let baloonsCount = 0;
       if (data && data.status === "PENDING_COLLECT" && data.collectUrl) {
+
+
         console.log("Collect rewards ", data.rewardId, data.reason, data.reward);
         spinResult = await this.post(
           "https://vik-game.moonactive.net" + data.collectUrl
         );
 
-      } else if (data && data.type === "baloons") {
+      } else if (data && data.type === "baloons" && !data.clientOptions) {
+        console.log("################################", data)
         spins = await this.popBallon(baloonsCount, spins);
         baloonsCount++;
       } else {
         // 3 -attack
-        if (!message.data || Object.keys(message.data).length == 0 || ["village_complete_bonus", "raid_master", "card_swap", "accumulation", "cards_boom"].some(x => x === message.data.type)) continue;
+        if (!message.data || Object.keys(message.data).length == 0 || ["village_complete_bonus", "raid_master", "card_swap", "accumulation", "cards_boom", "baloons"].some(x => x === message.data.type)) continue;
         console.log("Need Attention: --->UNHANDLED MESSAGE<----", message);
       }
     }
@@ -314,7 +317,7 @@ class CoinMaster {
         }
       }
     }
-    spinResult = await this.getBalance();
+    // spinResult = await this.getBalance();
     return spinResult;
   }
   async raid(spinResult, retry) {
@@ -404,7 +407,8 @@ class CoinMaster {
 
     const afterRaidCoins = response.coins;
     console.log("### Raid amount total: ".green, afterRaidCoins - originalCoins)
-    /*if (afterRaidCoins === originalCoins && retry < 2) {
+    
+    /*if (afterRaidCoins === originalCoins && retry < 1000) {
       response = await this.getBalance();
       console.log("Retry raid: ", retry + 1);
       return this.raid(response, retry + 1);
