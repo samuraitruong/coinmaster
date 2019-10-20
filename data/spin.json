@@ -1,6 +1,7 @@
 {
     "spins": 0,
     "shields": 3,
+<<<<<<< HEAD
     "seq": 15647,
     "village": 44,
     "coins": 7445170,
@@ -20,12 +21,34 @@
         "raid_target": "nf"
     },
     "msToNextDailyBonus": 9588,
+=======
+    "seq": 1057,
+    "village": 3,
+    "coins": 799300,
+    "Ship": 0,
+    "Farm": 1,
+    "Crop": 0,
+    "Statue": 0,
+    "House": 1,
+    "name": "Truong",
+    "fillTime": 1571441447179,
+    "image": "1204676683057655",
+    "raid": {
+        "name": "Helen",
+        "id": "rofnf_ck0ov4ysu00ijovq99bmw06ew",
+        "image": "m:100000060742580",
+        "coins": 312000,
+        "raid_target": "nf"
+    },
+    "msToNextDailyBonus": 0,
+>>>>>>> 3b1748300383fbf5b4f34ac027dac0ac04a43c0b
     "dailybonusextra": 0,
     "dailybonusextraPurchaseDisabled": false,
     "piggy": {
         "coins": 1000000,
         "productCode": "com.moonactive.cm.piggy.a"
     },
+<<<<<<< HEAD
     "cardsXP": 351,
     "messages": [
         {
@@ -78,31 +101,222 @@
         },
         {
             "t": 1571138983693,
+=======
+    "messages": [
+        {
+            "t": 1571441517819,
+            "a": 114,
+            "data": {
+                "id": "accumulation_2019-10-18T00:05",
+                "type": "accumulation",
+                "remainingSeconds": 289382,
+                "config": {},
+                "clientOptions": {
+                    "button_bundle_name": "event-button-halloweenbonus",
+                    "badge_prefab_name": "HalloweenBonusSpecialEventHudBadge",
+                    "skin_prefab_name": "HalloweenBonus",
+                    "skin_bundle_name": "event-skin-halloweenbonus",
+                    "scene_bundle_name": "event-scene-halloweenbonus",
+                    "scene_name": "GenericAccumulationSpecialEventPopup",
+                    "reward_animation_name": "GenericAccumulationWinItem",
+                    "3d_reward_animation": "false",
+                    "admin_config_id": "halloween_2019_10_15",
+                    "min_supported_version": "3.5.25",
+                    "scene_bundle_name_unsupported": "event-scene-halloweenbonus-update",
+                    "scene_name_unsupported": "HalloweenBonusUpdatePopup",
+                    "badge_bundle_name_unsupported": "event-button-halloweenbonus-update",
+                    "badge_prefab_name_unsupported": "HalloweenBonusSpecialEventHudBadge"
+                },
+                "options": {
+                    "missionIndex": 0,
+                    "currentAmount": 0,
+                    "totalAmount": 5,
+                    "reward": {
+                        "spins": 50
+                    },
+                    "paytable": [
+                        {
+                            "action": "match_3",
+                            "points": 10,
+                            "blockIndex": 3,
+                            "rowIndex": 1,
+                            "description": "gae_eventpopup_paytable_hit3"
+                        },
+                        {
+                            "action": "raid",
+                            "points": 4,
+                            "blockIndex": 2,
+                            "rowIndex": 1,
+                            "description": "gae_eventpopup_paytable_raid"
+                        },
+                        {
+                            "action": "perfect_raid",
+                            "points": 5,
+                            "blockIndex": 2,
+                            "rowIndex": 2,
+                            "description": "gae_eventpopup_paytable_perfectraid"
+                        },
+                        {
+                            "action": "attack_block",
+                            "points": 3,
+                            "blockIndex": 1,
+                            "rowIndex": 2,
+                            "description": "gae_eventpopup_paytable_attackblock"
+                        },
+                        {
+                            "action": "attack",
+                            "points": 2,
+                            "blockIndex": 1,
+                            "rowIndex": 1,
+                            "description": "gae_eventpopup_paytable_attack"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "t": 1571441497759,
+>>>>>>> 3b1748300383fbf5b4f34ac027dac0ac04a43c0b
             "a": 110,
             "e": {
                 "chest": {
                     "type": "wooden",
                     "cards": [
                         {
+<<<<<<< HEAD
+=======
+                            "name": "pets_4",
+                            "rarity": 1,
+                            "deckName": "pets",
+                            "swappable": true
+                        },
+                        {
+>>>>>>> 3b1748300383fbf5b4f34ac027dac0ac04a43c0b
                             "name": "statues_5",
                             "rarity": 2,
                             "deckName": "statues",
                             "swappable": true
-                        },
-                        {
-                            "name": "statues_6",
-                            "rarity": 3,
-                            "deckName": "statues",
-                            "swappable": true
                         }
                     ],
-                    "seq": 94
+                    "seq": 4
                 },
                 "completedDecksData": [],
-                "cardsXpDelta": 0
+                "cardsXpDelta": 2
             }
+        },
+        {
+            "t": 1571441447167,
+            "a": 114,
+            "data": {
+                "id": "baloons_2019-10-18T16:05",
+                "type": "baloons",
+                "remainingSeconds": 1453,
+                "config": {},
+                "clientOptions": {
+                    "timer": "true",
+                    "scene_name": "BalloonFrenzyEvent",
+                    "scene_bundle_name": "event-scene-balloons_v2_1903",
+                    "badge_bundle_name": "event-button-balloons_v2_1903",
+                    "badge_prefab_name": "BalloonFrenzyEventHudBadge"
+                }
+            }
+        },
+        {
+            "a": 2,
+            "t": 1571394685386,
+            "u": "rofnf_ck0ov4yps002wovq94ro4hux2",
+            "n": "Julian",
+            "i": "m:304208459",
+            "xp": 113,
+            "e": "Ship",
+            "r": 1
+        },
+        {
+            "a": 3,
+            "t": 1571388785619,
+            "u": "rofnf_ck0ov4yus00qyovq97is50ria",
+            "n": "Ryan",
+            "i": "m:100000110752157",
+            "xp": 48,
+            "e": "Ship",
+            "r": 1
+        },
+        {
+            "a": 3,
+            "t": 1571386777194,
+            "u": "rof4__cjzgkbk3s02cib3k76fci3yw6",
+            "n": "Truong",
+            "i": "f:10156498653158263",
+            "xp": 2955,
+            "e": "House"
+        },
+        {
+            "a": 3,
+            "t": 1571377703371,
+            "u": "rofnf_ck0ov4yst00idovq9been8c9i",
+            "n": "Leila",
+            "i": "m:100000181664346",
+            "xp": 54,
+            "e": "Ship"
+        },
+        {
+            "a": 2,
+            "t": 1571348187624,
+            "u": "rofnf_ck0ov4yqo006yovq93bg40cvd",
+            "n": "Mary",
+            "i": "m:1454488787",
+            "xp": 63,
+            "e": "House",
+            "r": 1
+        },
+        {
+            "a": 3,
+            "t": 1571342555285,
+            "u": "rofnf_ck0ov4yt600jxovq9bvck1wdh",
+            "n": "Ivona",
+            "i": "m:100000096206273",
+            "xp": 91,
+            "e": "Statue",
+            "r": 1
+        },
+        {
+            "a": 3,
+            "t": 1571330621265,
+            "u": "rofnf_ck0ov4yvd00tqovq94ohh8o4k",
+            "n": "Sophia",
+            "i": "m:100000539492141",
+            "xp": 47,
+            "e": "Statue"
+        },
+        {
+            "a": 3,
+            "t": 1571317066670,
+            "u": "rofnf_ck0ov4ytm00lfovq9g2kw2vd4",
+            "n": "Sally",
+            "i": "m:100000100154222",
+            "xp": 111,
+            "e": "Crop"
+        },
+        {
+            "a": 1,
+            "t": 1571188622126,
+            "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
+            "n": "Pham",
+            "i": "f:10156799422207762",
+            "xp": 3192,
+            "e": "Farm"
+        },
+        {
+            "a": 1,
+            "t": 1571184107814,
+            "u": "rof4__cjzn7tig40149hdli9tzz8f7g",
+            "n": "Pham",
+            "i": "f:10156799422207762",
+            "xp": 3192,
+            "e": "Ship"
         }
     ],
+<<<<<<< HEAD
     "extraShieldsToPay": 0,
     "hiddenShields": 2,
     "inbox": 0,
@@ -443,4 +657,35 @@
             "bundle": "generic"
         }
     ]
+=======
+    "extraShieldsToPay": 1,
+    "cardsXP": 15,
+    "inbox": 0,
+    "selectedPet": {
+        "type": "fox",
+        "xp": 0,
+        "paused": false,
+        "level": 0,
+        "messages": [],
+        "ttl": 0,
+        "scoreBonus": 0,
+        "currentStealPercent": 0,
+        "nextStealPercent": 16
+    },
+    "petXpBank": 140,
+    "petTtlBank": 43200000,
+    "DailyMiniSnacksUnlocksAtMiliSec": 1570107116276,
+    "activeTriplePromotionIds": [],
+    "score": 79,
+    "jp_t": 0,
+    "genericRewards": [],
+    "globalChestCounter": 4,
+    "now": 1571441531546,
+    "reward": 1,
+    "pay": 110000,
+    "r1": 2,
+    "r2": 2,
+    "r3": 2,
+    "coupons": []
+>>>>>>> 3b1748300383fbf5b4f34ac027dac0ac04a43c0b
 }
