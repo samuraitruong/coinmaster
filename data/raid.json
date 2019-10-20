@@ -1,194 +1,80 @@
 {
-    "spins": 0,
-    "shields": 1,
-    "seq": 13888,
-    "village": 42,
-    "coins": 524090,
-    "Ship": 12,
-    "Farm": 5,
-    "Crop": 4,
-    "Statue": 5,
-    "House": 5,
+    "spins": 4,
+    "shields": 3,
+    "seq": 15643,
+    "village": 44,
+    "coins": 6537670,
+    "Ship": 0,
+    "Farm": 1,
+    "Crop": 2,
+    "Statue": 3,
+    "House": 3,
     "name": "Xuong",
-    "fillTime": 1571361149930,
+    "fillTime": 1571568887293,
     "image": "159704061873110",
     "raid": {
-        "name": "Truong",
-        "id": "rof4__cjzgkbk3s02cib3k76fci3yw6",
-        "image": "10156498653158263",
-        "coins": 2460000,
-        "raid_target": "f"
+        "name": "Ихээ",
+        "id": "B_cjhavwu3v04i9n2jubqtlrysc",
+        "image": "105149033701277",
+        "coins": 4998000,
+        "raid_target": "nf"
     },
-    "msToNextDailyBonus": 5032252,
+    "msToNextDailyBonus": 14649,
     "dailybonusextra": 0,
     "dailybonusextraPurchaseDisabled": false,
     "piggy": {
         "coins": 1000000,
         "productCode": "com.moonactive.cm.piggy.a"
     },
-    "cardsXP": 332,
+    "cardsXP": 351,
     "messages": [
         {
-            "a": 3,
-            "t": 1571363908115,
-            "u": "rofnf_ck0ov4yu300nfovq940h2agqp",
-            "n": "Esther",
-            "i": "m:100000091722869",
-            "xp": 1065,
-            "e": "Ship"
-        },
-        {
-            "a": 4,
-            "t": 1571363647122,
-            "u": "rof4__ck09czjio03i2aulcfp5d1653",
-            "n": "Thaopham",
-            "i": "f:108071973910424",
-            "xp": 742,
-            "e": 100000,
-            "data": {}
-        },
-        {
-            "a": 3,
-            "t": 1571362585637,
-            "u": "rof4__cjzgkbk3s02cib3k76fci3yw6",
-            "n": "Truong",
-            "i": "f:10156498653158263",
-            "xp": 2951,
-            "e": "Ship"
-        },
-        {
-            "a": 4,
-            "t": 1571362435864,
-            "u": "rof4__cjzgkbk3s02cib3k76fci3yw6",
-            "n": "Truong",
-            "i": "f:10156498653158263",
-            "xp": 2951,
-            "e": 1194000,
-            "data": {}
-        },
-        {
-            "a": 4,
-            "t": 1571359858825,
-            "u": "rofnf_ck0ov4yt500juovq954pg50f0",
-            "n": "Edward",
-            "i": "m:100000116909391",
-            "xp": 1040,
-            "e": 528000,
-            "data": {}
-        },
-        {
-            "t": 1571143517806,
+            "t": 1571568616315,
             "a": 110,
             "e": {
                 "chest": {
-                    "type": "wooden",
+                    "type": "golden",
                     "cards": [
                         {
-                            "name": "vikings_3",
-                            "rarity": 2,
-                            "deckName": "vikings",
+                            "name": "plants_5",
+                            "rarity": 3,
+                            "deckName": "plants",
                             "swappable": true
                         },
                         {
-                            "name": "creatures_5",
-                            "rarity": 2,
+                            "name": "creatures_2",
+                            "rarity": 1,
                             "deckName": "creatures",
                             "swappable": true
+                        },
+                        {
+                            "name": "halloween_1",
+                            "rarity": 1,
+                            "deckName": "halloween",
+                            "swappable": true
+                        },
+                        {
+                            "name": "heroes_2",
+                            "rarity": 3,
+                            "deckName": "heroes",
+                            "swappable": true
                         }
                     ],
-                    "seq": 110
+                    "seq": 141
                 },
                 "completedDecksData": [],
                 "cardsXpDelta": 0
             }
         },
         {
-            "t": 1571143346479,
-            "a": 110,
-            "e": {
-                "chest": {
-                    "type": "magical",
-                    "cards": [
-                        {
-                            "name": "alice_4",
-                            "rarity": 3,
-                            "deckName": "alice",
-                            "swappable": true
-                        },
-                        {
-                            "name": "rides_7",
-                            "rarity": 4,
-                            "deckName": "rides",
-                            "swappable": true
-                        },
-                        {
-                            "name": "beasts_7",
-                            "rarity": 3,
-                            "deckName": "beasts",
-                            "swappable": true
-                        },
-                        {
-                            "name": "statues_6",
-                            "rarity": 3,
-                            "deckName": "statues",
-                            "swappable": true
-                        },
-                        {
-                            "name": "bling_4",
-                            "rarity": 2,
-                            "deckName": "bling",
-                            "swappable": true
-                        },
-                        {
-                            "name": "sweets_1",
-                            "rarity": 1,
-                            "deckName": "sweets",
-                            "swappable": true
-                        },
-                        {
-                            "name": "sweets_7",
-                            "rarity": 3,
-                            "deckName": "sweets",
-                            "swappable": true
-                        },
-                        {
-                            "name": "items_4",
-                            "rarity": 2,
-                            "deckName": "items",
-                            "swappable": true
-                        }
-                    ],
-                    "seq": 109
-                },
-                "completedDecksData": [],
-                "cardsXpDelta": 0
-            }
-        },
-        {
-            "t": 1571141004783,
-            "a": 110,
-            "e": {
-                "chest": {
-                    "type": "wooden",
-                    "cards": [
-                        {
-                            "name": "vikings_1",
-                            "rarity": 1,
-                            "deckName": "vikings",
-                            "swappable": true
-                        },
-                        {
-                            "name": "bling_6",
-                            "rarity": 3,
-                            "deckName": "bling",
-                            "swappable": true
-                        }
-                    ],
-                    "seq": 102
-                },
-                "completedDecksData": [],
-                "cardsXpDelta": 0
-            }
+            "a": 3,
+            "t": 1571567453154,
+            "u": "rofnf_ck0ov4ypo002govq92vgj8j6j",
+            "n": "Lester",
+            "i": "m:407552863",
+            "xp": 988,
+            "e": "Farm",
+            "r": 1
         },
         {
             "t": 1571138983693,
@@ -219,47 +105,354 @@
     ],
     "extraShieldsToPay": 0,
     "hiddenShields": 2,
-    "inbox": 2,
+    "inbox": 0,
     "selectedPet": {
         "type": "fox",
-        "xp": 19690,
+        "xp": 28210,
         "paused": false,
-        "level": 11,
-        "messages": [],
-        "ttl": 0,
-        "nextXp": 28000,
-        "scoreBonus": 11,
-        "currentStealPercent": 36,
-        "nextStealPercent": 38
+        "level": 13,
+        "messages": [
+            {
+                "id": "b6f78dd4-3ed2-49cb-80bf-f1951a32a9c0",
+                "createdAt": 1571567780313,
+                "expireAt": 1572777380313,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "c024716c-0d95-4049-8f01-dd14ea97c3db",
+                "createdAt": 1571567805336,
+                "expireAt": 1572777405336,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "a9409518-3026-422b-a4aa-5f4b85dcab6c",
+                "createdAt": 1571567831198,
+                "expireAt": 1572777431198,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "88b408ba-2762-4d52-b75b-64ef40dcc126",
+                "createdAt": 1571567921096,
+                "expireAt": 1572777521096,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "8212e7ee-788d-4319-ad96-c58d7c3b4e3d",
+                "createdAt": 1571567938644,
+                "expireAt": 1572777538644,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "59fdcc5c-dfb9-491b-807f-6960133c911d",
+                "createdAt": 1571567999138,
+                "expireAt": 1572777599138,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "67243d46-5038-4252-9e79-a67f7aaf917c",
+                "createdAt": 1571568038801,
+                "expireAt": 1572777638801,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "85324bb6-aa51-4cd4-ac3c-aec5b9489bbd",
+                "createdAt": 1571568098063,
+                "expireAt": 1572777698063,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "186ddd2c-2b62-485a-941f-971791bc6530",
+                "createdAt": 1571568156229,
+                "expireAt": 1572777756229,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "c1c2cac6-0808-48b7-9cc5-d6e444443d2a",
+                "createdAt": 1571568212033,
+                "expireAt": 1572777812033,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "47e6c41a-ec4e-41f3-ac24-48734c8c248a",
+                "createdAt": 1571568224089,
+                "expireAt": 1572777824089,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "7787b3b7-641c-4bc2-b285-ad3d03b91945",
+                "createdAt": 1571568239873,
+                "expireAt": 1572777839873,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "d58e243e-7917-436d-aed0-bc4332cc2161",
+                "createdAt": 1571568280943,
+                "expireAt": 1572777880943,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "2b712870-e61f-4369-a207-c8e72fb11329",
+                "createdAt": 1571568340950,
+                "expireAt": 1572777940950,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "7f8897c9-2920-4568-918e-70d8236a0481",
+                "createdAt": 1571568379354,
+                "expireAt": 1572777979354,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "9e028026-cfa7-45b6-b2dd-e62e7118cdc1",
+                "createdAt": 1571568390709,
+                "expireAt": 1572777990709,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "074dad88-1eae-4715-a383-fcd151bade3a",
+                "createdAt": 1571568446714,
+                "expireAt": 1572778046714,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "85c2a50e-fa24-43fe-9200-a93842bd27d0",
+                "createdAt": 1571568475203,
+                "expireAt": 1572778075203,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "27f0c0e6-7530-4178-af5b-8b89c44009eb",
+                "createdAt": 1571568551711,
+                "expireAt": 1572778151711,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "fc6a09f8-d390-496f-88a7-17df30da7a86",
+                "createdAt": 1571568610663,
+                "expireAt": 1572778210663,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "77a22f17-9028-4312-8c9d-c1be51fab8f6",
+                "createdAt": 1571568629525,
+                "expireAt": 1572778229525,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "70a1c251-a246-4d63-a532-8720fc04262d",
+                "createdAt": 1571568651265,
+                "expireAt": 1572778251265,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "d0a12258-e0cb-4415-b24e-fb82d29fa203",
+                "createdAt": 1571568668309,
+                "expireAt": 1572778268309,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "3d828ca1-4b6a-4add-bfb1-2b393d96d6a3",
+                "createdAt": 1571568726806,
+                "expireAt": 1572778326806,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "6f86bb2a-144c-4d93-bcdc-db88da475ba5",
+                "createdAt": 1571568734737,
+                "expireAt": 1572778334737,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "7196231d-ecfd-400f-aaf3-e8557d42e534",
+                "createdAt": 1571568762326,
+                "expireAt": 1572778362326,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "07e3edaf-d314-412a-83fb-6628f26ba9b8",
+                "createdAt": 1571568797567,
+                "expireAt": 1572778397567,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "002f09a7-d527-4d3c-ba1f-de0f39a6d272",
+                "createdAt": 1571568810945,
+                "expireAt": 1572778410945,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "1f62997f-a331-4812-b64d-4664a70a9455",
+                "createdAt": 1571568850081,
+                "expireAt": 1572778450081,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            },
+            {
+                "id": "c82d7cec-2016-4090-ae51-e6f5a5083181",
+                "createdAt": 1571568900464,
+                "expireAt": 1572778500464,
+                "type": "increasedXp",
+                "value": 200,
+                "removeOnAppStart": true,
+                "minVersion": "3.5.8"
+            }
+        ],
+        "ttl": 7221880,
+        "nextXp": 36000,
+        "scoreBonus": 14,
+        "currentStealPercent": 40,
+        "nextStealPercent": 42
     },
-    "petXpBank": 60000,
-    "petTtlBank": 57600000,
-    "DailyMiniSnacksUnlocksAtMiliSec": 1571368467866,
+    "petXpBank": 0,
+    "petTtlBank": 43200000,
+    "DailyMiniSnacksUnlocksAtMiliSec": 1571633970256,
     "activeTriplePromotionIds": [],
-    "score": 1423,
+    "score": 1505,
     "jp_t": 0,
     "accumulation": {
-        "missionIndex": 3,
-        "currentAmount": 11,
-        "currentAmountNonCapped": 11,
-        "totalAmount": 36,
+        "missionIndex": 11,
+        "currentAmount": 226,
+        "currentAmountNonCapped": 226,
+        "totalAmount": 240,
         "reward": {
-            "spins": 75
+            "spins": 600
         },
         "id": "accumulation_2019-10-18T00:05"
     },
+    "tournaments": {
+        "scoreThreshold": 5,
+        "score": 732,
+        "tournamentStartTime": "2019-10-20T02:05:00.000Z",
+        "tournamentId": "11_1716",
+        "rank": 2
+    },
     "active_events": {
-        "village_complete_bonus": 6908,
-        "accumulation": 366908,
-        "set_blast": 6908
+        "accumulation": 161967,
+        "tournaments": 32643
+    },
+    "superBet": {
+        "betLevel": 4,
+        "betOptions": [
+            1,
+            2,
+            3,
+            5,
+            10,
+            20,
+            40
+        ]
     },
     "genericRewards": [],
-    "globalChestCounter": 135,
-    "now": 1571363992087,
+    "globalChestCounter": 142,
+    "now": 1571568932496,
     "reward": 1,
-    "pay": 145000,
+    "pay": 150000,
     "r1": 1,
     "r2": 1,
     "r3": 1,
-    "coupons": []
+    "coupons": [
+        {
+            "id": "19070211",
+            "expireAt": 1571637300000,
+            "state": "pending",
+            "payload": {
+                "couponType": "SpinsNCoins",
+                "percentage": 300
+            },
+            "title": "Coupon20190702",
+            "supportedVersion": "3.5.4",
+            "sku": "",
+            "minCost": 0,
+            "source": "profile",
+            "group": "GA",
+            "segment": "",
+            "bundle": "generic"
+        }
+    ]
 }

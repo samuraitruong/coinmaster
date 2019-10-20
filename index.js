@@ -4,6 +4,7 @@ const config = require("./config");
 const fs = require("fs-extra");
 const path = require("path");
 const axios = require("axios");
+const numeral = require("numeral");
 var colors = require("colors");
 const axiosRetry = require("axios-retry");
 // process.env.VERBOSE = (process.env.VERBOSE === "true");
@@ -106,7 +107,7 @@ class CoinMaster {
     this.updateSeq(seq);
     console.log(
       colors.green(
-        `SPIN: ${r1} ${r2} ${r3} - pay ${pay}, coins : ${coins}, shields: ${ shields }, spins : ${spins}`
+        `SPIN: ${r1} ${r2} ${r3} - pay ${pay}, coins : ${numeral(coins).format('$(0.000a)')}, shields: ${ shields }, spins : ${spins}`
       )
     );
     fs.writeJsonSync(path.join(__dirname, "data", "spin.json"), response, {
@@ -144,7 +145,7 @@ class CoinMaster {
     const { coins, spins, name, shields } = response;
     if(!silient) {
       console.log(
-        `BALANCE: Hello ${name}, You have ${spins} spins and ${coins} coins ${shields} shields`
+        `BALANCE: Hello ${name}, You have ${spins} spins and ${numeral(coins).format('$(0.000a)')} coins ${shields} shields`
       );
     }
     fs.writeJsonSync(path.join(__dirname, "data", "balance.json"), response, {
@@ -269,7 +270,7 @@ class CoinMaster {
       } else {
         // 3 -attack
         if (!message.data || Object.keys(message.data).length == 0 || 
-        ["village_complete_bonus","raid_master", "card_swap", "accumulation", "cards_boom"].some(x =>x === message.data.type)) continue;
+        ["village_complete_bonus","raid_master", "card_swap", "accumulation", "cards_boom","tournaments"].some(x =>x === message.data.type)) continue;
         console.log("Need Attention: --->UNHANDLED MESSAGE<----", message);
       }
     }
