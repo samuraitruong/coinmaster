@@ -38,6 +38,7 @@ class CoinMaster {
     this.deviceId = options.deviceId || process.env.DEVICE_ID;
     this.deviceChange = options.deviceChange || process.env.DEVICE_CHANGE;
     this.config = getConfig(this.deviceId, this.deviceChange, this.fbToken);
+    this.onData = options.onData || function() {}
     this.axiosConfig = {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
@@ -181,6 +182,7 @@ class CoinMaster {
     fs.writeJsonSync(path.join(__dirname, "data", "balance.json"), response, {
       spaces: 4
     });
+    this.onData(response);
     return response;
   }
   updateSeq(sed) {
