@@ -1,10 +1,12 @@
-module.exports = {
-  "Device[udid]": process.env.DEVICE_ID,
+module.exports = function getConfig(deviceId, deviceChange, fbToken) {
+  return {
+  "Device[udid]": deviceId,
   API_KEY: "viki",
   API_SECRET: "coin",
-  "Device[change]": process.env.DEVICE_CHANGE,
-  fbToken: process.env.FB_TOKEN,
+  "Device[change]": deviceChange,
+  fbToken: fbToken,
   locale: "en",
   "Device[os]": "WebGL",
   "Client[version]": "3.5.27"
-};
+}}
+
