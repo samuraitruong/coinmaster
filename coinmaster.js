@@ -25,9 +25,24 @@ axios.interceptors.response.use(null, error => {
 });
 
 class CoinMaster {
+  /**
+   * 
+   * @param {*} options 
+   * @example
+   * {
+   *  dumpResponseToFile: true,
+   *  userId: "xxx",
+   *  fbToken: "xxx",
+   *  deviceId: "deviceId"
+   *  onData : function(resonse) {},
+   *  upgradeInterval : 10
+   * }
+   */
   constructor(options) {
     this.options = options || {};
-    this.userId = process.env.USER_ID;
+    this.dumpResponseToFile =  options.dumpResponseToFile || true;
+    console.log("this.dumpResponseToFile", this.dumpResponseToFile);
+    this.userId = options.userId || process.env.USER_ID;
     this.fbToken = options.fbToken || process.env.FB_TOKEN;
     this.sleep = options.sleep || process.env.SLEEP;
     this.verbose = options.verbose || process.env.VERBOSE === "true";
@@ -44,6 +59,14 @@ class CoinMaster {
         "Content-Type": "application/x-www-form-urlencoded"
       }
     };
+  }
+  dumpFile(name, response){
+    name = name || "response";
+    if(this.dumpResponseToFile) {
+      fs.writeJsonSync(path.join(__dirname, "data", name +".json"), response, {
+        spaces: 4
+      });
+    }
   }
   async getFriend(friendId) {
     const info = await this.post(`friends/${friendId}`);
@@ -130,9 +153,7 @@ class CoinMaster {
         `SPIN: ${r1} ${r2} ${r3} - pay ${pay}, coins : ${numeral(coins).format('$(0.000a)')}, shields: ${ shields }, spins : ${spins}`
       )
     );
-    fs.writeJsonSync(path.join(__dirname, "data", "spin.json"), response, {
-      spaces: 4
-    });
+    this.dumpFile("spin",response);
     return response;
   }
   async readSyncMessage() {
@@ -179,9 +200,8 @@ class CoinMaster {
         `BALANCE: Hello ${name}, You have ${spins} spins and ${numeral(coins).format('$(0.000a)')} coins ${shields} shields`
       );
     }
-    fs.writeJsonSync(path.join(__dirname, "data", "balance.json"), response, {
-      spaces: 4
-    });
+    this.dumpFile("balance",response);
+   
     this.onData(response);
     return response;
   }
@@ -245,10 +265,14 @@ class CoinMaster {
         case "333":
           spinResult = await this.hammerAttach(spinResult);
           break;
-        case "111":
+        case "444":
           console.log("Piggy Raid....", r1, r2, r3);
           spinResult = await this.raid(spinResult);
           break;
+          // case "111":
+          //   console.log("DEBUG ME...".red);
+          //   throw new Error("I got 111, exited for debug");
+          //   break;
       }
       //collect rewards
       //const accumulation = spinResult.accumulation;
@@ -336,14 +360,7 @@ class CoinMaster {
   }
   async raid(spinResult, retry) {
     console.log("************** RAID **************".magenta);
-
-    // console.log(spinResult);
-    fs.writeJsonSync(
-      path.join(__dirname, "data", `raid.json`),
-      spinResult, {
-        spaces: 4
-      }
-    );
+    this.dumpFile("raid", spinResult);
 
     const {
       raid
@@ -404,11 +421,9 @@ class CoinMaster {
       if (chest) {
         console.log(`You found ${chest.type}:`.green, chest);
       }
-      fs.writeJsonSync(
-        path.join(__dirname, "data", `raid_${slotIndex}.json`),
-        response, {
-          spaces: 4
-        }
+      this.dumpFile(
+        `raid_${slotIndex}`,
+        response
       );
 
       console.log(
@@ -560,23 +575,8 @@ class CoinMaster {
     }
     const attackPriorities = ["Ship", "Statue", "Crop", "Farm", "House"];
 
-    fs.writeJsonSync(path.join(__dirname, "data", "attack.json"), spinResult, {
-      spaces: 4
-    });
-    //   attack {
-    //     id: '11111111',
-    //     image: 'm:174896585403061',
-    //     name: 'Anna',
-    //     village: {
-    //       shields: 1,
-    //       village: 1,
-    //       Ship: 2,
-    //       Farm: 11,
-    //       Crop: 1,
-    //       Statue: 13,
-    //       House: 4
-    //     }
-    //   }
+    this.dumpFile("attack", spinResult);
+    
     const targetId = desireTarget.id;
 
     const village = desireTarget.village;
@@ -612,6 +612,8 @@ class CoinMaster {
       if (res == "shield") {
         console.log("Your attack has been blocked by shiled".yellow);
       }
+      this.dumpFile("attacked", response);
+      // throw new Error("stop !!!!");
       return response;
     }
   }
