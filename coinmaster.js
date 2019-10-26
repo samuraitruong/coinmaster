@@ -556,7 +556,7 @@ class CoinMaster {
     desireTarget = desireTarget || spinResult.attack;
 
     if (
-      desireTarget.village.shields > 0 ||
+      (desireTarget.village.shields > 0 && this.attackPrefer !=="shield") ||
       excludedAttack.some(x => x === desireTarget.id)
     ) {
       desireTarget = spinResult.random;
@@ -652,10 +652,12 @@ class CoinMaster {
         House,
         Ship,
         Statue,
-        Crop
+        Crop,
+        village
       } = spinResult;
       await this.handleMessage(spinResult);
       console.log(`Upgrade Result`, {
+        village,
         Farm,
         House,
         Ship,
