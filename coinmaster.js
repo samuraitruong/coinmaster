@@ -9,7 +9,9 @@ var colors = require("colors");
 const axiosRetry = require("axios-retry");
 const excludedAttack = [
   "rof4__cjzn7tig40149hdli9tzz8f7g",
-  "rof4__cjzgkbk3s02cib3k76fci3yw6"
+  "rof4__cjzgkbk3s02cib3k76fci3yw6",
+  "rof4__ck09czjio03i2aulcfp5d1653",
+  "rof4__cjzq2ta7s01qgasl87kg5dmro"
 ];
 // axiosRetry(axios, {
 //   retries: 3
@@ -320,7 +322,7 @@ class CoinMaster {
 
 
         console.log("######## Collect rewards ####".magenta, data.rewardId, data.reason, data.reward);
-        spinResult = await this.post(
+          await this.post(
           "https://vik-game.moonactive.net" + data.collectUrl
         );
 
