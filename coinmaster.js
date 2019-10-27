@@ -522,7 +522,7 @@ class CoinMaster {
   async findRevengeAttack(spinResult) {
     if(this.attackTarget === "random" && spinResult.random) {
       console.log("Prefer attack random target", spinResult.random.name);
-      return spinResult;
+      return spinResult.random;
     }
     
 
@@ -567,6 +567,7 @@ class CoinMaster {
       console.error("No target to attack, something went wrong, exited");
       throw new Error("Bad process");
     }
+    console.log("desireTarget", desireTarget);
     const attackPriorities = ["Ship", "Statue", "Crop", "Farm", "House"];
 
     this.dumpFile("attack", spinResult);
@@ -593,6 +594,7 @@ class CoinMaster {
           item
         }
       );
+      if(!response) return spinResult;
       //this.updateSeq(response.data.seq)
       const {
         res,
@@ -610,7 +612,8 @@ class CoinMaster {
       // throw new Error("stop !!!!");
       return response;
     }
-    console.log("Warining : sometihng wrong with attack".red);
+    console.log("Warining : something wrong with attack".red);
+    throw new Error("STOP !!!!");
     return spinResult;
   }
   async fixBuilding(spinResult) {
