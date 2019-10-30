@@ -56,10 +56,16 @@ class CoinMaster {
     this.deviceChange = options.deviceChange || process.env.DEVICE_CHANGE;
     this.config = getConfig(this.deviceId, this.deviceChange, this.fbToken);
     this.attackPrefer = options.attackPrefer || process.env.ATTACK_PREFER;
-    this.attackTarget = options.attackTarger || process.env.ATTACK_TARGET;
+    this.attackTarget = options.attackTarget || process.env.ATTACK_TARGET || "";
     this.onData = options.onData || function() {}
     this.spinCountFromAttack = 0;
     this.spinCountFromRaid = 0;
+    this.raidBetSwitch = this.options.raidBetSwitch || parseInt(process.env.RAID_BET_SWITCH || "30", 10);
+    this.attackBetSwitch = this.options.attackBetSwitch || parseInt(process.env.ATTACK_BET_SWITCH || "16", 10);
+    this.autoBet = this.options.autoBet || process.env.AUTO_BET==="true" || true
+    this.raidBetMinLimit = this.options.raidBetMinLimit || parseInt(process.env.RAID_BET_MIN_LIMIT || "25000000", 10);
+    console.log("Auto switcher at", this.raidBetSwitch, this.attackBetSwitch);
+    console.log("Enemy target", this.attackTarget);
     this.axiosConfig = {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
@@ -133,13 +139,19 @@ class CoinMaster {
     }
     return null;
   }
-  async spin() {
+  async spin(lastRespponse) {
+    const remainSpins = lastRespponse.spins;
     this.spinCountFromAttack++;
     this.spinCountFromRaid ++;
+    let bet = this.bet || 1;
+    if(this.autoBet && (this.spinCountFromAttack >= this.attackBetSwitch || 
+      ( lastRespponse.raid  && lastRespponse.raid.coins > this.raidBetMinLimit && this.spinCountFromRaid >= this.raidBetSwitch))) {
+      bet = Math.min(3, remainSpins);
+    }
     let response = await this.post("spin", {
       seq: this.seq + 1,
       auto_spin: "True",
-      bet: this.bet || 1
+      bet
     });
     if (!response) {
       response = this.getBalance(true);
@@ -152,12 +164,12 @@ class CoinMaster {
       seq,
       coins,
       spins,
-      shields,raid
+      shields,raid={}
     } = response;
     this.updateSeq(seq);
     console.log(
       colors.green(
-        `SPIN: ${r1} ${r2} ${r3} - Pay ${pay}, Coins : ${numeral(coins).format('$(0.000a)')}, Shields: ${ shields }, Spins : ${spins} \t| Raid :${raid.name}(${numeral(raid.coins).format('$(0.000a)')}) H: ${this.spinCountFromAttack}  R: ${this.spinCountFromRaid}`
+        `SPIN: ${r1} ${r2} ${r3} - Bet: X${bet} Pay ${pay}, Coins : ${numeral(coins).format('$(0.000a)')}, Shields: ${ shields }, Spins : ${spins} \t| Raid :${raid.name}(${numeral(raid.coins).format('$(0.000a)')}) H: ${this.spinCountFromAttack}  R: ${this.spinCountFromRaid}`
       )
     );
     this.dumpFile("spin",response);
@@ -257,31 +269,31 @@ class CoinMaster {
     let spins = res.spins;
     while (spins > 0) {
       await this.waitFor(this.sleep || 1000);
-      let spinResult = await this.spin();
+      res = await this.spin(res);
       const {
         pay,
         r1,
         r2,
         r3,
         seq
-      } = spinResult;
+      } = res;
       const result = `${r1}${r2}${r3}`;
       switch (result) {
         case "333":
-          spinResult = await this.hammerAttach(spinResult);
+          res = await this.hammerAttach(res);
           this.spinCountFromAttack = 0;
           break;
         case "444":
           console.log("Piggy Raid....", r1, r2, r3);
           this.spinCountFromRaid = 0;
-          spinResult = await this.raid(spinResult);
+          res = await this.raid(res);
           break;
       }
 
-      const messageResult = await this.handleMessage(spinResult);
+      const messageResult = await this.handleMessage(res);
       if (messageResult) spins = messageResult.spins;
       if (++spinCount % this.upgradeInterval === 0) {
-        await this.upgrade(spinResult);
+        await this.upgrade(res);
       }
     }
     console.log("No more spins, no more fun, good bye!".yellow);
@@ -523,7 +535,12 @@ class CoinMaster {
     }
     return response;
   }
-  isAttackableVillage(userId, village) {
+  isAttackableVillage(userId, user) {
+    //console.log("isAttackableVillage", user.id)
+    if(!user) return false;
+    const village = user.village || user;
+    //console.log("going to validate ", village)
+
     const attackPriorities = ["Ship", "Statue", "Crop", "Farm", "House"];
     if (excludedAttack.some(x => x === userId)) return false;
     for (const item of attackPriorities) {
@@ -532,13 +549,23 @@ class CoinMaster {
     }
     return false;
   }
+  
   //return the target
   async findRevengeAttack(spinResult) {
-    if(this.attackTarget === "random" && spinResult.random) {
+    if(this.attackTarget === "random" && spinResult.random && this.isAttackableVillage(spinResult.random)) {
       console.log("Prefer attack random target", spinResult.random.name);
       return spinResult.random;
     }
     
+    if(this.attackTarget.indexOf("_") >=0 ){
+      console.log("get attack target", this.attackTarget)
+      var friend = await this.getFriend(this.attackTarget);
+      //console.log("Enemy found", friend);
+      if(this.isAttackableVillage(friend.id, friend)) {
+        return friend;
+      }
+
+    }
 
     console.log("Find revenge target".yellow);
     const data = await this.getAllMessages();
@@ -566,12 +593,13 @@ class CoinMaster {
   async hammerAttach(spinResult) {
     console.log("------------> Hammer Attack <-------------".blue);
     //console.log("attack", spinResult.attack);
+
     let desireTarget = await this.findRevengeAttack(spinResult);
     desireTarget = desireTarget || spinResult.attack;
 
-    if (
+    if (desireTarget.id != this.attackTarget && (
       (desireTarget.village.shields > 0 && this.attackPrefer !=="shield") ||
-      excludedAttack.some(x => x === desireTarget.id)
+      excludedAttack.some(x => x === desireTarget.id))
     ) {
       desireTarget = spinResult.random;
     }
@@ -579,7 +607,7 @@ class CoinMaster {
       console.error("No target to attack, something went wrong, exited");
       throw new Error("Bad process");
     }
-    console.log("desireTarget", desireTarget);
+    // console.log("desireTarget", desireTarget);
     const attackPriorities = ["Ship", "Statue", "Crop", "Farm", "House"];
 
     this.dumpFile("attack", spinResult);
