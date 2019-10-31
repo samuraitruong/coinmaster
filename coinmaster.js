@@ -302,13 +302,13 @@ class CoinMaster {
     await this.handleMessage(firstResponse);
     await this.daillySpin();
     let res = await this.getBalance();
-    res = await this.collectGift(res);
-    res = await this.getBalance();
+    // res = await this.collectGift(res);
+    // res = await this.getBalance();
     res = await this.fixBuilding(res);
     res = await this.upgrade(res);
     var spinCount = 0;
     let spins = res.spins;
-    while (spins > 0) {
+    while (spins >= this.bet) {
       await this.waitFor(this.sleep || 1000);
       res = await this.spin(res);
       const { pay, r1, r2, r3, seq } = res;
@@ -337,12 +337,13 @@ class CoinMaster {
       }
     }
     console.log("No more spins, no more fun, good bye!".yellow);
-    if(this.csvStream) {
-      this.csvStream.close();
-    }
+   
     res = await this.collectGift(res);
     if (res.spins > 0) {
       await this.play();
+    }
+    if(this.csvStream) {
+      this.csvStream.close();
     }
   }
   async handleMessage(spinResult) {
