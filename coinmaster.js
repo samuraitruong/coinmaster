@@ -7,6 +7,9 @@ const axios = require("axios");
 const numeral = require("numeral");
 var colors = require("colors");
 const axiosRetry = require("axios-retry");
+const csv = require("csv-parser");
+const createCsvWriter = require("csv-writer").createObjectCsvWriter;
+
 const excludedAttack = [
   "rof4__cjzn7tig40149hdli9tzz8f7g",
   "rof4__cjzgkbk3s02cib3k76fci3yw6",
@@ -28,8 +31,8 @@ axios.interceptors.response.use(null, error => {
 
 class CoinMaster {
   /**
-   * 
-   * @param {*} options 
+   *
+   * @param {*} options
    * @example
    * {
    *  dumpResponseToFile: true,
@@ -42,7 +45,7 @@ class CoinMaster {
    */
   constructor(options) {
     this.options = options || {};
-    this.dumpResponseToFile =  options.dumpResponseToFile || true;
+    this.dumpResponseToFile = options.dumpResponseToFile || true;
     this.lastNoCoinIndex = -1;
     this.userId = options.userId || process.env.USER_ID;
     this.fbToken = options.fbToken || process.env.FB_TOKEN;
@@ -50,20 +53,30 @@ class CoinMaster {
     this.verbose = options.verbose || process.env.VERBOSE === "true";
     this.bet = options.bet || process.env.BET || 1;
     this.fbUserToken = options.fbUserToken || process.env.FB_USER_TOKEN;
-    this.upgradeInterval = options.upgradeInterval || parseInt(process.env.UPGRADE_INTERVAL || "10", 10);
-    this.enableTracking = options.enableTracking || process.env.TRACKING_EVENT === true
+    this.upgradeInterval =
+      options.upgradeInterval ||
+      parseInt(process.env.UPGRADE_INTERVAL || "10", 10);
+    this.enableTracking =
+      options.enableTracking || process.env.TRACKING_EVENT === true;
     this.deviceId = options.deviceId || process.env.DEVICE_ID;
     this.deviceChange = options.deviceChange || process.env.DEVICE_CHANGE;
     this.config = getConfig(this.deviceId, this.deviceChange, this.fbToken);
     this.attackPrefer = options.attackPrefer || process.env.ATTACK_PREFER;
     this.attackTarget = options.attackTarget || process.env.ATTACK_TARGET || "";
-    this.onData = options.onData || function() {}
+    this.onData = options.onData || function() {};
     this.spinCountFromAttack = 0;
     this.spinCountFromRaid = 0;
-    this.raidBetSwitch = this.options.raidBetSwitch || parseInt(process.env.RAID_BET_SWITCH || "30", 10);
-    this.attackBetSwitch = this.options.attackBetSwitch || parseInt(process.env.ATTACK_BET_SWITCH || "16", 10);
-    this.autoBet = this.options.autoBet || process.env.AUTO_BET==="true" || true
-    this.raidBetMinLimit = this.options.raidBetMinLimit || parseInt(process.env.RAID_BET_MIN_LIMIT || "25000000", 10);
+    this.raidBetSwitch =
+      this.options.raidBetSwitch ||
+      parseInt(process.env.RAID_BET_SWITCH || "30", 10);
+    this.attackBetSwitch =
+      this.options.attackBetSwitch ||
+      parseInt(process.env.ATTACK_BET_SWITCH || "16", 10);
+    this.autoBet =
+      this.options.autoBet || process.env.AUTO_BET === "true" || true;
+    this.raidBetMinLimit =
+      this.options.raidBetMinLimit ||
+      parseInt(process.env.RAID_BET_MIN_LIMIT || "25000000", 10);
     console.log("Auto switcher at", this.raidBetSwitch, this.attackBetSwitch);
     console.log("Enemy target", this.attackTarget);
     this.axiosConfig = {
@@ -71,11 +84,35 @@ class CoinMaster {
         "Content-Type": "application/x-www-form-urlencoded"
       }
     };
+    this.dataFile = path.join(__dirname, "data", this.userId + ".csv");
+    this.spinResult = null;
   }
-  dumpFile(name, response){
+  async readHistoryData() {
+    return new Promise(resolve => {
+      if (!fs.existsSync(this.dataFile)) {
+        fs.writeFileSync(this.dataFile, "r1,r2,r3,type\n");
+      }
+      const data = [];
+      fs.createReadStream(this.dataFile)
+        .pipe(csv())
+        .on("data", row => {
+          data.push(row);
+        })
+        .on("end", () => {
+          resolve(data);
+        });
+    });
+  }
+  async updateHistoryData(r1, r2, r3, type) {
+    if (!this.csvStream) {
+      this.csvStream = fs.createWriteStream(this.dataFile, { flags: "a" });
+    }
+    this.csvStream.write(`${r1},${r2},${r3},${type}\n`);
+  }
+  dumpFile(name, response) {
     name = name || "response";
-    if(this.dumpResponseToFile) {
-      fs.writeJsonSync(path.join(__dirname, "data", name +".json"), response, {
+    if (this.dumpResponseToFile) {
+      fs.writeJsonSync(path.join(__dirname, "data", name + ".json"), response, {
         spaces: 4
       });
     }
@@ -105,8 +142,11 @@ class CoinMaster {
     //console.log(`All Message:`, info.messages.length);
     return info;
   }
-  async daillySpin(){
-    const result = await this.post("dailybonus/collect", {segmented: true, extra: false})
+  async daillySpin() {
+    const result = await this.post("dailybonus/collect", {
+      segmented: true,
+      extra: false
+    });
     console.log("Dailly spin : ", result.reward);
   }
   async post(url, data, retry) {
@@ -120,7 +160,7 @@ class CoinMaster {
       ...data
     };
     try {
-      if (this.verbose ) {
+      if (this.verbose) {
         console.log(colors.dim(`#${retry + 1} Request Url : ${url}`), data);
         console.log("Form data", qs.stringify(formData));
       }
@@ -142,10 +182,15 @@ class CoinMaster {
   async spin(lastRespponse) {
     const remainSpins = lastRespponse.spins;
     this.spinCountFromAttack++;
-    this.spinCountFromRaid ++;
+    this.spinCountFromRaid++;
     let bet = this.bet || 1;
-    if(this.autoBet && (this.spinCountFromAttack >= this.attackBetSwitch || 
-      ( lastRespponse.raid  && lastRespponse.raid.coins > this.raidBetMinLimit && this.spinCountFromRaid >= this.raidBetSwitch))) {
+    if (
+      this.autoBet &&
+      (this.spinCountFromAttack >= this.attackBetSwitch ||
+        (lastRespponse.raid &&
+          lastRespponse.raid.coins > this.raidBetMinLimit &&
+          this.spinCountFromRaid >= this.raidBetSwitch))
+    ) {
       bet = Math.min(3, remainSpins);
     }
     let response = await this.post("spin", {
@@ -156,38 +201,34 @@ class CoinMaster {
     if (!response) {
       response = this.getBalance(true);
     }
-    const {
-      pay,
-      r1,
-      r2,
-      r3,
-      seq,
-      coins,
-      spins,
-      shields,raid={}
-    } = response;
+    const { pay, r1, r2, r3, seq, coins, spins, shields, raid = {} } = response;
     this.updateSeq(seq);
     console.log(
       colors.green(
-        `SPIN: ${r1} ${r2} ${r3} - Bet: X${bet} Pay ${pay}, Coins : ${numeral(coins).format('$(0.000a)')}, Shields: ${ shields }, Spins : ${spins} \t| Raid :${raid.name}(${numeral(raid.coins).format('$(0.000a)')}) H: ${this.spinCountFromAttack}  R: ${this.spinCountFromRaid}`
+        `SPIN: ${r1} ${r2} ${r3} - Bet: X${bet} Pay ${pay}, Coins : ${numeral(
+          coins
+        ).format(
+          "$(0.000a)"
+        )}, Shields: ${shields}, Spins : ${spins} \t| Raid :${
+          raid.name
+        }(${numeral(raid.coins).format("$(0.000a)")}) H: ${
+          this.spinCountFromAttack
+        }  R: ${this.spinCountFromRaid}`
       )
     );
-    this.dumpFile("spin",response);
+    this.dumpFile("spin", response);
     return response;
   }
   async readSyncMessage() {
     return await this.post(`read_sys_messages`);
   }
   async popBallon(index, currentSpins) {
-   // console.log("Popping baloon", index);
+    // console.log("Popping baloon", index);
     const result = await this.post(`balloons/${index}/pop`);
-    const {
-      pay,
-      coins,
-      spins
-    } = result;
+    const { pay, coins, spins } = result;
     console.log(
-      `Pop ballop result :  pay ${pay || 0}, coins : ${coins}, spins : ${spins} +${spins-currentSpins}`.red
+      `Pop ballop result :  pay ${pay ||
+        0}, coins : ${coins}, spins : ${spins} +${spins - currentSpins}`.red
     );
     return result;
   }
@@ -199,26 +240,22 @@ class CoinMaster {
     return data;
   }
   async getBalance(silient) {
-
     const response = await this.post("balance", {
       extended: "true",
       config: "all",
       segmented: "true"
     });
     this.updateSeq(response.seq);
-    const {
-      coins,
-      spins,
-      name,
-      shields
-    } = response;
+    const { coins, spins, name, shields } = response;
     if (!silient) {
       console.log(
-        `BALANCE: Hello ${name}, You have ${spins} spins and ${numeral(coins).format('$(0.000a)')} coins ${shields} shields`
+        `BALANCE: Hello ${name}, You have ${spins} spins and ${numeral(
+          coins
+        ).format("$(0.000a)")} coins ${shields} shields`
       );
     }
-    this.dumpFile("balance",response);
-   
+    this.dumpFile("balance", response);
+
     this.onData(response);
     return response;
   }
@@ -233,7 +270,7 @@ class CoinMaster {
     if (this.fbUserToken) {
       const response = await this.post("update_fb_data", {
         "User[fb_token]": this.fbToken,
-        p: 'fb',
+        p: "fb",
         fbToken: null
       });
       this.fbUser = response;
@@ -247,10 +284,14 @@ class CoinMaster {
     };
     if (useToken) data.fbToken = this.config.fbToken;
 
-    const res = await this.post("https://vik-game.moonactive.net/api/v1/users/login", data);
+    const res = await this.post(
+      "https://vik-game.moonactive.net/api/v1/users/login",
+      data
+    );
     console.log("Login result", res);
   }
   async play() {
+    this.histories = await this.readHistoryData();
     await this.fetchMetadata();
 
     //await this.login();
@@ -270,25 +311,24 @@ class CoinMaster {
     while (spins > 0) {
       await this.waitFor(this.sleep || 1000);
       res = await this.spin(res);
-      const {
-        pay,
-        r1,
-        r2,
-        r3,
-        seq
-      } = res;
+      const { pay, r1, r2, r3, seq } = res;
       const result = `${r1}${r2}${r3}`;
+      this.histories.push({r1,r2,r3});
+      let type="";
       switch (result) {
         case "333":
+            type= "attack";
           res = await this.hammerAttach(res);
           this.spinCountFromAttack = 0;
           break;
         case "444":
+            type = "raid"
           console.log("Piggy Raid....", r1, r2, r3);
           this.spinCountFromRaid = 0;
           res = await this.raid(res);
           break;
       }
+      this.updateHistoryData(r1, r2, r3, type);
 
       const messageResult = await this.handleMessage(res);
       if (messageResult) spins = messageResult.spins;
@@ -299,7 +339,7 @@ class CoinMaster {
     console.log("No more spins, no more fun, good bye!".yellow);
 
     res = await this.collectGift(res);
-    if(res.spins >0) {
+    if (res.spins > 0) {
       await this.play();
     }
   }
@@ -308,9 +348,7 @@ class CoinMaster {
       console.log("something wrong handleMessage with null".red);
       return null;
     }
-    const {
-      messages
-    } = spinResult;
+    const { messages } = spinResult;
     if (!messages) return spinResult;
 
     //   "messages": [
@@ -331,30 +369,38 @@ class CoinMaster {
     let spins = spinResult.spins;
 
     for (const message of messages) {
-      const {
-        data, e
-      } = message;
+      const { data, e } = message;
       let baloonsCount = 0;
       if (data && data.status === "PENDING_COLLECT" && data.collectUrl) {
-
-
-        console.log("######## Collect rewards ####".magenta, data.rewardId, data.reason, data.reward);
-          await this.post(
-          "https://vik-game.moonactive.net" + data.collectUrl
+        console.log(
+          "######## Collect rewards ####".magenta,
+          data.rewardId,
+          data.reason,
+          data.reward
         );
-
+        await this.post("https://vik-game.moonactive.net" + data.collectUrl);
       } else if (data && data.foxFound) {
         // acttion to elimited foxFound message
-      } 
-      else
-      if(e && e.chest) {
+      } else if (e && e.chest) {
         // console.log("You got free chest, collect it", e.chest);
         // await this.post('read_messages', {last: message.t});
-
-      }
-      else {
+      } else {
         // 3 -attack
-        if (!message.data || Object.keys(message.data).length == 0 || ["attack_master","village_complete_bonus", "raid_master", "card_swap", "accumulation", "cards_boom", "baloons", "tournaments"].some(x => x === message.data.type)) continue;
+        if (
+          !message.data ||
+          Object.keys(message.data).length == 0 ||
+          [
+            "attack_master",
+            "village_complete_bonus",
+            "raid_master",
+            "card_swap",
+            "accumulation",
+            "cards_boom",
+            "baloons",
+            "tournaments"
+          ].some(x => x === message.data.type)
+        )
+          continue;
         console.log("Need Attention: --->UNHANDLED MESSAGE<----", message);
       }
     }
@@ -372,9 +418,7 @@ class CoinMaster {
     console.log("************** RAID **************".magenta);
     this.dumpFile("raid", spinResult);
 
-    const {
-      raid
-    } = spinResult;
+    const { raid } = spinResult;
     let raidVillige = raid.village;
     if (!raidVillige) {
       console.log("Raid response invalid, missing villige".red);
@@ -397,50 +441,53 @@ class CoinMaster {
         raid_farm: raidVillige.Farm
         //"all_time_raids":"3"
       },
-      time,
+      time
     });
     retry = retry || 0;
-    console.log(`Raid : ${spinResult.raid.name} Coins:  ${numeral(spinResult.raid.coins).format('$(0.000a)')} `);
+    console.log(
+      `Raid : ${spinResult.raid.name} Coins:  ${numeral(
+        spinResult.raid.coins
+      ).format("$(0.000a)")} `
+    );
     const originalCoins = spinResult.coins;
 
     let response = null;
-    const list = [1, 2, 3, 4].sort(() => Math.random() - 0.5).filter(x => x!= this.lastNoCoinIndex);
+    const list = [1, 2, 3, 4]
+      .sort(() => Math.random() - 0.5)
+      .filter(x => x != this.lastNoCoinIndex);
     const raided = [];
     let totalAmount = 0;
     for (var i = 0; i < 3; i++) {
       const slotIndex = list[i];
       response = await this.post(`raid/dig/${slotIndex}`);
-      const {
-        res,
-        pay,
-        coins,
-        chest
-      } = response;
+      const { res, pay, coins, chest } = response;
       raided.push(pay);
 
       totalAmount += pay;
       if (chest) {
         console.log(`You found ${chest.type}:`.green, chest);
       }
-      if(!chest && pay ===0) {
+      if (!chest && pay === 0) {
         this.lastNoCoinIndex = slotIndex;
       }
-      this.dumpFile(
-        `raid_${slotIndex}`,
-        response
-      );
+      this.dumpFile(`raid_${slotIndex}`, response);
 
       console.log(
         colors.magenta(
-          `Raid : index ${slotIndex},  Raid Result: ${res} - Pay ${pay} => Coins : ${numeral(coins).format('$(0.000a)')}`
+          `Raid : index ${slotIndex},  Raid Result: ${res} - Pay ${pay} => Coins : ${numeral(
+            coins
+          ).format("$(0.000a)")}`
         )
       );
     }
     response = await this.getBalance(true);
 
     const afterRaidCoins = response.coins;
-    console.log("### RAID TOTAL AMOUNT: ".green, numeral(afterRaidCoins - originalCoins).format('$(0.000a)'))
-    
+    console.log(
+      "### RAID TOTAL AMOUNT: ".green,
+      numeral(afterRaidCoins - originalCoins).format("$(0.000a)")
+    );
+
     /*if (afterRaidCoins === originalCoins && retry < 1000) {
       response = await this.getBalance();
       console.log("Retry raid: ", retry + 1);
@@ -448,7 +495,7 @@ class CoinMaster {
     }*/
     // raided end, update tracking
 
-    time += (new Date().getTime()) - ts;
+    time += new Date().getTime() - ts;
     this.track({
       event: "raid_end",
       msg: {
@@ -458,10 +505,13 @@ class CoinMaster {
         dig_2_amount: raided[1].toString(),
         dig_3_type: raided[2] > 0 ? "coins" : "no coins",
         dig_3_amount: raided[2].toString(),
-        duration: (new Date().getTime()) - ts,
-        "target_name": spinResult.raid.name,
-        "attackedPerson": spinResult.raid.id,
-        amount_total: parseInt(raided[0], 10) + parseInt(raided[1], 10) + parseInt(raided[2], 10)
+        duration: new Date().getTime() - ts,
+        target_name: spinResult.raid.name,
+        attackedPerson: spinResult.raid.id,
+        amount_total:
+          parseInt(raided[0], 10) +
+          parseInt(raided[1], 10) +
+          parseInt(raided[2], 10)
       },
       time
     });
@@ -488,26 +538,27 @@ class CoinMaster {
         wifi: "",
         device_id: this.config["Device[udid]"],
         fullscreen: "False"
-      },
+      }
       //i: "1939300993-24"
     };
     const finalEvent = {
       ...event
-    }
+    };
     finalEvent.msg = {
       ...event.msg,
       device_id: this.config["Device[udid]"],
       user_id: this.userId,
       change_purpose: this.config["Device[change]"],
       ...this.profile
-    }
+    };
 
     var data = JSON.stringify(deviceInfo) + "\n" + JSON.stringify(event);
     if (this.verbose) {
       console.log("Tracking event", event);
     }
     const result = await this.post(
-      "https://vik-analytics.moonactive.net/vikings/track", {
+      "https://vik-analytics.moonactive.net/vikings/track",
+      {
         data
       }
     );
@@ -522,7 +573,7 @@ class CoinMaster {
       console.log("Your have gifts", messages);
 
       for (const message of messages) {
-        if (message.type !== "gift" && message.type!= "send_cards") continue;
+        if (message.type !== "gift" && message.type != "send_cards") continue;
         console.log("Collect gift", message);
         try {
           response = await this.post(`inbox/pending/${message.id}/collect`);
@@ -537,40 +588,42 @@ class CoinMaster {
   }
   isAttackableVillage(userId, user) {
     //console.log("isAttackableVillage", user.id)
-    if(!user) return false;
+    if (!user) return false;
     const village = user.village || user;
     //console.log("going to validate ", village)
 
     const attackPriorities = ["Ship", "Statue", "Crop", "Farm", "House"];
     if (excludedAttack.some(x => x === userId)) return false;
     for (const item of attackPriorities) {
-      if (village[item] && village[item] >0 && village[item] < 6)
-        return true;
+      if (village[item] && village[item] > 0 && village[item] < 6) return true;
     }
     return false;
   }
-  
+
   //return the target
   async findRevengeAttack(spinResult) {
-    if(this.attackTarget === "random" && spinResult.random && this.isAttackableVillage(spinResult.random)) {
+    if (
+      this.attackTarget === "random" &&
+      spinResult.random &&
+      this.isAttackableVillage(spinResult.random)
+    ) {
       console.log("Prefer attack random target", spinResult.random.name);
       return spinResult.random;
     }
-    
-    if(this.attackTarget.indexOf("_") >=0 ){
-      console.log("get attack target", this.attackTarget)
+
+    if (this.attackTarget.indexOf("_") >= 0) {
+      console.log("get attack target", this.attackTarget);
       var friend = await this.getFriend(this.attackTarget);
       //console.log("Enemy found", friend);
-      if(this.isAttackableVillage(friend.id, friend)) {
+      if (this.isAttackableVillage(friend.id, friend)) {
         return friend;
       }
-
     }
 
     console.log("Find revenge target".yellow);
     const data = await this.getAllMessages();
     const attackable = [];
-   
+
     const hash = {};
     if (data.messages) {
       for (const message of data.messages) {
@@ -580,9 +633,10 @@ class CoinMaster {
 
         const village = await this.getFriend(message.u);
         hash[message.u] = village;
-        if(this.isAttackableVillage(message.u, village)) {
+        if (this.isAttackableVillage(message.u, village)) {
           attackable.push(village);
-          if(this.attackPrefer === "shield" && village.shields>0) return village;
+          if (this.attackPrefer === "shield" && village.shields > 0)
+            return village;
           if (village.shields === 0) return village;
         }
       }
@@ -597,9 +651,10 @@ class CoinMaster {
     let desireTarget = await this.findRevengeAttack(spinResult);
     desireTarget = desireTarget || spinResult.attack;
 
-    if (desireTarget.id != this.attackTarget && (
-      (desireTarget.village.shields > 0 && this.attackPrefer !=="shield") ||
-      excludedAttack.some(x => x === desireTarget.id))
+    if (
+      desireTarget.id != this.attackTarget &&
+      ((desireTarget.village.shields > 0 && this.attackPrefer !== "shield") ||
+        excludedAttack.some(x => x === desireTarget.id))
     ) {
       desireTarget = spinResult.random;
     }
@@ -611,7 +666,7 @@ class CoinMaster {
     const attackPriorities = ["Ship", "Statue", "Crop", "Farm", "House"];
 
     this.dumpFile("attack", spinResult);
-    
+
     const targetId = desireTarget.id;
 
     const village = desireTarget.village;
@@ -629,18 +684,15 @@ class CoinMaster {
       );
 
       const response = await this.post(
-        `targets/${targetId}/attack/structures/${item}`, {
+        `targets/${targetId}/attack/structures/${item}`,
+        {
           state: village[item],
           item
         }
       );
-      if(!response) return spinResult;
+      if (!response) return spinResult;
       //this.updateSeq(response.data.seq)
-      const {
-        res,
-        pay,
-        coins
-      } = response;
+      const { res, pay, coins } = response;
       console.log(`Attack Result : ${res} - Pay ${pay} => coins : ${coins}`);
       if (res != "ok" && res != "shield") {
         console.log("Attack failed".red, response);
@@ -679,27 +731,21 @@ class CoinMaster {
     return response;
   }
   async upgrade(spinResult) {
-    if(!spinResult) return;
+    if (!spinResult) return;
     console.log("Running upgrade".magenta);
     const priority = ["Farm", "House", "Ship", "Statue", "Crop"];
     for (const item of priority) {
+      console.log(
+        colors.rainbow(`Upgrade item = ${item} state = ${spinResult[item]}`)
+      );
 
-      console.log(colors.rainbow(`Upgrade item = ${item} state = ${spinResult[item]}`));
-      
       spinResult = await this.post("upgrade", {
         item,
         state: spinResult[item]
       });
       //this.updateSeq(response.data.seq)
       const data = spinResult;
-      let {
-        Farm,
-        House,
-        Ship,
-        Statue,
-        Crop,
-        village
-      } = spinResult;
+      let { Farm, House, Ship, Statue, Crop, village } = spinResult;
       await this.handleMessage(spinResult);
       console.log(`Upgrade Result`, {
         village,
