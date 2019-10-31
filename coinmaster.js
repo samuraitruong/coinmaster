@@ -337,7 +337,9 @@ class CoinMaster {
       }
     }
     console.log("No more spins, no more fun, good bye!".yellow);
-
+    if(this.csvStream) {
+      this.csvStream.close();
+    }
     res = await this.collectGift(res);
     if (res.spins > 0) {
       await this.play();
@@ -484,8 +486,8 @@ class CoinMaster {
 
     const afterRaidCoins = response.coins;
     console.log(
-      "### RAID TOTAL AMOUNT: ".green,
-      numeral(afterRaidCoins - originalCoins).format("$(0.000a)")
+      "######### RAID TOTAL AMOUNT ######## ".green,
+      color.magenta(numeral(afterRaidCoins - originalCoins).format("$(0.000a)"))
     );
 
     /*if (afterRaidCoins === originalCoins && retry < 1000) {
