@@ -487,7 +487,7 @@ class CoinMaster {
     const afterRaidCoins = response.coins;
     console.log(
       "######### RAID TOTAL AMOUNT ######## ".green,
-      color.magenta(numeral(afterRaidCoins - originalCoins).format("$(0.000a)"))
+      colors.red(numeral(afterRaidCoins - originalCoins).format("$(0.000a)"))
     );
 
     /*if (afterRaidCoins === originalCoins && retry < 1000) {
