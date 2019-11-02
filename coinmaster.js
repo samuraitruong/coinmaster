@@ -712,7 +712,7 @@ class CoinMaster {
       return response;
     }
     console.log("Warining : something wrong with attack".red);
-    throw new Error("STOP !!!!");
+    // throw new Error("STOP !!!!");
     return spinResult;
   }
   async fixBuilding(spinResult) {
@@ -740,8 +740,9 @@ class CoinMaster {
   async upgrade(spinResult) {
     if (!spinResult) return;
     console.log("Running upgrade".magenta);
-    const priority = ["Farm", "House", "Ship", "Statue", "Crop"];
+    const priority = ["Ship", "Farm", "Crop",  "Statue", "House"];
     for (const item of priority) {
+      if(spinResult[item] === 5) continue;
       console.log(
         colors.rainbow(`Upgrade item = ${item} state = ${spinResult[item]}`)
       );
