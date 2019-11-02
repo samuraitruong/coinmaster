@@ -77,6 +77,7 @@ class CoinMaster {
     this.raidBetMinLimit =
       this.options.raidBetMinLimit ||
       parseInt(process.env.RAID_BET_MIN_LIMIT || "25000000", 10);
+    this.attackCountFromRaid = 0;
     console.log("Auto switcher at", this.raidBetSwitch, this.attackBetSwitch);
     console.log("Enemy target", this.attackTarget);
     this.axiosConfig = {
@@ -189,7 +190,7 @@ class CoinMaster {
       (this.spinCountFromAttack >= this.attackBetSwitch ||
         (lastRespponse.raid &&
           lastRespponse.raid.coins > this.raidBetMinLimit &&
-          this.spinCountFromRaid >= this.raidBetSwitch))
+          (this.spinCountFromRaid >= this.raidBetSwitch || this.attackCountFromRaid >3)))
     ) {
       bet = Math.min(3, remainSpins);
     }
@@ -213,7 +214,7 @@ class CoinMaster {
           raid.name
         }(${numeral(raid.coins).format("$(0.000a)")}) H: ${
           this.spinCountFromAttack
-        }  R: ${this.spinCountFromRaid}`
+        }  R: ${this.spinCountFromRaid} Attack Count: ${this.attackCountFromRaid}`
       )
     );
     this.dumpFile("spin", response);
@@ -320,11 +321,13 @@ class CoinMaster {
             type= "attack";
           res = await this.hammerAttach(res);
           this.spinCountFromAttack = 0;
+          this.attackCountFromRaid++;
           break;
         case "444":
             type = "raid"
           console.log("Piggy Raid....", r1, r2, r3);
           this.spinCountFromRaid = 0;
+          this.attackCountFromRaid =0;
           res = await this.raid(res);
           break;
       }
@@ -400,7 +403,8 @@ class CoinMaster {
             "accumulation",
             "cards_boom",
             "baloons",
-            "tournaments"
+            "tournaments",
+            "set_blast"
           ].some(x => x === message.data.type)
         )
           continue;
