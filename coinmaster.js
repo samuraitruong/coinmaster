@@ -87,6 +87,7 @@ class CoinMaster {
     };
     this.dataFile = path.join(__dirname, "data", this.userId + ".csv");
     this.spinResult = null;
+    this.upgradeCost = {};
   }
   async readHistoryData() {
     return new Promise(resolve => {
@@ -190,7 +191,7 @@ class CoinMaster {
       (this.spinCountFromAttack >= this.attackBetSwitch ||
         (lastRespponse.raid &&
           lastRespponse.raid.coins > this.raidBetMinLimit &&
-          (this.spinCountFromRaid >= this.raidBetSwitch || this.attackCountFromRaid >3)))
+          (this.spinCountFromRaid >= this.raidBetSwitch || this.attackCountFromRaid >=3)))
     ) {
       bet = Math.min(3, remainSpins);
     }
@@ -202,7 +203,16 @@ class CoinMaster {
     if (!response) {
       response = this.getBalance(true);
     }
-    const { pay, r1, r2, r3, seq, coins, spins, shields, raid = {} } = response;
+    let extraInfo ="";
+
+    const { pay, r1, r2, r3, seq, coins, spins, shields, raid = {},accumulation } = response;
+    if(accumulation) {
+      let reward = accumulation.reward;
+      if(reward.coins ) {
+        reward.coins = numeral(reward.coins).format( "$(0a)")
+      }
+      extraInfo =`Rewards: ${JSON.stringify(reward)}, progress: ${accumulation.currentAmount}/${accumulation.totalAmount}`.magenta
+    }
     this.updateSeq(seq);
     console.log(
       colors.green(
@@ -214,7 +224,7 @@ class CoinMaster {
           raid.name
         }(${numeral(raid.coins).format("$(0.000a)")}) H: ${
           this.spinCountFromAttack
-        }  R: ${this.spinCountFromRaid} Attack Count: ${this.attackCountFromRaid}`
+        }  R: ${this.spinCountFromRaid} Attack Count: ${this.attackCountFromRaid} | ${extraInfo}`
       )
     );
     this.dumpFile("spin", response);
@@ -380,11 +390,12 @@ class CoinMaster {
       if (data && data.status === "PENDING_COLLECT" && data.collectUrl) {
         console.log(
           "######## Collect rewards ####".magenta,
-          data.rewardId,
+          data.rewardId.green,
           data.reason,
           data.reward
         );
         await this.post("https://vik-game.moonactive.net" + data.collectUrl);
+        await this.upgrade(spinResult);
       } else if (data && data.foxFound) {
         // acttion to elimited foxFound message
       } else if (e && e.chest) {
@@ -452,9 +463,9 @@ class CoinMaster {
     });
     retry = retry || 0;
     console.log(
-      `Raid : ${spinResult.raid.name} Coins:  ${numeral(
+      `Raid: ${spinResult.raid.name} Coins:  ${numeral(
         spinResult.raid.coins
-      ).format("$(0.000a)")} `
+      ).format("$(0.000a)")}, target: ${raid.raid_target} `
     );
     const originalCoins = spinResult.coins;
 
@@ -737,32 +748,38 @@ class CoinMaster {
     }
     return response;
   }
+
   async upgrade(spinResult) {
     if (!spinResult) return;
     console.log("Running upgrade".magenta);
+    this.upgradeCost[spinResult.village] = this.upgradeCost[spinResult.village] = {};
+    let maxDelta = 0;
     const priority = ["Ship", "Farm", "Crop",  "Statue", "House"];
     for (const item of priority) {
+      this.upgradeCost[spinResult.village][item] = this.upgradeCost[spinResult.village][item] || [];
       if(spinResult[item] === 5) continue;
       console.log(
-        colors.rainbow(`Upgrade item = ${item} state = ${spinResult[item]}`)
+        colors.rainbow(`Upgrade structure = ${item} State = ${spinResult[item]}`)
       );
-
+      const coins = spinResult.coins;
       spinResult = await this.post("upgrade", {
         item,
         state: spinResult[item]
       });
-      //this.updateSeq(response.data.seq)
-      const data = spinResult;
+      const deltaCoins = coins - spinResult.coins;
+      if(deltaCoins > 0) {
+        this.upgradeCost[spinResult.village] = this.upgradeCost[spinResult.village] || {};
+        this.upgradeCost[spinResult.village][item] =  this.upgradeCost[spinResult.village][item] || []
+        this.upgradeCost[spinResult.village][item].push(deltaCoins);
+        maxDelta = Math.max(maxDelta, deltaCoins);
+      }
+
       let { Farm, House, Ship, Statue, Crop, village } = spinResult;
       await this.handleMessage(spinResult);
-      console.log(`Upgrade Result`, {
-        village,
-        Farm,
-        House,
-        Ship,
-        Statue,
-        Crop
-      });
+      console.log(`Upgrade Result: Village ${village}\tFarm: ${Farm}\tHouse: ${House}\tStatue: ${Statue}\tCrop: ${Crop}\t Ship: ${Ship} \t | Cost ${deltaCoins}`);
+    }
+    if(maxDelta>0 && maxDelta < spinResult.coins ) {
+      await this.upgrade(spinResult);
     }
     return spinResult;
   }
