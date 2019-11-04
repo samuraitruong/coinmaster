@@ -63,6 +63,7 @@ class CoinMaster {
     this.config = getConfig(this.deviceId, this.deviceChange, this.fbToken);
     this.attackPrefer = options.attackPrefer || process.env.ATTACK_PREFER;
     this.attackTarget = options.attackTarget || process.env.ATTACK_TARGET || "";
+    this.attackRaidGap = options.attackRaidGap || parseInt(process.env.ATTACK_RAID_GAP || "5", 10),
     this.onData = options.onData || function() {};
     this.spinCountFromAttack = 0;
     this.spinCountFromRaid = 0;
@@ -191,7 +192,7 @@ class CoinMaster {
       (this.spinCountFromAttack >= this.attackBetSwitch ||
         (lastRespponse.raid &&
           lastRespponse.raid.coins > this.raidBetMinLimit &&
-          (this.spinCountFromRaid >= this.raidBetSwitch || this.attackCountFromRaid >=3)))
+          (this.spinCountFromRaid >= this.raidBetSwitch || (this.attackCountFromRaid >=3 && this.spinCountFromAttack >= this.attackRaidGap))))
     ) {
       bet = Math.min(3, remainSpins);
     }
@@ -751,32 +752,43 @@ class CoinMaster {
 
   async upgrade(spinResult) {
     if (!spinResult) return;
-    console.log("Running upgrade".magenta);
-    this.upgradeCost[spinResult.village] = this.upgradeCost[spinResult.village] = {};
+    console.log("************************* Running Upgrade **********************".magenta);
     let maxDelta = 0;
+    let coins = spinResult.coins;
+    const villageLevel = spinResult.village;
+    this.upgradeCost[villageLevel] = this.upgradeCost[villageLevel] = {};
+
     const priority = ["Ship", "Farm", "Crop",  "Statue", "House"];
     for (const item of priority) {
-      this.upgradeCost[spinResult.village][item] = this.upgradeCost[spinResult.village][item] || [];
+      this.upgradeCost[villageLevel] = this.upgradeCost[villageLevel] || {};
+      this.upgradeCost[villageLevel][item] = this.upgradeCost[villageLevel][item] || 0;
       if(spinResult[item] === 5) continue;
+      if(this.upgradeCost[villageLevel][item] > coins ) {
+        console.log("Skipped!!!. Not enought coins to upgrade, last upgrade need ", this.upgradeCost[villageLevel][item])
+        continue;
+      }
       console.log(
         colors.rainbow(`Upgrade structure = ${item} State = ${spinResult[item]}`)
       );
-      const coins = spinResult.coins;
       spinResult = await this.post("upgrade", {
         item,
         state: spinResult[item]
       });
+      await this.handleMessage(spinResult);
       const deltaCoins = coins - spinResult.coins;
       if(deltaCoins > 0) {
-        this.upgradeCost[spinResult.village] = this.upgradeCost[spinResult.village] || {};
-        this.upgradeCost[spinResult.village][item] =  this.upgradeCost[spinResult.village][item] || []
-        this.upgradeCost[spinResult.village][item].push(deltaCoins);
+        this.upgradeCost[villageLevel][item] = deltaCoins;
         maxDelta = Math.max(maxDelta, deltaCoins);
       }
+      else{
+        this.upgradeCost[villageLevel][item] = Math.max(this.upgradeCost[villageLevel][item], coins);
+      }
+      villageLevel = spinResult.village;
 
       let { Farm, House, Ship, Statue, Crop, village } = spinResult;
-      await this.handleMessage(spinResult);
+      // await this.handleMessage(spinResult);
       console.log(`Upgrade Result: Village ${village}\tFarm: ${Farm}\tHouse: ${House}\tStatue: ${Statue}\tCrop: ${Crop}\t Ship: ${Ship} \t | Cost ${deltaCoins}`);
+      coins = spinResult.coins;
     }
     if(maxDelta>0 && maxDelta < spinResult.coins ) {
       await this.upgrade(spinResult);
