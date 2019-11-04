@@ -136,7 +136,7 @@ class CoinMaster {
     // console.log("metadata", response.data.data.profile);
     this.profile = response.data.data.profile;
     this.config["Device[change]"] = response.data.data.profile.change_purpose;
-    console.log("config", this.config);
+    // console.log("config", this.config);
     // throw new Error("tata");
   }
   async getAllMessages() {
@@ -755,7 +755,7 @@ class CoinMaster {
     console.log("************************* Running Upgrade **********************".magenta);
     let maxDelta = 0;
     let coins = spinResult.coins;
-    const villageLevel = spinResult.village;
+    let villageLevel = spinResult.village;
     this.upgradeCost[villageLevel] = this.upgradeCost[villageLevel] = {};
 
     const priority = ["Ship", "Farm", "Crop",  "Statue", "House"];
