@@ -787,7 +787,14 @@ class CoinMaster {
 
       let { Farm, House, Ship, Statue, Crop, village } = spinResult;
       // await this.handleMessage(spinResult);
-      console.log(`Upgrade Result: Village ${village}\tFarm: ${Farm}\tHouse: ${House}\tStatue: ${Statue}\tCrop: ${Crop}\t Ship: ${Ship} \t | Cost ${deltaCoins}`);
+      const printMessage = `Upgrade Result: Village ${village} \t Farm: ${Farm} \t House: ${House} \t Statue: ${Statue} \t Crop: ${Crop} \t Ship: ${Ship} \t | Cost ${deltaCoins}`;
+
+      if(deltaCoins >0) {
+        console.log(printMessage.green);
+      }
+      else{
+        console.log(printMessage.grey);
+      }
       coins = spinResult.coins;
     }
     if(maxDelta>0 && maxDelta < spinResult.coins ) {
