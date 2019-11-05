@@ -206,7 +206,7 @@ class CoinMaster {
     }
     let extraInfo ="";
 
-    const { pay, r1, r2, r3, seq, coins, spins, shields, raid = {},accumulation } = response;
+    const { pay, r1, r2, r3, seq, coins, spins, shields, raid = {},accumulation, attackRaidMaster } = response;
     if(accumulation) {
       let reward = accumulation.reward;
       if(reward.coins ) {
@@ -214,6 +214,15 @@ class CoinMaster {
       }
       extraInfo =`Rewards: ${JSON.stringify(reward)}, progress: ${accumulation.currentAmount}/${accumulation.totalAmount}`.magenta
     }
+
+    if(attackRaidMaster) {
+      let reward = attackRaidMaster.reward;
+      if(reward.coins ) {
+        reward.coins = numeral(reward.coins).format( "$(0a)")
+      }
+      extraInfo =`Rewards: ${JSON.stringify(reward)}, progress: ${attackRaidMaster.counter}/${attackRaidMaster.required}`.magenta
+    }
+
     this.updateSeq(seq);
     console.log(
       colors.green(
