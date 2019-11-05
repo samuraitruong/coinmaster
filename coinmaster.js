@@ -231,8 +231,14 @@ class CoinMaster {
     this.dumpFile("spin", response);
     return response;
   }
-  async readSyncMessage() {
-    return await this.post(`read_sys_messages`);
+  async readSyncMessage(t) {
+    this.track = this.track || {};
+    this.track[t] = true;
+    if(this.track[t]) return;
+    const data = {};
+    data[t] = "delete";
+    console.log("read sync message", data);
+    return await this.post(`read_sys_messages`, data);
   }
   async popBallon(index, currentSpins) {
     // console.log("Popping baloon", index);
@@ -419,6 +425,7 @@ class CoinMaster {
             "set_blast"
           ].some(x => x === message.data.type)
         )
+        await this.readSyncMessage(message.t);
           continue;
         console.log("Need Attention: --->UNHANDLED MESSAGE<----", message);
       }
