@@ -142,6 +142,7 @@ class CoinMaster {
   async getAllMessages() {
     //console.log("********************Spins*******************".green);
     const info = await this.post(`all_messages`);
+    await this.handleMessage(info);
     //console.log(`All Message:`, info.messages.length);
     return info;
   }
@@ -150,7 +151,7 @@ class CoinMaster {
       segmented: true,
       extra: false
     });
-    console.log("Dailly spin : ", result.reward);
+    console.log("Daily spin : ", result.reward);
   }
   async post(url, data, retry) {
     if (url.indexOf("http") === -1) {
@@ -246,7 +247,7 @@ class CoinMaster {
     if(this.track[t]) return;
     const data = {};
     data[t] = "delete";
-    console.log("read sync message", data);
+    console.log("Read sync message", data);
     return await this.post(`read_sys_messages`, data);
   }
   async popBallon(index, currentSpins) {
