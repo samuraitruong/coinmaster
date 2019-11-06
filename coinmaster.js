@@ -9,7 +9,7 @@ var colors = require("colors");
 const axiosRetry = require("axios-retry");
 const csv = require("csv-parser");
 const createCsvWriter = require("csv-writer").createObjectCsvWriter;
-
+const uuid = require("uuid");
 const excludedAttack = [
   "rof4__cjzn7tig40149hdli9tzz8f7g",
   "rof4__cjzgkbk3s02cib3k76fci3yw6",
@@ -766,7 +766,17 @@ class CoinMaster {
     }
     return response;
   }
-
+  /**
+   * 
+   * @param {*} type wooden, golden, magical
+   */
+  async purchase(type) {
+    const response = await this.post("purchase", {
+      type,
+      request_id: uuid.v4()
+    });
+    console.log("Purchase", response.chest);
+  }
   async upgrade(spinResult) {
     if (!spinResult) return;
     console.log("************************* Running Upgrade **********************".magenta);
