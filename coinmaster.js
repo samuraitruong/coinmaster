@@ -174,6 +174,7 @@ class CoinMaster {
         this.axiosConfig
       );
       const info = response.data;
+      
       return info;
     } catch (err) {
       console.log("Error".red, err.response.status, err.response.statusText);
@@ -325,11 +326,13 @@ class CoinMaster {
     //await this.login();
     await this.update_fb_data();
     //await this.login(true);
-    await this.getBalance();
+    let res = await this.getBalance();
+    await this.handleMessage(res);
+
     const firstResponse = await this.getAllMessages();
     await this.handleMessage(firstResponse);
     await this.daillySpin();
-    let res = await this.getBalance();
+     res = await this.getBalance();
     // res = await this.collectGift(res);
     // res = await this.getBalance();
     res = await this.fixBuilding(res);
@@ -641,7 +644,7 @@ class CoinMaster {
     if (
       this.attackTarget === "random" &&
       spinResult.random &&
-      this.isAttackableVillage(spinResult.random)
+      this.isAttackableVillage(spinResult.random.id, spinResult.random)
     ) {
       console.log("Prefer attack random target", spinResult.random.name);
       return spinResult.random;
