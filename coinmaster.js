@@ -107,11 +107,11 @@ class CoinMaster {
         });
     });
   }
-  async updateHistoryData(r1, r2, r3, type) {
+  async updateHistoryData(r1, r2, r3, type, spinCount) {
     if (!this.csvStream) {
       this.csvStream = fs.createWriteStream(this.dataFile, { flags: "a" });
     }
-    this.csvStream.write(`${r1},${r2},${r3},${type}\n`);
+    this.csvStream.write(`${r1},${r2},${r3},${type},${spinCount}\n`);
   }
   dumpFile(name, response) {
     name = name || "response";
@@ -343,6 +343,8 @@ class CoinMaster {
     let spins = res.spins;
     while (spins >= this.bet) {
       await this.waitFor(this.sleep || 1000);
+      let deltaSpins = "";
+
       res = await this.spin(res);
       const { pay, r1, r2, r3, seq } = res;
       const result = `${r1}${r2}${r3}`;
@@ -352,6 +354,7 @@ class CoinMaster {
         case "333":
             type= "attack";
           res = await this.hammerAttach(res);
+          deltaSpins = this.spinCountFromAttack.toString();
           this.spinCountFromAttack = 0;
           this.attackCountFromRaid++;
           break;
@@ -363,7 +366,7 @@ class CoinMaster {
           res = await this.raid(res);
           break;
       }
-      this.updateHistoryData(r1, r2, r3, type);
+      this.updateHistoryData(r1, r2, r3, type, deltaSpins);
 
       const messageResult = await this.handleMessage(res);
       if (messageResult) spins = messageResult.spins;
