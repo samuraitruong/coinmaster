@@ -75,6 +75,7 @@ class CoinMaster {
       parseInt(process.env.ATTACK_BET_SWITCH || "16", 10);
     this.autoBet =
       this.options.autoBet || process.env.AUTO_BET === "true" || true;
+    this.maxAutoBet = this.config.maxAutoBet || parseInt(process.env.MAX_AUTO_BET || "3", 10);
     this.raidBetMinLimit =
       this.options.raidBetMinLimit ||
       parseInt(process.env.RAID_BET_MIN_LIMIT || "25000000", 10);
@@ -196,7 +197,8 @@ class CoinMaster {
           lastRespponse.raid.coins > this.raidBetMinLimit &&
           (this.spinCountFromRaid >= this.raidBetSwitch || (this.attackCountFromRaid >=3 && this.spinCountFromAttack >= this.attackRaidGap))))
     ) {
-      bet = Math.min(3, remainSpins);
+      
+      bet = Math.min(this.maxAutoBet, remainSpins);
     }
     let response = await this.post("spin", {
       seq: this.seq + 1,

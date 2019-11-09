@@ -8,14 +8,16 @@ console.log('myArgs: ', myArgs);
 (async () => {
   if (fs.existsSync(accountFile) && myArgs.length>0 ) {
     const accounts = []
+
     fs.createReadStream(accountFile)
       .pipe(csv())
       .on('data', (data) => accounts.push(data))
       .on('end', async () => {
         console.log(accounts);
-        for (const account of accounts) {
+        var index = myArgs[0] || "-1";
+        for (const account of accounts.filter(x =>x.ID === index || index =="all")) {
           try {
-            if(account.EMAIL[0] === "#") continue;
+            if(account.EMAIL[0] === "#" && isNaN(index) ) continue;
             console.log("PLAY AS: ", account.EMAIL)
             var cm = new CoinMaster({
               userId: account.USER_ID,
