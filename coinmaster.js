@@ -67,6 +67,7 @@ class CoinMaster {
     this.onData = options.onData || function() {};
     this.spinCountFromAttack = 0;
     this.spinCountFromRaid = 0;
+    this.enemyId = options.enemyId || process.env.ENEMY_ID;
     this.raidBetSwitch =
       this.options.raidBetSwitch ||
       parseInt(process.env.RAID_BET_SWITCH || "30", 10);
@@ -185,6 +186,14 @@ class CoinMaster {
     }
     return null;
   }
+  async getDailyFreeRewards() {
+    const sss = 
+    await this.post("https://vik-game.moonactive.net/external/facebook/CoinMaster_3.5.33_prod_225/connect?minScreenSize=1300&pid=FB_PAGE&c=%28_%29VKpenjlwl00SkioYg0ZC6zw_382EWrI3LoCnT7qirDQ&campaign=%28_%29VKpenjlwl00SkioYg0ZC6zw_382EWrI3LoCnT7qirDQ&af_deeplink=true");
+    console.log(sss);
+    const campaign = "(_)VKpenjlwl00SkioYg0ZC6zw_382EWrI3LoCnT7qirDQ";
+    const response = await this.post(`campaigns/${campaign}/click`);
+    console.log(response);
+  }
   async spin(lastRespponse) {
     const remainSpins = lastRespponse.spins;
     this.spinCountFromAttack++;
@@ -192,7 +201,8 @@ class CoinMaster {
     let bet = this.bet || 1;
     if (
       this.autoBet &&
-      (this.spinCountFromAttack >= this.attackBetSwitch ||
+      ((this.spinCountFromAttack >= this.attackBetSwitch  && this.spinCountFromAttack % this.attackBetSwitch <=9) ||
+      (this.spinCountFromAttack >=21 && this.spinCountFromAttack <=23)||
         (lastRespponse.raid &&
           lastRespponse.raid.coins > this.raidBetMinLimit &&
           (this.spinCountFromRaid >= this.raidBetSwitch || (this.attackCountFromRaid >=3 && this.spinCountFromAttack >= this.attackRaidGap))))
@@ -246,11 +256,12 @@ class CoinMaster {
   }
   async readSyncMessage(t) {
     this.track = this.track || {};
-    this.track[t] = true;
     if(this.track[t]) return;
     const data = {};
     data[t] = "delete";
     console.log("Read sync message", data);
+    this.track[t] = true;
+
     return await this.post(`read_sys_messages`, data);
   }
   async popBallon(index, currentSpins) {
@@ -298,9 +309,10 @@ class CoinMaster {
     return new Promise(resolve => setTimeout(resolve, ts));
   }
   async update_fb_data() {
+    console.log("update fb user data", this.fbUserToken);
     if (this.fbUserToken) {
       const response = await this.post("update_fb_data", {
-        "User[fb_token]": this.fbToken,
+        "User[fb_token]": this.fbUserToken,
         p: "fb",
         fbToken: null
       });
@@ -326,9 +338,10 @@ class CoinMaster {
     await this.fetchMetadata();
 
     //await this.login();
-    await this.update_fb_data();
-    //await this.login(true);
+    //await this.update_fb_data();
+
     let res = await this.getBalance();
+    //await this.getDailyFreeRewards();
     await this.handleMessage(res);
 
     const firstResponse = await this.getAllMessages();
@@ -442,9 +455,10 @@ class CoinMaster {
             "tournaments",
             "set_blast"
           ].some(x => x === message.data.type)
-        )
+        ) {
         await this.readSyncMessage(message.t);
           continue;
+        }
         console.log("Need Attention: --->UNHANDLED MESSAGE<----", message);
       }
     }
@@ -646,6 +660,13 @@ class CoinMaster {
 
   //return the target
   async findRevengeAttack(spinResult) {
+    if(this.enemyId) {
+      const enemy = await this.getFriend(this.enemyId);
+      if(this.isAttackableVillage(this.enemyId, enemy)){
+        console.log("Revent the stupid enemey", enemy.id, enemy.name);
+        return enemy;
+      }
+    }
     if (
       this.attackTarget === "random" &&
       spinResult.random &&
@@ -688,14 +709,15 @@ class CoinMaster {
     if (attackable.length > 0) return attackable[0];
     return spinResult.attack;
   }
-  async hammerAttach(spinResult) {
+  async hammerAttach(spinResult, desireTarget) {
     console.log("------------> Hammer Attack <-------------".blue);
     //console.log("attack", spinResult.attack);
 
-    let desireTarget = await this.findRevengeAttack(spinResult);
+     desireTarget = desireTarget || await this.findRevengeAttack(spinResult);
     desireTarget = desireTarget || spinResult.attack;
 
     if (
+      desireTarget.id != this.enemyId &&
       desireTarget.id != this.attackTarget &&
       ((desireTarget.village.shields > 0 && this.attackPrefer !== "shield") ||
         excludedAttack.some(x => x === desireTarget.id))
@@ -734,7 +756,10 @@ class CoinMaster {
           item
         }
       );
-      if (!response) return spinResult;
+      if (!response) {
+        excludedAttack.push(desireTarget.id);
+        return this.hammerAttach(spinResult, spinResult.random);
+      }
       //this.updateSeq(response.data.seq)
       const { res, pay, coins } = response;
       console.log(`Attack Result : ${res} - Pay ${pay} => coins : ${coins}`);
