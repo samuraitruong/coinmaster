@@ -396,6 +396,7 @@ class CoinMaster {
     if(this.csvStream) {
       this.csvStream.close();
     }
+    await this.upgrade(res);
   }
   async handleMessage(spinResult) {
     if (!spinResult) {
