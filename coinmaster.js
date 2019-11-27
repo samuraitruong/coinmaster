@@ -67,6 +67,8 @@ class CoinMaster {
     this.onData = options.onData || function() {};
     this.spinCountFromAttack = 0;
     this.spinCountFromRaid = 0;
+    this.priorityUpgrade = options.priorityUpgrade || process.env.PRIORITY_UPGRADE;
+    this.enemyId = options.enemyId || process.env.ENEMY_ID;
     this.raidBetSwitch =
       this.options.raidBetSwitch ||
       parseInt(process.env.RAID_BET_SWITCH || "30", 10);
@@ -75,10 +77,12 @@ class CoinMaster {
       parseInt(process.env.ATTACK_BET_SWITCH || "16", 10);
     this.autoBet =
       this.options.autoBet || process.env.AUTO_BET === "true" || true;
+    this.maxAutoBet = this.config.maxAutoBet || parseInt(process.env.MAX_AUTO_BET || "3", 10);
     this.raidBetMinLimit =
       this.options.raidBetMinLimit ||
       parseInt(process.env.RAID_BET_MIN_LIMIT || "25000000", 10);
     this.attackCountFromRaid = 0;
+    this.shieldCountFromAttack=0;
     console.log("Auto switcher at", this.raidBetSwitch, this.attackBetSwitch);
     console.log("Enemy target", this.attackTarget);
     this.axiosConfig = {
@@ -89,6 +93,7 @@ class CoinMaster {
     this.dataFile = path.join(__dirname, "data", this.userId + ".csv");
     this.spinResult = null;
     this.upgradeCost = {};
+    
   }
   async readHistoryData() {
     return new Promise(resolve => {
@@ -106,11 +111,11 @@ class CoinMaster {
         });
     });
   }
-  async updateHistoryData(r1, r2, r3, type) {
+  async updateHistoryData(r1, r2, r3, type, spinCount) {
     if (!this.csvStream) {
       this.csvStream = fs.createWriteStream(this.dataFile, { flags: "a" });
     }
-    this.csvStream.write(`${r1},${r2},${r3},${type}\n`);
+    this.csvStream.write(`${r1},${r2},${r3},${type},${spinCount}\n`);
   }
   dumpFile(name, response) {
     name = name || "response";
@@ -174,6 +179,7 @@ class CoinMaster {
         this.axiosConfig
       );
       const info = response.data;
+      
       return info;
     } catch (err) {
       console.log("Error".red, err.response.status, err.response.statusText);
@@ -183,6 +189,18 @@ class CoinMaster {
     }
     return null;
   }
+  async getDailyFreeRewards() {
+    const sss = 
+    await this.post("https://vik-game.moonactive.net/external/facebook/CoinMaster_3.5.33_prod_225/connect?minScreenSize=1300&pid=FB_PAGE&c=%28_%29VKpenjlwl00SkioYg0ZC6zw_382EWrI3LoCnT7qirDQ&campaign=%28_%29VKpenjlwl00SkioYg0ZC6zw_382EWrI3LoCnT7qirDQ&af_deeplink=true");
+    console.log(sss);
+    const campaign = "(_)VKpenjlwl00SkioYg0ZC6zw_382EWrI3LoCnT7qirDQ";
+    const response = await this.post(`campaigns/${campaign}/click`);
+    console.log(response);
+  }
+  numberFormat(num) {
+    return numeral(num).format("$(0.000a)")
+   
+  }
   async spin(lastRespponse) {
     const remainSpins = lastRespponse.spins;
     this.spinCountFromAttack++;
@@ -190,12 +208,24 @@ class CoinMaster {
     let bet = this.bet || 1;
     if (
       this.autoBet &&
-      (this.spinCountFromAttack >= this.attackBetSwitch ||
+      ((this.spinCountFromAttack >= this.attackBetSwitch  && this.spinCountFromAttack % this.attackBetSwitch <=5) ||
+      (this.spinCountFromAttack >=21 && this.spinCountFromAttack <=23)||
         (lastRespponse.raid &&
           lastRespponse.raid.coins > this.raidBetMinLimit &&
-          (this.spinCountFromRaid >= this.raidBetSwitch || (this.attackCountFromRaid >=3 && this.spinCountFromAttack >= this.attackRaidGap))))
+          (this.spinCountFromRaid >= this.raidBetSwitch ||
+             (this.attackCountFromRaid >=3 && this.spinCountFromAttack >= this.attackRaidGap) ||
+             this.spinCountFromRaid > 60)))
     ) {
-      bet = Math.min(3, remainSpins);
+      //find the max valid bet
+      const superBet = lastRespponse.superBet;
+      let validBet = 3;
+      if(superBet && superBet.betOptions) {
+        const validBets = superBet.betOptions.filter(x => x <= this.maxAutoBet);
+        if(validBets.length >0) {
+        validBet = validBets[validBets.length -1];
+        }
+      }
+      bet = Math.min(validBet, remainSpins);
     }
     let response = await this.post("spin", {
       seq: this.seq + 1,
@@ -243,11 +273,12 @@ class CoinMaster {
   }
   async readSyncMessage(t) {
     this.track = this.track || {};
-    this.track[t] = true;
     if(this.track[t]) return;
     const data = {};
     data[t] = "delete";
     console.log("Read sync message", data);
+    this.track[t] = true;
+
     return await this.post(`read_sys_messages`, data);
   }
   async popBallon(index, currentSpins) {
@@ -283,9 +314,37 @@ class CoinMaster {
       );
     }
     this.dumpFile("balance", response);
-
     this.onData(response);
     return response;
+  }
+  async feedFox(res){ 
+
+    /*selectedPet: {type: "fox", xp: 7789, paused: false, level: 27, messages: [], ttl: 899961, nextXp: 100000,…}
+    currentStealPercent: 61
+    level: 27
+    messages: []
+    nextStealPercent: 62
+    nextXp: 100000
+    paused: false
+    scoreBonus: 40
+    ttl: 899961
+    type: "fox"
+    xp: 7789
+
+    https://vik-game.moonactive.net/api/v1/users/rof4__cjzgkbk3s02cib3k76fci3yw6/pets/selected/feed
+
+    ttl: 14400000
+// request_id: 80a17e33-74d0-4fdc-9f17-bd4b8c895ab9
+
+*/
+
+    const {selectedPet} = res;
+    if(selectedPet) {
+      console.log("Your pet", selectedPet);
+    }
+    console.log("Feed the fox with free snack");
+
+    res = await this.post("pets/fox/daily-mini-snack")
   }
   updateSeq(sed) {
     // console.log("SEQ", sed);
@@ -295,9 +354,10 @@ class CoinMaster {
     return new Promise(resolve => setTimeout(resolve, ts));
   }
   async update_fb_data() {
+    console.log("update fb user data", this.fbUserToken);
     if (this.fbUserToken) {
       const response = await this.post("update_fb_data", {
-        "User[fb_token]": this.fbToken,
+        "User[fb_token]": this.fbUserToken,
         p: "fb",
         fbToken: null
       });
@@ -323,13 +383,16 @@ class CoinMaster {
     await this.fetchMetadata();
 
     //await this.login();
-    await this.update_fb_data();
-    //await this.login(true);
-    await this.getBalance();
+    //await this.update_fb_data();
+
+    let res = await this.getBalance();
+    //await this.getDailyFreeRewards();
+    await this.handleMessage(res);
+
     const firstResponse = await this.getAllMessages();
     await this.handleMessage(firstResponse);
     await this.daillySpin();
-    let res = await this.getBalance();
+     res = await this.getBalance();
     // res = await this.collectGift(res);
     // res = await this.getBalance();
     res = await this.fixBuilding(res);
@@ -338,6 +401,8 @@ class CoinMaster {
     let spins = res.spins;
     while (spins >= this.bet) {
       await this.waitFor(this.sleep || 1000);
+      let deltaSpins = "";
+
       res = await this.spin(res);
       const { pay, r1, r2, r3, seq } = res;
       const result = `${r1}${r2}${r3}`;
@@ -347,18 +412,33 @@ class CoinMaster {
         case "333":
             type= "attack";
           res = await this.hammerAttach(res);
+          deltaSpins = this.spinCountFromAttack.toString();
           this.spinCountFromAttack = 0;
+          this.shieldCountFromAttack = 0;
           this.attackCountFromRaid++;
           break;
         case "444":
             type = "raid"
           console.log("Piggy Raid....", r1, r2, r3);
+          deltaSpins = this.spinCountFromRaid.toString();
           this.spinCountFromRaid = 0;
           this.attackCountFromRaid =0;
+          this.shieldCountFromAttack = 0;
           res = await this.raid(res);
           break;
+        case "666": 
+        type = "spins"
+        console.log("get spin rewards")
+        break;
+        case "555": 
+        this.shieldCountFromAttack++;
+        type = "shields"
+        console.log("get shield rewards")
+        break;
+
+
       }
-      this.updateHistoryData(r1, r2, r3, type);
+      this.updateHistoryData(r1, r2, r3, type, deltaSpins);
 
       const messageResult = await this.handleMessage(res);
       if (messageResult) spins = messageResult.spins;
@@ -375,6 +455,7 @@ class CoinMaster {
     if(this.csvStream) {
       this.csvStream.close();
     }
+    await this.upgrade(res);
   }
   async handleMessage(spinResult) {
     if (!spinResult) {
@@ -405,14 +486,20 @@ class CoinMaster {
       const { data, e } = message;
       let baloonsCount = 0;
       if (data && data.status === "PENDING_COLLECT" && data.collectUrl) {
+        if(data.reward && data.reward.coins) {
+          data.reward.coins = numeral(data.reward.coins).format("$(0.000a)")
+        }
         console.log(
           "######## Collect rewards ####".magenta,
           data.rewardId.green,
           data.reason,
           data.reward
         );
+       
         await this.post("https://vik-game.moonactive.net" + data.collectUrl);
-        await this.upgrade(spinResult);
+        if(data.reward && data.reward.coins) {
+          await this.upgrade(spinResult);
+        }
       } else if (data && data.foxFound) {
         // acttion to elimited foxFound message
       } else if (e && e.chest) {
@@ -434,9 +521,10 @@ class CoinMaster {
             "tournaments",
             "set_blast"
           ].some(x => x === message.data.type)
-        )
+        ) {
         await this.readSyncMessage(message.t);
           continue;
+        }
         console.log("Need Attention: --->UNHANDLED MESSAGE<----", message);
       }
     }
@@ -638,10 +726,17 @@ class CoinMaster {
 
   //return the target
   async findRevengeAttack(spinResult) {
+    if(this.enemyId) {
+      const enemy = await this.getFriend(this.enemyId);
+      if(this.isAttackableVillage(this.enemyId, enemy)){
+        console.log("Revent the stupid enemey", enemy.id, enemy.name);
+        return enemy;
+      }
+    }
     if (
       this.attackTarget === "random" &&
       spinResult.random &&
-      this.isAttackableVillage(spinResult.random)
+      this.isAttackableVillage(spinResult.random.id, spinResult.random)
     ) {
       console.log("Prefer attack random target", spinResult.random.name);
       return spinResult.random;
@@ -680,14 +775,15 @@ class CoinMaster {
     if (attackable.length > 0) return attackable[0];
     return spinResult.attack;
   }
-  async hammerAttach(spinResult) {
+  async hammerAttach(spinResult, desireTarget) {
     console.log("------------> Hammer Attack <-------------".blue);
     //console.log("attack", spinResult.attack);
 
-    let desireTarget = await this.findRevengeAttack(spinResult);
+     desireTarget = desireTarget || await this.findRevengeAttack(spinResult);
     desireTarget = desireTarget || spinResult.attack;
 
     if (
+      desireTarget.id != this.enemyId &&
       desireTarget.id != this.attackTarget &&
       ((desireTarget.village.shields > 0 && this.attackPrefer !== "shield") ||
         excludedAttack.some(x => x === desireTarget.id))
@@ -726,10 +822,13 @@ class CoinMaster {
           item
         }
       );
-      if (!response) return spinResult;
+      if (!response) {
+        excludedAttack.push(desireTarget.id);
+        return this.hammerAttach(spinResult, spinResult.random);
+      }
       //this.updateSeq(response.data.seq)
       const { res, pay, coins } = response;
-      console.log(`Attack Result : ${res} - Pay ${pay} => coins : ${coins}`);
+      console.log(`Attack Result : ${res} - Pay ${pay} => coins : ${this.numberFormat(coins)}`);
       if (res != "ok" && res != "shield") {
         console.log("Attack failed".red, response);
       }
@@ -794,6 +893,7 @@ class CoinMaster {
 
     const priority = ["Ship", "Farm", "Crop",  "Statue", "House"];
     for (const item of priority) {
+      if(this.priorityUpgrade && item != this.priorityUpgrade && spinResult[this.priorityUpgrade] < 5) continue;
       this.upgradeCost[villageLevel] = this.upgradeCost[villageLevel] || {};
       this.upgradeCost[villageLevel][item] = this.upgradeCost[villageLevel][item] || 0;
       if(spinResult[item] === 5) continue;
