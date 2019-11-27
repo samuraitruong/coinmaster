@@ -777,6 +777,13 @@ class CoinMaster {
     });
     console.log("Purchase", response.chest);
   }
+  async upgradePet() {
+    const res = await this.post('/pets/fox/upgrade', {
+      request_id : "fb7061b5eff84f97b4d2" + (new Date()).getTime(),
+      "include[0]": "pets"
+    });
+    console.log("pet", res.selectedPet)
+  }
   async upgrade(spinResult) {
     if (!spinResult) return;
     console.log("************************* Running Upgrade **********************".magenta);
