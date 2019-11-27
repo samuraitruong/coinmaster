@@ -428,7 +428,7 @@ class CoinMaster {
           break;
         case "666": 
         type = "spins"
-        console.log("get spin rewards")
+        console.log("get spin rewards", res.spins)
         break;
         case "555": 
         this.shieldCountFromAttack++;
