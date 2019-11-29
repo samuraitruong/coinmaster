@@ -53,6 +53,7 @@ class CoinMaster {
     this.verbose = options.verbose || process.env.VERBOSE === "true";
     this.bet = options.bet || process.env.BET || 1;
     this.fbUserToken = options.fbUserToken || process.env.FB_USER_TOKEN;
+    this.numberOfDailyReward = parseInt(process.env.REWARDS_COUNT || "3", 10)
     this.upgradeInterval =
       options.upgradeInterval ||
       parseInt(process.env.UPGRADE_INTERVAL || "10", 10);
@@ -396,7 +397,7 @@ class CoinMaster {
       data
     } = await axios.get("https://cm-spin.herokuapp.com/");
     const ids = []
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < this.numberOfDailyReward; i++) {
       try {
         let query = qs.parse(data[i].url.split('?')[1], "&", "=");
         if (query.c) {
