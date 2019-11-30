@@ -161,7 +161,6 @@ class CoinMaster {
       console.log("No Viking quest event, skip play quest".yellow);
       return response;
     }
-    // console.log("response", response);
     console.log("Quest coins to play: ", response.coins)
     let coins = response.coins;
     const refill = async () => {
@@ -569,7 +568,6 @@ class CoinMaster {
     await this.claimTodayRewards();
     //await this.claimReward("pe_FCBJmBGxT_20191127");
     await this.playQuest();
-    return;
     const firstResponse = await this.getAllMessages();
     await this.handleMessage(firstResponse);
     await this.daillySpin();
