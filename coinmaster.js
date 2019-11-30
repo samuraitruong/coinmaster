@@ -453,8 +453,6 @@ class CoinMaster {
     //await this.getDailyFreeRewards();
     await this.handleMessage(res);
     await this.claimTodayRewards();
-    //await this.claimReward("pe_FCBJmBGxT_20191127");
-    return;
     const firstResponse = await this.getAllMessages();
     await this.handleMessage(firstResponse);
     await this.daillySpin();
