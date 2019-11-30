@@ -44,6 +44,8 @@ class CoinMaster {
    * }
    */
   constructor(options) {
+    this.allowUpgrade = true;
+    this.enableQuest = process.env.ENABLE_QUEST === "true";
     this.options = options || {};
     this.dumpResponseToFile = options.dumpResponseToFile || true;
     this.lastNoCoinIndex = -1;
@@ -146,6 +148,56 @@ class CoinMaster {
     this.config["Device[change]"] = response.data.data.profile.change_purpose;
     // console.log("config", this.config);
     // throw new Error("tata");
+  }
+  async startQuestMode() {
+    const response = await this.post('rewards/VQ_ENTRY_REWARD/collect');
+    console.log("startQuestMode", response);
+  }
+  async playQuest() {
+    if(!this.enableQuest) return;
+    const questCoins = [12500, 400000, 550000, 1250000]; //3000000
+    let questLevel = 0;
+    this.allowUpgrade = false;
+    let response = await this.getBalance(true);
+    if (response && response.active_events && !response.active_events.viking_quest) {
+      console.log("No Viking quest event, skip play quest".yellow);
+      return response;
+    }
+    console.log("Quest coins to play: ", response.coins)
+    let coins = response.coins;
+    const refill = async () => {
+      if (coins < questCoins[questLevel]) {
+        console.log("Do quick spin to  get  more  money for quest  20 spin or 10m")
+        const quickSpin = await this.doQuickSpin(20, 10000000);
+        if (quickSpin) {
+          coins = quickSpin.coins;
+        }
+      }
+    }
+    await refill();
+    while (coins > questCoins[questLevel] && questLevel < questCoins.length) {
+      const data = {
+        requestId: uuid.v4(),
+        coins: questCoins[questLevel]
+      };
+      console.log("Vikings quest: ", {
+        questLevel,
+        bet: questCoins[questLevel]
+      })
+      response = await this.post("vquest/spin", data);
+      if (response) {
+        this.dumpFile("vikingquest", response);
+        coins = response.coins;
+        console.log(`Viking quest spin level: ${questLevel +1} Bet: ${questCoins[questLevel]}, Pay: ${response.pay}, Coins: ${this.numberFormat(coins)}`);
+        await this.handleMessage(response);
+      } else {
+        questLevel++;
+        console.log("Error when doing viking quest spin, please check".red)
+      }
+      await refill();
+    }
+    this.allowUpgrade = true;
+    console.log("End vikings, out of money or reach target");
   }
   async getAllMessages() {
     //console.log("********************Spins*******************".green);
@@ -442,6 +494,69 @@ class CoinMaster {
     );
     console.log("Login result", res);
   }
+  async doQuickSpin(spinLimit, moneyLimit) {
+    let res = await this.getBalance();
+    let spins = res.spins;
+    let spinCount = 0;
+    while (spins >= this.bet) {
+      await this.waitFor(this.sleep || 1000);
+      let deltaSpins = "";
+
+      res = await this.spin(res);
+      const {
+        pay,
+        r1,
+        r2,
+        r3,
+        seq
+      } = res;
+      const result = `${r1}${r2}${r3}`;
+      this.histories.push({
+        r1,
+        r2,
+        r3
+      });
+      let type = "";
+      switch (result) {
+        case "333":
+          type = "attack";
+          res = await this.hammerAttach(res);
+          deltaSpins = this.spinCountFromAttack.toString();
+          this.spinCountFromAttack = 0;
+          this.shieldCountFromAttack = 0;
+          this.attackCountFromRaid++;
+          break;
+        case "444":
+          type = "raid"
+          console.log("Piggy Raid....", r1, r2, r3);
+          deltaSpins = this.spinCountFromRaid.toString();
+          this.spinCountFromRaid = 0;
+          this.attackCountFromRaid = 0;
+          this.shieldCountFromAttack = 0;
+          res = await this.raid(res);
+          break;
+        case "666":
+          type = "spins"
+          console.log("get spin rewards", res.spins)
+          break;
+        case "555":
+          this.shieldCountFromAttack++;
+          type = "shields"
+          console.log("get shield rewards")
+          break;
+
+
+      }
+      this.updateHistoryData(r1, r2, r3, type, deltaSpins);
+
+      const messageResult = await this.handleMessage(res);
+
+      if (spinLimit && spinCount > spinLimit) return res;
+      if (moneyLimit && res.coins > moneyLimit) return res;
+    }
+    return res;
+
+  }
   async play() {
     this.histories = await this.readHistoryData();
     await this.fetchMetadata();
@@ -453,9 +568,12 @@ class CoinMaster {
     //await this.getDailyFreeRewards();
     await this.handleMessage(res);
     await this.claimTodayRewards();
+    //await this.claimReward("pe_FCBJmBGxT_20191127");
     const firstResponse = await this.getAllMessages();
     await this.handleMessage(firstResponse);
     await this.daillySpin();
+    await this.playQuest();
+
     res = await this.getBalance();
     // res = await this.collectGift(res);
     // res = await this.getBalance();
@@ -972,7 +1090,7 @@ class CoinMaster {
     console.log("pet", res.selectedPet)
   }
   async upgrade(spinResult) {
-    if (!spinResult) return;
+    if (!spinResult || !this.allowUpgrade) return;
     console.log("************************* Running Upgrade **********************".magenta);
     let maxDelta = 0;
     let coins = spinResult.coins;
