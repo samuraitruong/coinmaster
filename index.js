@@ -41,10 +41,12 @@ let accounts = [];
             const balance = await cm.play({onData: (d) => {
               io.emit("data", d);
           }});
+         
           } catch (err) {
             console.error(err)
           }
         }
+        process.exit(0);
       });
 
     console.log("Multiple play use accout file");

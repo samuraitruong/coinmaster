@@ -157,12 +157,13 @@ class CoinMaster {
     if(!this.enableQuest) return;
     const questCoins = [12500, 400000, 550000, 1250000]; //3000000
     let questLevel = 0;
-    this.allowUpgrade = false;
     let response = await this.getBalance(true);
     if (response && response.active_events && !response.active_events.viking_quest) {
       console.log("No Viking quest event, skip play quest".yellow);
       return response;
     }
+    this.allowUpgrade = false;
+
     console.log("Quest coins to play: ", response.coins)
     let coins = response.coins;
     const refill = async () => {
@@ -565,6 +566,7 @@ class CoinMaster {
     //await this.update_fb_data();
 
     let res = await this.getBalance();
+    console.log("events", res.active_events)
     //await this.getDailyFreeRewards();
     await this.handleMessage(res);
     await this.claimTodayRewards();
@@ -575,12 +577,12 @@ class CoinMaster {
     await this.playQuest();
 
     res = await this.getBalance();
+    let spins = res.spins;
     // res = await this.collectGift(res);
     // res = await this.getBalance();
     res = await this.fixBuilding(res);
     res = await this.upgrade(res);
     var spinCount = 0;
-    let spins = res.spins;
     while (spins >= this.bet) {
       await this.waitFor(this.sleep || 1000);
       let deltaSpins = "";
@@ -642,12 +644,14 @@ class CoinMaster {
 
     res = await this.collectGift(res);
     if (res.spins > 0) {
+      console.log("Recursive play", res.spins)
       await this.play();
     }
     if (this.csvStream) {
       this.csvStream.close();
     }
     await this.upgrade(res);
+    console.log("end....")
   }
   async handleMessage(spinResult) {
     if (!spinResult) {
@@ -688,7 +692,7 @@ class CoinMaster {
         }
         console.log(
           "######## Collect rewards ####".magenta,
-          data.rewardId.green,
+          (data.rewardId || "noid").green,
           data.reason,
           data.reward
         );
@@ -715,7 +719,8 @@ class CoinMaster {
             "cards_boom",
             "baloons",
             "tournaments",
-            "set_blast"
+            "set_blast",
+            "bet_blast"
           ].some(x => x === message.data.type)
         ) {
           await this.readSyncMessage(message.t);
@@ -1090,7 +1095,7 @@ class CoinMaster {
     console.log("pet", res.selectedPet)
   }
   async upgrade(spinResult) {
-    if (!spinResult || !this.allowUpgrade) return;
+    if (!spinResult || !this.allowUpgrade) return spinResult;
     console.log("************************* Running Upgrade **********************".magenta);
     let maxDelta = 0;
     let coins = spinResult.coins;
@@ -1143,6 +1148,7 @@ class CoinMaster {
       coins = spinResult.coins;
     }
     if (maxDelta > 0 && maxDelta < spinResult.coins) {
+      console.log("recursive upgrade")
       await this.upgrade(spinResult);
     }
     return spinResult;
