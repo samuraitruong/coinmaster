@@ -158,6 +158,7 @@ class CoinMaster {
     const questCoins = [12500, 400000, 550000, 1250000]; //3000000
     let questLevel = 0;
     let response = await this.getBalance(true);
+    let lastPay = response.coins;
     if (response && response.active_events && !response.active_events.viking_quest) {
       console.log("No Viking quest event, skip play quest".yellow);
       return response;
@@ -181,16 +182,20 @@ class CoinMaster {
         requestId: uuid.v4(),
         coins: questCoins[questLevel]
       };
-      console.log("Vikings quest: ", {
-        questLevel,
-        bet: questCoins[questLevel]
-      })
+      // console.log("Vikings quest: ", {
+      //   questLevel,
+      //   bet: questCoins[questLevel]
+      // })
       response = await this.post("vquest/spin", data);
       if (response) {
         this.dumpFile("vikingquest", response);
         coins = response.coins;
-        console.log(`Viking quest spin level: ${questLevel +1} Bet: ${questCoins[questLevel]}, Pay: ${response.pay}, Coins: ${this.numberFormat(coins)}`);
+        const vk = response.viking_quest;
+        const questPay = response.coins-lastPay;
+        const outMessage  = `QUEST: lv${questLevel +1} ${vk.qd} \tBet: ${questCoins[questLevel]}, \tPay: ${this.numberFormat(vk.p)}, \tCoins: ${this.numberFormat(coins)} , \t Complete: ${vk.qcx}%`;
+        console.log(vk.p > questCoins[questLevel]? outMessage.magenta : outMessage.green)
         await this.handleMessage(response);
+        lastPay = response.coins;
       } else {
         questLevel++;
         console.log("Error when doing viking quest spin, please check".red)
@@ -424,7 +429,11 @@ class CoinMaster {
     }
     console.log("Feed the fox with free snack");
 
-    res = await this.post("pets/fox/daily-mini-snack")
+    res = await this.post("pets/fox/daily-mini-snack");
+    if(res){
+    console.log("Your pet after feed", res.selectedPet);
+    }
+    this.usedFreeSnack = true;
   }
   updateSeq(sed) {
     // console.log("SEQ", sed);
@@ -558,22 +567,29 @@ class CoinMaster {
     return res;
 
   }
-  async play() {
+  async play(recursive) {
+    recursive = recursive || false;
     this.histories = await this.readHistoryData();
-    await this.fetchMetadata();
+    //await this.fetchMetadata();
 
     //await this.login();
     //await this.update_fb_data();
 
     let res = await this.getBalance();
-    console.log("events", res.active_events)
     //await this.getDailyFreeRewards();
     await this.handleMessage(res);
-    await this.claimTodayRewards();
-    //await this.claimReward("pe_FCBJmBGxT_20191127");
     const firstResponse = await this.getAllMessages();
     await this.handleMessage(firstResponse);
-    await this.daillySpin();
+    console.log("events", firstResponse.active_events)
+
+    if(!recursive) {
+      await this.claimTodayRewards();
+      //await this.claimReward("pe_FCBJmBGxT_20191127");
+      const firstResponse = await this.getAllMessages();
+      await this.handleMessage(firstResponse);
+      await this.daillySpin();
+      
+    }
     await this.playQuest();
 
     res = await this.getBalance();
@@ -584,6 +600,10 @@ class CoinMaster {
     res = await this.upgrade(res);
     var spinCount = 0;
     while (spins >= this.bet) {
+
+      if(spins> 500 && !this.usedFreeSnack) {
+        await this.feedFox(res);
+      }
       await this.waitFor(this.sleep || 1000);
       let deltaSpins = "";
 
@@ -645,7 +665,7 @@ class CoinMaster {
     res = await this.collectGift(res);
     if (res.spins > 0) {
       console.log("Recursive play", res.spins)
-      await this.play();
+      await this.play(false);
     }
     if (this.csvStream) {
       this.csvStream.close();

@@ -1,4 +1,6 @@
 const CoinMaster = require("./coinmaster");
+const portfinder = require('portfinder');
+
 const fs = require("fs");
 const csv = require("csv-parser");
 const accountFile = ".account.csv";
@@ -16,8 +18,11 @@ let accounts = [];
     client.emit("accounts", accounts);
     client.emit("connected", true)
   });
-  console.log("start socket server at port 3001")
-  server.listen(3001);
+  portfinder.getPortPromise({startPort: 3001, stopPort:3000}).then(port => {
+    
+    console.log("start socket server at port ", port)
+    server.listen(port);
+  })
 
   if (fs.existsSync(accountFile) && myArgs.length>0 ) {
      accounts = []
@@ -36,12 +41,12 @@ let accounts = [];
               userId: account.USER_ID,
               fbToken: account.FB_TOKEN,
               deviceId: account.DEVICE_ID,
+              onData: (d) => {
+                io.emit("data", d);
+            }
             });
            
-            const balance = await cm.play({onData: (d) => {
-              io.emit("data", d);
-          }});
-         
+            const balance = await cm.play() 
           } catch (err) {
             console.error(err)
           }

@@ -19,6 +19,7 @@
     "dotenv": "^8.1.0",
     "fs-extra": "^8.1.0",
     "numeral": "^2.0.6",
+    "portfinder": "^1.0.25",
     "qs": "^6.9.1",
     "querystring": "^0.2.0",
     "request": "^2.88.0",
