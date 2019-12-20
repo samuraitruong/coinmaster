@@ -315,7 +315,7 @@ class CoinMaster {
     if (accumulation) {
       let reward = accumulation.reward;
       if (reward.coins) {
-        reward.coins = numeral(reward.coins).format("$(0a)")
+        reward.coins = numeral(reward.coins).format("$(0.0a)")
       }
       extraInfo = `Rewards: ${JSON.stringify(reward)}, progress: ${accumulation.currentAmount}/${accumulation.totalAmount}`.magenta
     }
@@ -323,7 +323,7 @@ class CoinMaster {
     if (attackRaidMaster) {
       let reward = attackRaidMaster.reward;
       if (reward.coins) {
-        reward.coins = numeral(reward.coins).format("$(0a)")
+        reward.coins = numeral(reward.coins).format("$(0.0a)")
       }
       extraInfo = `Rewards: ${JSON.stringify(reward)}, progress: ${attackRaidMaster.counter}/${attackRaidMaster.required}`.magenta
     }
@@ -591,7 +591,7 @@ class CoinMaster {
       
     }
     await this.playQuest();
-
+    //process.exit(0);
     res = await this.getBalance();
     let spins = res.spins;
     // res = await this.collectGift(res);
