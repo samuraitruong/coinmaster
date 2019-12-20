@@ -10,6 +10,7 @@ const axiosRetry = require("axios-retry");
 const csv = require("csv-parser");
 const createCsvWriter = require("csv-writer").createObjectCsvWriter;
 const uuid = require("uuid");
+const util = require("./util");
 const excludedAttack = [
   "rof4__cjzn7tig40149hdli9tzz8f7g",
   "rof4__cjzgkbk3s02cib3k76fci3yw6",
@@ -44,7 +45,8 @@ class CoinMaster {
    * }
    */
   constructor(options) {
-    this.allowUpgrade = true;
+    this.questLevelLimit = parseInt(process.env.QUEST_LEVEL_LIMIT || "6");
+    this.allowUpgrade = false;
     this.enableQuest = process.env.ENABLE_QUEST === "true";
     this.options = options || {};
     this.dumpResponseToFile = options.dumpResponseToFile || true;
@@ -154,15 +156,15 @@ class CoinMaster {
     console.log("startQuestMode", response);
   }
   async playQuest() {
-    if(!this.enableQuest) return;
-    const questCoins = [12500, 400000, 550000, 1250000]; //3000000
+    if (!this.enableQuest) return;
+    const questCoins = this.vikingQuestBetOptions || [12500, 400000, 550000, 1250000, 3000000, 6500000]; //3000000
     let questLevel = 0;
     let response = await this.getBalance(true);
-    let lastPay = response.coins;
     if (response && response.active_events && !response.active_events.viking_quest) {
       console.log("No Viking quest event, skip play quest".yellow);
       return response;
     }
+    const allowUpgrade = this.allowUpgrade;
     this.allowUpgrade = false;
 
     console.log("Quest coins to play: ", response.coins)
@@ -191,18 +193,20 @@ class CoinMaster {
         this.dumpFile("vikingquest", response);
         coins = response.coins;
         const vk = response.viking_quest;
-        const questPay = response.coins-lastPay;
-        const outMessage  = `QUEST: lv${questLevel +1} ${vk.qd} \tBet: ${questCoins[questLevel]}, \tPay: ${this.numberFormat(vk.p)}, \tCoins: ${this.numberFormat(coins)} , \t Complete: ${vk.qcx}%`;
-        console.log(vk.p > questCoins[questLevel]? outMessage.magenta : outMessage.green)
+        const wheelResult = vk.reels.join(" ");
+        const outMessage = `QUEST ${wheelResult}: lv${vk.qn} ${vk.qd} \tBet: ${questCoins[questLevel]}, \tPay: ${this.numberFormat(vk.p)}, \t\tCoins: ${this.numberFormat(coins)} , \t Complete: ${vk.qcx}%`;
+        console.log(vk.p > questCoins[questLevel] ? outMessage.magenta : outMessage.green)
         await this.handleMessage(response);
-        lastPay = response.coins;
+        if (vk.qn > this.questLevelLimit) {
+          console.log("Quest level limit reached. exiting", this.questLevelLimit, vk.qn);
+        }
       } else {
         questLevel++;
         console.log("Error when doing viking quest spin, please check".red)
       }
       await refill();
     }
-    this.allowUpgrade = true;
+    this.allowUpgrade = allowUpgrade;
     console.log("End vikings, out of money or reach target");
   }
   async getAllMessages() {
@@ -212,7 +216,7 @@ class CoinMaster {
     //console.log(`All Message:`, info.messages.length);
     return info;
   }
-  async daillySpin() {
+  async dailySpin() {
     const result = await this.post("dailybonus/collect", {
       segmented: true,
       extra: false
@@ -387,9 +391,13 @@ class CoinMaster {
       coins,
       spins,
       name,
-      shields
+      shields,
+      extended
     } = response;
     if (!silient) {
+      if (extended && extended.activeEvents && extended.activeEvents.viking_quest) {
+        this.vikingQuestBetOptions = extended.activeEvents.viking_quest.options.bet_coins;
+      }
       console.log(
         `BALANCE: Hello ${name}, You have ${spins} spins and ${numeral(
           coins
@@ -430,8 +438,8 @@ class CoinMaster {
     console.log("Feed the fox with free snack");
 
     res = await this.post("pets/fox/daily-mini-snack");
-    if(res){
-    console.log("Your pet after feed", res.selectedPet);
+    if (res) {
+      console.log("Your pet after feed", res.selectedPet);
     }
     this.usedFreeSnack = true;
   }
@@ -459,20 +467,32 @@ class CoinMaster {
       data
     } = await axios.get("https://cm-spin.herokuapp.com/");
     const ids = []
-    for (let i = 0; i < this.numberOfDailyReward; i++) {
+    for (let i = 0; i < Math.min(this.numberOfDailyReward, data.length); i++) {
       try {
         let query = qs.parse(data[i].url.split('?')[1], "&", "=");
         if (query.c) {
           await this.claimReward(query.c);
         } else {
           const htmlResposne = await axios.get(data[i].url);
+          //for (var x in htmlResposne.request) console.log(x);
+          query = qs.parse(htmlResposne.request.path.split('?')[1], "&", "=");
+          if (query.c) {
+            await this.claimReward(query.c);
+          }
+          if (htmlResposne.request.path.indexOf("next=") > 0) {
+            const code = util.findCodeInQuery(htmlResposne.request.path);
+            if (code) {
+              await this.claimReward(code);
+              continue;
+            }
+          }
           query = qs.parse(htmlResposne.data.split('?')[1], "&", "=");
           if (query.c) {
             await this.claimReward(query.c);
           }
         }
       } catch (err) {
-        console.log(`Could not get dailly  reward : ` + data[i].url)
+        console.log(`Could not get daily  reward : ` + data[i].url)
       }
     }
     // fetch the reward  links
@@ -582,16 +602,15 @@ class CoinMaster {
     await this.handleMessage(firstResponse);
     console.log("events", firstResponse.active_events)
 
-    if(!recursive) {
+    if (!recursive) {
       await this.claimTodayRewards();
-      //await this.claimReward("pe_FCBJmBGxT_20191127");
       const firstResponse = await this.getAllMessages();
       await this.handleMessage(firstResponse);
-      await this.daillySpin();
-      
+      await this.dailySpin();
+
     }
     await this.playQuest();
-
+    process.exit(0)
     res = await this.getBalance();
     let spins = res.spins;
     // res = await this.collectGift(res);
@@ -601,7 +620,7 @@ class CoinMaster {
     var spinCount = 0;
     while (spins >= this.bet) {
 
-      if(spins> 500 && !this.usedFreeSnack) {
+      if (spins > 500 && !this.usedFreeSnack) {
         await this.feedFox(res);
       }
       await this.waitFor(this.sleep || 1000);
