@@ -47,6 +47,7 @@ class CoinMaster {
   constructor(options) {
     this.questLevelLimit = parseInt(process.env.QUEST_LEVEL_LIMIT || "6");
     this.allowUpgrade = false;
+    this.allowUpgrade = options.allowUpgrade || process.env.ALLOw_UPGRADE === "true";
     this.enableQuest = process.env.ENABLE_QUEST === "true";
     this.options = options || {};
     this.dumpResponseToFile = options.dumpResponseToFile || true;
@@ -199,6 +200,7 @@ class CoinMaster {
         await this.handleMessage(response);
         if (vk.qn > this.questLevelLimit) {
           console.log("Quest level limit reached. exiting", this.questLevelLimit, vk.qn);
+          return;
         }
       } else {
         questLevel++;
@@ -463,40 +465,44 @@ class CoinMaster {
     }
   }
   async claimTodayRewards() {
-    const {
-      data
-    } = await axios.get("https://cm-spin.herokuapp.com/");
-    const ids = []
-    for (let i = 0; i < Math.min(this.numberOfDailyReward, data.length); i++) {
-      try {
-        let query = qs.parse(data[i].url.split('?')[1], "&", "=");
-        if (query.c) {
-          await this.claimReward(query.c);
-        } else {
-          const htmlResposne = await axios.get(data[i].url);
-          //for (var x in htmlResposne.request) console.log(x);
-          query = qs.parse(htmlResposne.request.path.split('?')[1], "&", "=");
+    try {
+      const {
+        data
+      } = await axios.get("https://cm-spin.herokuapp.com/");
+      const ids = []
+      for (let i = 0; i < Math.min(this.numberOfDailyReward, data.length); i++) {
+        try {
+          let query = qs.parse(data[i].url.split('?')[1], "&", "=");
           if (query.c) {
             await this.claimReward(query.c);
-          }
-          if (htmlResposne.request.path.indexOf("next=") > 0) {
-            const code = util.findCodeInQuery(htmlResposne.request.path);
-            if (code) {
-              await this.claimReward(code);
-              continue;
+          } else {
+            const htmlResposne = await axios.get(data[i].url);
+            //for (var x in htmlResposne.request) console.log(x);
+            query = qs.parse(htmlResposne.request.path.split('?')[1], "&", "=");
+            if (query.c) {
+              await this.claimReward(query.c);
             }
+            if (htmlResposne.request.path.indexOf("next=") > 0) {
+              const code = util.findCodeInQuery(htmlResposne.request.path);
+              if (code) {
+                await this.claimReward(code);
+                continue;
+              }
+            }
+            query = qs.parse(htmlResposne.data.split('?')[1], "&", "=");
+            if (query.c) {
+              await this.claimReward(query.c);
+
+            }
+
           }
-          query = qs.parse(htmlResposne.data.split('?')[1], "&", "=");
-          if (query.c) {
-            await this.claimReward(query.c);
-          }
+        } catch (err) {
+
         }
-      } catch (err) {
-        console.log(`Could not get daily  reward : ` + data[i].url)
       }
+    } catch (err) {
+      console.log("Error claimTodayRewards".red)
     }
-    // fetch the reward  links
-    // loop throught and claim it
   }
   async claimReward(id) {
     console.log("getting daily reward using code", id);
@@ -611,6 +617,7 @@ class CoinMaster {
     }
     await this.playQuest();
     process.exit(0)
+
     res = await this.getBalance();
     let spins = res.spins;
     // res = await this.collectGift(res);
@@ -1094,6 +1101,7 @@ class CoinMaster {
     return spinResult;
   }
   async fixBuilding(spinResult) {
+    if (!this.allowUpgrade) return spinResult;
     console.log("Fix damage building if any".red);
     const priority = ["Farm", "House", "Ship", "Statue", "Crop"];
     let response = spinResult;
@@ -1134,8 +1142,11 @@ class CoinMaster {
     console.log("pet", res.selectedPet)
   }
   async upgrade(spinResult) {
+    // this.allowUpgrade=false;
+
     if (!spinResult || !this.allowUpgrade) return spinResult;
     console.log("************************* Running Upgrade **********************".magenta);
+
     let maxDelta = 0;
     let coins = spinResult.coins;
     let villageLevel = spinResult.village;

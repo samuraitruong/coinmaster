@@ -62,7 +62,7 @@ let accounts = [];
         process.exit(0);
       });
 
-    console.log("Multiple play use accout file");
+    console.log("Multiple play use account file");
   } else {
     // await new Promise((resolve) => setTimeout(resolve, 15000))
     var cm = new CoinMaster({
