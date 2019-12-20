@@ -44,7 +44,7 @@ class CoinMaster {
    * }
    */
   constructor(options) {
-    this.allowUpgrade = true;
+    this.allowUpgrade = options.allowUpgrade || process.env.ALLOw_UPGRADE === "true";
     this.enableQuest = process.env.ENABLE_QUEST === "true";
     this.options = options || {};
     this.dumpResponseToFile = options.dumpResponseToFile || true;
@@ -154,8 +154,8 @@ class CoinMaster {
     console.log("startQuestMode", response);
   }
   async playQuest() {
-    if(!this.enableQuest) return;
-    const questCoins = [12500, 400000, 550000, 1250000]; //3000000
+    if (!this.enableQuest) return;
+    const questCoins = [12500, 400000, 550000, 1250000, 1500000, 3000000, 4000000, 6000000,7500000]; //3000000
     let questLevel = 0;
     let response = await this.getBalance(true);
     let lastPay = response.coins;
@@ -191,9 +191,9 @@ class CoinMaster {
         this.dumpFile("vikingquest", response);
         coins = response.coins;
         const vk = response.viking_quest;
-        const questPay = response.coins-lastPay;
-        const outMessage  = `QUEST: lv${questLevel +1} ${vk.qd} \tBet: ${questCoins[questLevel]}, \tPay: ${this.numberFormat(vk.p)}, \tCoins: ${this.numberFormat(coins)} , \t Complete: ${vk.qcx}%`;
-        console.log(vk.p > questCoins[questLevel]? outMessage.magenta : outMessage.green)
+        const questPay = response.coins - lastPay;
+        const outMessage = `QUEST: lv${questLevel +1} ${vk.qd} \tBet: ${questCoins[questLevel]}, \tPay: ${this.numberFormat(vk.p)}, \tCoins: ${this.numberFormat(coins)} , \t Complete: ${vk.qcx}%`;
+        console.log(vk.p > questCoins[questLevel] ? outMessage.magenta : outMessage.green)
         await this.handleMessage(response);
         lastPay = response.coins;
       } else {
@@ -430,8 +430,8 @@ class CoinMaster {
     console.log("Feed the fox with free snack");
 
     res = await this.post("pets/fox/daily-mini-snack");
-    if(res){
-    console.log("Your pet after feed", res.selectedPet);
+    if (res) {
+      console.log("Your pet after feed", res.selectedPet);
     }
     this.usedFreeSnack = true;
   }
@@ -455,26 +455,32 @@ class CoinMaster {
     }
   }
   async claimTodayRewards() {
-    const {
-      data
-    } = await axios.get("https://cm-spin.herokuapp.com/");
-    const ids = []
-    for (let i = 0; i < this.numberOfDailyReward; i++) {
-      try {
-        let query = qs.parse(data[i].url.split('?')[1], "&", "=");
-        if (query.c) {
-          await this.claimReward(query.c);
-        } else {
-          const htmlResposne = await axios.get(data[i].url);
-          query = qs.parse(htmlResposne.data.split('?')[1], "&", "=");
-          if (query.c) {
-            await this.claimReward(query.c);
+    try {
+      const {
+        data
+      } = await axios.get("https://cm-spin.herokuapp.com/");
+      const ids = []
+      for (let i = 0; i < this.numberOfDailyReward; i++) {
+        try {
+          data[i].url = data[i].url.replace("@", "&");
+          let query = qs.parse(data[i].url.split('?')[1], "&", "=");
+          if (query.c || query.campaign) {
+            await this.claimReward(query.c || query.campaign);
+          } else {
+            const htmlResposne = await axios.get(data[i].url);
+            query = qs.parse(htmlResposne.data.split('?')[1], "&", "=");
+            if (query.c) {
+              await this.claimReward(query.c);
+            }
           }
+        } catch (err) {
+          console.log(`Could not get daily  reward : ` + data[i].url)
         }
-      } catch (err) {
-        console.log(`Could not get dailly  reward : ` + data[i].url)
       }
+    } catch (err) {
+
     }
+
     // fetch the reward  links
     // loop throught and claim it
   }
@@ -582,16 +588,16 @@ class CoinMaster {
     await this.handleMessage(firstResponse);
     console.log("events", firstResponse.active_events)
 
-    if(!recursive) {
+    if (!recursive) {
       await this.claimTodayRewards();
       //await this.claimReward("pe_FCBJmBGxT_20191127");
       const firstResponse = await this.getAllMessages();
       await this.handleMessage(firstResponse);
       await this.daillySpin();
-      
+
     }
     await this.playQuest();
-
+    // process.exit(0);
     res = await this.getBalance();
     let spins = res.spins;
     // res = await this.collectGift(res);
@@ -601,7 +607,7 @@ class CoinMaster {
     var spinCount = 0;
     while (spins >= this.bet) {
 
-      if(spins> 500 && !this.usedFreeSnack) {
+      if (spins > 500 && !this.usedFreeSnack) {
         await this.feedFox(res);
       }
       await this.waitFor(this.sleep || 1000);
@@ -1075,6 +1081,7 @@ class CoinMaster {
     return spinResult;
   }
   async fixBuilding(spinResult) {
+    if (!this.allowUpgrade) return spinResult;
     console.log("Fix damage building if any".red);
     const priority = ["Farm", "House", "Ship", "Statue", "Crop"];
     let response = spinResult;
@@ -1115,8 +1122,11 @@ class CoinMaster {
     console.log("pet", res.selectedPet)
   }
   async upgrade(spinResult) {
+    // this.allowUpgrade=false;
+
     if (!spinResult || !this.allowUpgrade) return spinResult;
     console.log("************************* Running Upgrade **********************".magenta);
+
     let maxDelta = 0;
     let coins = spinResult.coins;
     let villageLevel = spinResult.village;
