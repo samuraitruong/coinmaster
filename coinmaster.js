@@ -159,7 +159,6 @@ class CoinMaster {
   async playQuest() {
     if (!this.enableQuest) return;
     const questCoins = this.vikingQuestBetOptions || [12500, 400000, 550000, 1250000, 3000000, 6500000]; //3000000
-    let questLevel = 0;
     let response = await this.getBalance(true);
     if (response && response.active_events && !response.active_events.viking_quest) {
       console.log("No Viking quest event, skip play quest".yellow);
@@ -167,6 +166,7 @@ class CoinMaster {
     }
     const allowUpgrade = this.allowUpgrade;
     this.allowUpgrade = false;
+    let questLevel = this.currentQuestLevel - 1;
 
     console.log("Quest coins to play: ", response.coins)
     let coins = response.coins;
@@ -180,7 +180,13 @@ class CoinMaster {
       }
     }
     await refill();
-    while (coins > questCoins[questLevel] && questLevel < questCoins.length) {
+    while (coins > questCoins[questLevel]) {
+      questLevel = this.currentQuestLevel;
+      if (this.currentQuestLevel > this.questLevelLimit) {
+        console.log("Quest level limit reached. exiting", this.questLevelLimit, this.currentQuestLevel);
+        return;
+      }
+
       const data = {
         requestId: uuid.v4(),
         coins: questCoins[questLevel]
@@ -198,10 +204,8 @@ class CoinMaster {
         const outMessage = `QUEST ${wheelResult}: lv${vk.qn} ${vk.qd} \tBet: ${questCoins[questLevel]}, \tPay: ${this.numberFormat(vk.p)}, \t\tCoins: ${this.numberFormat(coins)} , \t Complete: ${vk.qcx}%`;
         console.log(vk.p > questCoins[questLevel] ? outMessage.magenta : outMessage.green)
         await this.handleMessage(response);
-        if (vk.qn > this.questLevelLimit) {
-          console.log("Quest level limit reached. exiting", this.questLevelLimit, vk.qn);
-          return;
-        }
+        this.currentQuestLevel = vk.qn;
+
       } else {
         questLevel++;
         console.log("Error when doing viking quest spin, please check".red)
@@ -399,6 +403,7 @@ class CoinMaster {
     if (!silient) {
       if (extended && extended.activeEvents && extended.activeEvents.viking_quest) {
         this.vikingQuestBetOptions = extended.activeEvents.viking_quest.options.bet_coins;
+        this.currentQuestLevel = extended.activeEvents.viking_quest.options.qn;
       }
       console.log(
         `BALANCE: Hello ${name}, You have ${spins} spins and ${numeral(
