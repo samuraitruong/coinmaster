@@ -26,7 +26,7 @@ const [status, setStatus] = useState("connecting");
 const [json, setJson ] = useState(defaultData);
 useEffect(() => {
 socket.on('connected', ()=> {setStatus("Connected")});
-socket.on('data', (data: any) => {setJson(data);console.log("Data", data)});
+socket.on('data', (data: any) => {setJson({...json, ...data});console.log("Data", data)});
 socket.on('disconnect', () => {});
 socket.on('error', () => setStatus("Error"))
 }, [])

@@ -50,7 +50,7 @@ let accounts = [];
               fbToken: account.FB_TOKEN,
               deviceId: account.DEVICE_ID,
               onData: (d) => {
-                io.emit("data", d);
+                io.emit(d);
               }
             });
 
@@ -67,7 +67,7 @@ let accounts = [];
     // await new Promise((resolve) => setTimeout(resolve, 15000))
     var cm = new CoinMaster({
       onData: (d) => {
-        io.emit("data", d);
+        io.emit(d);
       }
     });
     //const friend = await cm.getFriend("A_cj7ui7x6m00imtms1r9sxw8b0");

@@ -454,6 +454,63 @@ class CoinMaster {
     // console.log("SEQ", sed);
     this.seq = sed;
   }
+  async getSet() {
+    const sets = await this.post("sets");
+    this.cardCollection = sets;
+    this.onData({
+      cards: this.cardCollection
+    });
+    this.dumpFile(`${this.userId}_sets`, this.cardCollection);
+    const {
+      decks
+    } = this.cardCollection;
+    if (decks) {
+      for (const key in decks) {
+        if (decks.hasOwnProperty(key)) {
+          const item = decks[key];
+          const h = item.cards.reduce((a, b) => {
+            a[b.name] = b;
+            return a
+          }, {});
+          let cards = "";
+          for (let i = 1; i <= 9; i++) {
+            const name = key + "_" + i;
+            const c = h[name];
+            let cardText = `[${name}]`;
+            if (c) {
+              cardText+="x" + c.count;
+              switch (c.rarity) {
+                case 1:
+                    cardText = cardText.cyan;
+                    break;
+                case 2:
+                    cardText = cardText.white;
+                    break;
+                case 3:
+                    cardText = cardText.green;
+                    break;
+                case 4:
+                  cardText = cardText.brightRed;
+                  break;
+                case 5:
+                  cardText = cardText.brightYellow;
+              }
+            } else {
+              cardText = cardText.grey;
+            }
+            cards += cardText +"  ";
+          }
+          let logMessage = `CARD - ${key.rainbow} ${cards} `;
+          if( item.cards.length ===9) {
+            logMessage += " Completed".brightMagenta;
+            logMessage = logMessage.strikethrough;
+          }
+          console.log(logMessage);
+
+        }
+      }
+    }
+  }
   async waitFor(ts) {
     return new Promise(resolve => setTimeout(resolve, ts));
   }
@@ -607,12 +664,13 @@ class CoinMaster {
     //await this.update_fb_data();
 
     let res = await this.getBalance();
+
     //await this.getDailyFreeRewards();
     await this.handleMessage(res);
     const firstResponse = await this.getAllMessages();
     await this.handleMessage(firstResponse);
-    console.log("events", firstResponse.active_events)
-
+    await this.getSet();
+    console.log("Active Events: ", firstResponse.active_events)
     if (!recursive) {
       await this.claimTodayRewards();
       const firstResponse = await this.getAllMessages();
@@ -621,7 +679,6 @@ class CoinMaster {
 
     }
     await this.playQuest();
-    process.exit(0)
 
     res = await this.getBalance();
     let spins = res.spins;
