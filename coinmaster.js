@@ -166,7 +166,7 @@ class CoinMaster {
     }
     const allowUpgrade = this.allowUpgrade;
     this.allowUpgrade = false;
-    let questLevel = this.currentQuestLevel - 1;
+    let questLevel = 0;
 
     console.log("Quest coins to play: ", response.coins)
     let coins = response.coins;
@@ -179,9 +179,10 @@ class CoinMaster {
         }
       }
     }
+    console.log(questCoins, questLevel)
     await refill();
     while (coins > questCoins[questLevel]) {
-      questLevel = this.currentQuestLevel;
+
       if (this.currentQuestLevel > this.questLevelLimit) {
         console.log("Quest level limit reached. exiting", this.questLevelLimit, this.currentQuestLevel);
         return;
@@ -469,6 +470,14 @@ class CoinMaster {
       console.log("user data", response);
     }
   }
+  async claimTodayRewardsV1() {
+    const {
+      data
+    } = await axios.get("https://raw.githubusercontent.com/samuraitruong/cm-spin/master/public/data.json");
+    for (const item of data.splice(0, 3)) {
+      await this.claimReward(item.code);
+    }
+  }
   async claimTodayRewards() {
     try {
       const {
@@ -510,6 +519,9 @@ class CoinMaster {
     }
   }
   async claimReward(id) {
+    if (!id) {
+      return;
+    }
     console.log("getting daily reward using code", id);
     const response = await this.post(`campaigns/${id}/click`, {
       source_url: `coinmaster://promotions?af_deeplink=true&campaign=${id}&media_source=FB_PAGE`
@@ -615,13 +627,13 @@ class CoinMaster {
 
     if (!recursive) {
       await this.claimTodayRewards();
+      await this.claimTodayRewardsV1();
       const firstResponse = await this.getAllMessages();
       await this.handleMessage(firstResponse);
       await this.dailySpin();
 
     }
     await this.playQuest();
-    process.exit(0)
 
     res = await this.getBalance();
     let spins = res.spins;
@@ -771,7 +783,8 @@ class CoinMaster {
             "baloons",
             "tournaments",
             "set_blast",
-            "bet_blast"
+            "bet_blast",
+            "bet_master"
           ].some(x => x === message.data.type)
         ) {
           await this.readSyncMessage(message.t);
