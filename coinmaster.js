@@ -45,6 +45,7 @@ class CoinMaster {
    * }
    */
   constructor(options) {
+    this.syncTarget = process.env.SYNC_TARGET || null;
     this.questLevelLimit = parseInt(process.env.QUEST_LEVEL_LIMIT || "6");
     this.allowUpgrade = false;
     this.allowUpgrade = options.allowUpgrade || process.env.ALLOw_UPGRADE === "true";
@@ -100,6 +101,50 @@ class CoinMaster {
     this.spinResult = null;
     this.upgradeCost = {};
 
+  }
+  async syncCard(to){
+    if(!to || to === this.userId) {
+      console.log("NO SYNC_TARGET set, ignore syncing process".yellow)
+    }
+    //read the desk 
+    const existing = JSON.parse(fs.readFileSync(`data/${to}_sets.json`, "utf8"));
+    const toDecks = existing.decks;
+    await this.getSet();
+    console.log("hahaha", this.cardCollection)
+    if(!this.cardCollection) {
+      return;
+    }
+    const decks = this.cardCollection.decks;
+    let cardToSends = [];
+    for (const deck in decks) {
+      if (decks.hasOwnProperty(deck)) {
+        const items = decks[deck].cards;
+        for (const card of items) {
+          if(card.count>1 && card.swappable && (!toDecks[deck] ||  toDecks[deck].cards.filter(x =>x.name == card.name) ===0) ) {
+            cardToSends.push(card.name);
+            if(cardToSends.length === 25) {
+              await this.sendCard(to, cardToSends);
+              cardToSends = [];
+            }
+          }
+        }
+      }
+    }
+    if(cardToSends.length >0) {
+      await this.sendCard(to, cardToSends);
+    }
+  }
+  async sendCard(to, cards) {
+    console.log("Sending card ", to, cards);
+    const request = {
+      to,
+      request_id: uuid.v4(),
+    };
+    for(let i=0; i< cards.length; i++) {
+      request[`cards[${i}]`] = cards[i]
+    }
+    const results = await this.post("cards/send", request )
+    this.cardCollection = results;
   }
   async readHistoryData() {
     return new Promise(resolve => {
@@ -676,7 +721,7 @@ class CoinMaster {
     //await this.update_fb_data();
 
     let res = await this.getBalance();
-
+    await this.syncCard(this.syncTarget);
     //await this.getDailyFreeRewards();
     await this.handleMessage(res);
     const firstResponse = await this.getAllMessages();
