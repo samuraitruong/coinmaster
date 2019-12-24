@@ -102,16 +102,18 @@ class CoinMaster {
     this.upgradeCost = {};
 
   }
-  async syncCard(to){
-    if(!to || to === this.userId) {
+  async syncCard(to) {
+
+    if (!to || to === this.userId) {
       console.log("NO SYNC_TARGET set, ignore syncing process".yellow)
+      return;
     }
     //read the desk 
     const existing = JSON.parse(fs.readFileSync(`data/${to}_sets.json`, "utf8"));
     const toDecks = existing.decks;
     await this.getSet();
     console.log("hahaha", this.cardCollection)
-    if(!this.cardCollection) {
+    if (!this.cardCollection) {
       return;
     }
     const decks = this.cardCollection.decks;
@@ -120,9 +122,9 @@ class CoinMaster {
       if (decks.hasOwnProperty(deck)) {
         const items = decks[deck].cards;
         for (const card of items) {
-          if(card.count>1 && card.swappable && (!toDecks[deck] ||  toDecks[deck].cards.filter(x =>x.name == card.name) ===0) ) {
+          if (card.count > 1 && card.swappable && (!toDecks[deck] || toDecks[deck].cards.filter(x => x.name == card.name) === 0)) {
             cardToSends.push(card.name);
-            if(cardToSends.length === 25) {
+            if (cardToSends.length === 25) {
               await this.sendCard(to, cardToSends);
               cardToSends = [];
             }
@@ -130,7 +132,7 @@ class CoinMaster {
         }
       }
     }
-    if(cardToSends.length >0) {
+    if (cardToSends.length > 0) {
       await this.sendCard(to, cardToSends);
     }
   }
@@ -140,10 +142,10 @@ class CoinMaster {
       to,
       request_id: uuid.v4(),
     };
-    for(let i=0; i< cards.length; i++) {
+    for (let i = 0; i < cards.length; i++) {
       request[`cards[${i}]`] = cards[i]
     }
-    const results = await this.post("cards/send", request )
+    const results = await this.post("cards/send", request)
     this.cardCollection = results;
   }
   async readHistoryData() {
@@ -425,6 +427,38 @@ class CoinMaster {
     );
     return result;
   }
+  async handleTriplePromotion(extended) {
+    if (!extended || !extended.activeTriplePromotions) {
+      return;
+    }
+    // console.log("activeTriplePromotions", extended.activeTriplePromotions);
+    for (const promotion of extended.activeTriplePromotions) {
+      const {
+        offers
+      } = promotion;
+      let index = 1;
+      for (const offer of offers) {
+        if (offer.status === "READY_TO_PURCHASE" && offer.productDetails.price === 0) {
+          console.log("Purchasing offer", offer);
+          const res = await this.post(`triple-promotion/${promotion.id}/purchase`, {
+            "Purchase[item_code]": offer.sku,
+            "Purchase[offer_index]": index
+          });
+          if (res) {
+            const {
+              coins,
+              spins
+            } = res
+            console.log("Purchased result", {
+              coin: this.numberFormat(coins),
+              spins
+            })
+          }
+        }
+        index++;
+      }
+    }
+  }
   // apart of handle messages list
   async collectRewards(rewardType) {
     rewardType = rewardType || "GENERIC_ACCUMULATION_REWARD";
@@ -446,6 +480,7 @@ class CoinMaster {
       shields,
       extended
     } = response;
+    await this.handleTriplePromotion(extended);
     if (!silient) {
       if (extended && extended.activeEvents && extended.activeEvents.viking_quest) {
         this.vikingQuestBetOptions = extended.activeEvents.viking_quest.options.bet_coins;
@@ -459,6 +494,7 @@ class CoinMaster {
     }
     this.dumpFile("balance", response);
     this.onData(response);
+
     return response;
   }
   async feedFox(res) {
@@ -524,17 +560,17 @@ class CoinMaster {
             const c = h[name];
             let cardText = `[${name}]`;
             if (c) {
-              cardText+="x" + c.count;
+              cardText += "x" + c.count;
               switch (c.rarity) {
                 case 1:
-                    cardText = cardText.cyan;
-                    break;
+                  cardText = cardText.cyan;
+                  break;
                 case 2:
-                    cardText = cardText.white;
-                    break;
+                  cardText = cardText.white;
+                  break;
                 case 3:
-                    cardText = cardText.green;
-                    break;
+                  cardText = cardText.green;
+                  break;
                 case 4:
                   cardText = cardText.brightRed;
                   break;
@@ -544,10 +580,10 @@ class CoinMaster {
             } else {
               cardText = cardText.grey;
             }
-            cards += cardText +"  ";
+            cards += cardText + "  ";
           }
           let logMessage = `CARD - ${key.rainbow} ${cards} `;
-          if( item.cards.length ===9) {
+          if (item.cards.length === 9) {
             logMessage += " Completed".brightMagenta;
             logMessage = logMessage.strikethrough;
           }
@@ -721,6 +757,8 @@ class CoinMaster {
     //await this.update_fb_data();
 
     let res = await this.getBalance();
+    //console.log(res)
+    await this.upgradePet(res.selectedPet, res.petXpBank);
     await this.syncCard(this.syncTarget);
     //await this.getDailyFreeRewards();
     await this.handleMessage(res);
@@ -819,6 +857,36 @@ class CoinMaster {
     await this.upgrade(res);
     console.log("end....")
   }
+  async upgradePet(selectedPet, petXpBank) {
+    if(selectedPet.level === 0) {
+      console.log("hatching pet", selectedPet)
+    const result = await this.post(`pets/${selectedPet.type}/upgrade`, {
+      "include[0]": "pets",
+      request_id: uuid.v4()
+    });
+    if(result) {
+      console.log("Selected pet:", result.selectedPet);
+    }
+
+  }
+  else {
+    const requireXp = selectedPet.nextXp - selectedPet.xp;
+    if(petXpBank ==0) {
+      console.log("No XP to upgrade");
+      return;
+    };
+    console.log("Upgrade pet with xp", petXpBank,  selectedPet.nextXp)
+    const feedResult = await this.post("pets/selected/feed", {
+      petv2: true,
+      request_id: uuid.v4(),
+      xp: Math.min(requireXp, petXpBank )
+    });
+    console.log("Upgrade bet result", feedResult.selectedPet, feedResult.petXpBank);
+    if(feedResult.petXpBank >0) {
+      await this.upgradePet(feedResult.selectedPet, feedResult.petXpBank);
+    }
+  }
+  }
   async handleMessage(spinResult) {
     if (!spinResult) {
       console.log("something wrong handleMessage with null".red);
@@ -852,6 +920,7 @@ class CoinMaster {
         e
       } = message;
       let baloonsCount = 0;
+     
       if (data && data.status === "PENDING_COLLECT" && data.collectUrl) {
         if (data.reward && data.reward.coins) {
           data.reward.coins = numeral(data.reward.coins).format("$(0.000a)")
@@ -870,8 +939,8 @@ class CoinMaster {
       } else if (data && data.foxFound) {
         // acttion to elimited foxFound message
       } else if (e && e.chest) {
-        // console.log("You got free chest, collect it", e.chest);
-        // await this.post('read_messages', {last: message.t});
+         //console.log("You got free chest, collect it", e.chest);
+         //await this.post('read_messages', {last: message.t});
       } else {
         // 3 -attack
         if (
@@ -1254,13 +1323,6 @@ class CoinMaster {
       request_id: uuid.v4()
     });
     console.log("Purchase", response.chest);
-  }
-  async upgradePet() {
-    const res = await this.post('/pets/fox/upgrade', {
-      request_id: "fb7061b5eff84f97b4d2" + (new Date()).getTime(),
-      "include[0]": "pets"
-    });
-    console.log("pet", res.selectedPet)
   }
   async upgrade(spinResult) {
     // this.allowUpgrade=false;
