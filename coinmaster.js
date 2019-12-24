@@ -112,7 +112,6 @@ class CoinMaster {
     const existing = JSON.parse(fs.readFileSync(`data/${to}_sets.json`, "utf8"));
     const toDecks = existing.decks;
     await this.getSet();
-    console.log("hahaha", this.cardCollection)
     if (!this.cardCollection) {
       return;
     }
@@ -124,7 +123,7 @@ class CoinMaster {
         for (const card of items) {
           if (card.count > 1 && card.swappable && (!toDecks[deck] || toDecks[deck].cards.filter(x => x.name == card.name) === 0)) {
             cardToSends.push(card.name);
-            if (cardToSends.length === 25) {
+            if (cardToSends.length === 5) {
               await this.sendCard(to, cardToSends);
               cardToSends = [];
             }
