@@ -14,18 +14,26 @@ let accounts = [];
     client.on('connected', data => {
       io.emit("connected", true)
     });
-    client.on('disconnect', () => { /* … */ });
+    client.on('disconnect', () => {
+      /* … */
+    });
     client.emit("accounts", accounts);
     client.emit("connected", true)
   });
-  portfinder.getPortPromise({startPort: 3001, stopPort:3000}).then(port => {
-    
+  portfinder.getPortPromise({
+    port: 3001,
+    stopPort: 3099
+  }).then(port => {
+
     console.log("start socket server at port ", port)
     server.listen(port);
+  }).catch(err => {
+    console.log("No port available for start up socker server".red);
+    console.log(err)
   })
 
-  if (fs.existsSync(accountFile) && myArgs.length>0 ) {
-     accounts = []
+  if (fs.existsSync(accountFile) && myArgs.length > 0) {
+    accounts = []
 
     fs.createReadStream(accountFile)
       .pipe(csv())
@@ -33,20 +41,20 @@ let accounts = [];
       .on('end', async () => {
         console.log(accounts);
         var index = myArgs[0] || "-1";
-        for (const account of accounts.filter(x =>x.ID === index || index =="all")) {
+        for (const account of accounts.filter(x => x.ID === index || index == "all")) {
           try {
-            if(account.EMAIL[0] === "#" && isNaN(index) ) continue;
+            if (account.EMAIL[0] === "#" && isNaN(index)) continue;
             console.log("PLAY AS: ", account.EMAIL)
             var cm = new CoinMaster({
               userId: account.USER_ID,
               fbToken: account.FB_TOKEN,
               deviceId: account.DEVICE_ID,
               onData: (d) => {
-                io.emit("data", d);
-            }
+                io.emit(d);
+              }
             });
-           
-            const balance = await cm.play() 
+
+            const balance = await cm.play()
           } catch (err) {
             console.error(err)
           }
@@ -54,15 +62,17 @@ let accounts = [];
         process.exit(0);
       });
 
-    console.log("Multiple play use accout file");
+    console.log("Multiple play use account file");
   } else {
     // await new Promise((resolve) => setTimeout(resolve, 15000))
-    var cm = new CoinMaster({onData: (d) => {
-        io.emit("data", d);
-    }});
+    var cm = new CoinMaster({
+      onData: (d) => {
+        io.emit(d);
+      }
+    });
     //const friend = await cm.getFriend("A_cj7ui7x6m00imtms1r9sxw8b0");
     // console.log("friends", friend);
-   
+
     const balance = await cm.play();
   }
 })();

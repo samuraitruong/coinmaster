@@ -10,6 +10,7 @@ const axiosRetry = require("axios-retry");
 const csv = require("csv-parser");
 const createCsvWriter = require("csv-writer").createObjectCsvWriter;
 const uuid = require("uuid");
+const util = require("./util");
 const excludedAttack = [
   "rof4__cjzn7tig40149hdli9tzz8f7g",
   "rof4__cjzgkbk3s02cib3k76fci3yw6",
@@ -44,7 +45,10 @@ class CoinMaster {
    * }
    */
   constructor(options) {
-    this.allowUpgrade = true;
+    this.syncTarget = process.env.SYNC_TARGET || null;
+    this.questLevelLimit = parseInt(process.env.QUEST_LEVEL_LIMIT || "6");
+    this.allowUpgrade = false;
+    this.allowUpgrade = options.allowUpgrade || process.env.ALLOw_UPGRADE === "true";
     this.enableQuest = process.env.ENABLE_QUEST === "true";
     this.options = options || {};
     this.dumpResponseToFile = options.dumpResponseToFile || true;
@@ -97,6 +101,52 @@ class CoinMaster {
     this.spinResult = null;
     this.upgradeCost = {};
 
+  }
+  async syncCard(to) {
+
+    if (!to || to === this.userId) {
+      console.log("NO SYNC_TARGET set, ignore syncing process".yellow)
+      return;
+    }
+    //read the desk 
+    const existing = JSON.parse(fs.readFileSync(`data/${to}_sets.json`, "utf8"));
+    const toDecks = existing.decks;
+    await this.getSet();
+    console.log("hahaha", this.cardCollection)
+    if (!this.cardCollection) {
+      return;
+    }
+    const decks = this.cardCollection.decks;
+    let cardToSends = [];
+    for (const deck in decks) {
+      if (decks.hasOwnProperty(deck)) {
+        const items = decks[deck].cards;
+        for (const card of items) {
+          if (card.count > 1 && card.swappable && (!toDecks[deck] || toDecks[deck].cards.filter(x => x.name == card.name) === 0)) {
+            cardToSends.push(card.name);
+            if (cardToSends.length === 25) {
+              await this.sendCard(to, cardToSends);
+              cardToSends = [];
+            }
+          }
+        }
+      }
+    }
+    if (cardToSends.length > 0) {
+      await this.sendCard(to, cardToSends);
+    }
+  }
+  async sendCard(to, cards) {
+    console.log("Sending card ", to, cards);
+    const request = {
+      to,
+      request_id: uuid.v4(),
+    };
+    for (let i = 0; i < cards.length; i++) {
+      request[`cards[${i}]`] = cards[i]
+    }
+    const results = await this.post("cards/send", request)
+    this.cardCollection = results;
   }
   async readHistoryData() {
     return new Promise(resolve => {
@@ -154,16 +204,16 @@ class CoinMaster {
     console.log("startQuestMode", response);
   }
   async playQuest() {
-    if(!this.enableQuest) return;
-    const questCoins = [12500, 400000, 550000, 1250000]; //3000000
-    let questLevel = 0;
+    if (!this.enableQuest) return;
+    const questCoins = this.vikingQuestBetOptions || [12500, 400000, 550000, 1250000, 3000000, 6500000]; //3000000
     let response = await this.getBalance(true);
-    let lastPay = response.coins;
     if (response && response.active_events && !response.active_events.viking_quest) {
       console.log("No Viking quest event, skip play quest".yellow);
       return response;
     }
+    const allowUpgrade = this.allowUpgrade;
     this.allowUpgrade = false;
+    let questLevel = 0;
 
     console.log("Quest coins to play: ", response.coins)
     let coins = response.coins;
@@ -176,8 +226,15 @@ class CoinMaster {
         }
       }
     }
+    console.log(questCoins, questLevel)
     await refill();
-    while (coins > questCoins[questLevel] && questLevel < questCoins.length) {
+    while (coins > questCoins[questLevel]) {
+
+      if (this.currentQuestLevel > this.questLevelLimit) {
+        console.log("Quest level limit reached. exiting", this.questLevelLimit, this.currentQuestLevel);
+        return;
+      }
+
       const data = {
         requestId: uuid.v4(),
         coins: questCoins[questLevel]
@@ -191,18 +248,19 @@ class CoinMaster {
         this.dumpFile("vikingquest", response);
         coins = response.coins;
         const vk = response.viking_quest;
-        const questPay = response.coins-lastPay;
-        const outMessage  = `QUEST: lv${questLevel +1} ${vk.qd} \tBet: ${questCoins[questLevel]}, \tPay: ${this.numberFormat(vk.p)}, \tCoins: ${this.numberFormat(coins)} , \t Complete: ${vk.qcx}%`;
-        console.log(vk.p > questCoins[questLevel]? outMessage.magenta : outMessage.green)
+        const wheelResult = vk.reels.join(" ");
+        const outMessage = `QUEST ${wheelResult}: lv${vk.qn} ${vk.qd} \tBet: ${questCoins[questLevel]}, \tPay: ${this.numberFormat(vk.p)}, \t\tCoins: ${this.numberFormat(coins)} , \t Complete: ${vk.qcx}%`;
+        console.log(vk.p > questCoins[questLevel] ? outMessage.magenta : outMessage.green)
         await this.handleMessage(response);
-        lastPay = response.coins;
+        this.currentQuestLevel = vk.qn;
+
       } else {
         questLevel++;
         console.log("Error when doing viking quest spin, please check".red)
       }
       await refill();
     }
-    this.allowUpgrade = true;
+    this.allowUpgrade = allowUpgrade;
     console.log("End vikings, out of money or reach target");
   }
   async getAllMessages() {
@@ -212,7 +270,7 @@ class CoinMaster {
     //console.log(`All Message:`, info.messages.length);
     return info;
   }
-  async daillySpin() {
+  async dailySpin() {
     const result = await this.post("dailybonus/collect", {
       segmented: true,
       extra: false
@@ -369,6 +427,38 @@ class CoinMaster {
     );
     return result;
   }
+  async handleTriplePromotion(extended) {
+    if (!extended || !extended.activeTriplePromotions) {
+      return;
+    }
+    // console.log("activeTriplePromotions", extended.activeTriplePromotions);
+    for (const promotion of extended.activeTriplePromotions) {
+      const {
+        offers
+      } = promotion;
+      let index = 1;
+      for (const offer of offers) {
+        if (offer.status === "READY_TO_PURCHASE" && offer.productDetails.price === 0) {
+          console.log("Purchasing offer", offer);
+          const res = await this.post(`triple-promotion/${promotion.id}/purchase`, {
+            "Purchase[item_code]": offer.sku,
+            "Purchase[offer_index]": index
+          });
+          if (res) {
+            const {
+              coins,
+              spins
+            } = res
+            console.log("Purchased result", {
+              coin: this.numberFormat(coins),
+              spins
+            })
+          }
+        }
+        index++;
+      }
+    }
+  }
   // apart of handle messages list
   async collectRewards(rewardType) {
     rewardType = rewardType || "GENERIC_ACCUMULATION_REWARD";
@@ -387,9 +477,15 @@ class CoinMaster {
       coins,
       spins,
       name,
-      shields
+      shields,
+      extended
     } = response;
+    await this.handleTriplePromotion(extended);
     if (!silient) {
+      if (extended && extended.activeEvents && extended.activeEvents.viking_quest) {
+        this.vikingQuestBetOptions = extended.activeEvents.viking_quest.options.bet_coins;
+        this.currentQuestLevel = extended.activeEvents.viking_quest.options.qn;
+      }
       console.log(
         `BALANCE: Hello ${name}, You have ${spins} spins and ${numeral(
           coins
@@ -398,6 +494,7 @@ class CoinMaster {
     }
     this.dumpFile("balance", response);
     this.onData(response);
+
     return response;
   }
   async feedFox(res) {
@@ -430,14 +527,71 @@ class CoinMaster {
     console.log("Feed the fox with free snack");
 
     res = await this.post("pets/fox/daily-mini-snack");
-    if(res){
-    console.log("Your pet after feed", res.selectedPet);
+    if (res) {
+      console.log("Your pet after feed", res.selectedPet);
     }
     this.usedFreeSnack = true;
   }
   updateSeq(sed) {
     // console.log("SEQ", sed);
     this.seq = sed;
+  }
+  async getSet() {
+    const sets = await this.post("sets");
+    this.cardCollection = sets;
+    this.onData({
+      cards: this.cardCollection
+    });
+    this.dumpFile(`${this.userId}_sets`, this.cardCollection);
+    const {
+      decks
+    } = this.cardCollection;
+    if (decks) {
+      for (const key in decks) {
+        if (decks.hasOwnProperty(key)) {
+          const item = decks[key];
+          const h = item.cards.reduce((a, b) => {
+            a[b.name] = b;
+            return a
+          }, {});
+          let cards = "";
+          for (let i = 1; i <= 9; i++) {
+            const name = key + "_" + i;
+            const c = h[name];
+            let cardText = `[${name}]`;
+            if (c) {
+              cardText += "x" + c.count;
+              switch (c.rarity) {
+                case 1:
+                  cardText = cardText.cyan;
+                  break;
+                case 2:
+                  cardText = cardText.white;
+                  break;
+                case 3:
+                  cardText = cardText.green;
+                  break;
+                case 4:
+                  cardText = cardText.brightRed;
+                  break;
+                case 5:
+                  cardText = cardText.brightYellow;
+              }
+            } else {
+              cardText = cardText.grey;
+            }
+            cards += cardText + "  ";
+          }
+          let logMessage = `CARD - ${key.rainbow} ${cards} `;
+          if (item.cards.length === 9) {
+            logMessage += " Completed".brightMagenta;
+            logMessage = logMessage.strikethrough;
+          }
+          console.log(logMessage);
+
+        }
+      }
+    }
   }
   async waitFor(ts) {
     return new Promise(resolve => setTimeout(resolve, ts));
@@ -454,31 +608,58 @@ class CoinMaster {
       console.log("user data", response);
     }
   }
-  async claimTodayRewards() {
+  async claimTodayRewardsV1() {
     const {
       data
-    } = await axios.get("https://cm-spin.herokuapp.com/");
-    const ids = []
-    for (let i = 0; i < this.numberOfDailyReward; i++) {
-      try {
-        let query = qs.parse(data[i].url.split('?')[1], "&", "=");
-        if (query.c) {
-          await this.claimReward(query.c);
-        } else {
-          const htmlResposne = await axios.get(data[i].url);
-          query = qs.parse(htmlResposne.data.split('?')[1], "&", "=");
+    } = await axios.get("https://raw.githubusercontent.com/samuraitruong/cm-spin/master/public/data.json");
+    for (const item of data.splice(0, 3)) {
+      await this.claimReward(item.code);
+    }
+  }
+  async claimTodayRewards() {
+    try {
+      const {
+        data
+      } = await axios.get("https://cm-spin.herokuapp.com/");
+      const ids = []
+      for (let i = 0; i < Math.min(this.numberOfDailyReward, data.length); i++) {
+        try {
+          let query = qs.parse(data[i].url.split('?')[1], "&", "=");
           if (query.c) {
             await this.claimReward(query.c);
+          } else {
+            const htmlResposne = await axios.get(data[i].url);
+            //for (var x in htmlResposne.request) console.log(x);
+            query = qs.parse(htmlResposne.request.path.split('?')[1], "&", "=");
+            if (query.c) {
+              await this.claimReward(query.c);
+            }
+            if (htmlResposne.request.path.indexOf("next=") > 0) {
+              const code = util.findCodeInQuery(htmlResposne.request.path);
+              if (code) {
+                await this.claimReward(code);
+                continue;
+              }
+            }
+            query = qs.parse(htmlResposne.data.split('?')[1], "&", "=");
+            if (query.c) {
+              await this.claimReward(query.c);
+
+            }
+
           }
+        } catch (err) {
+
         }
-      } catch (err) {
-        console.log(`Could not get dailly  reward : ` + data[i].url)
       }
+    } catch (err) {
+      console.log("Error claimTodayRewards".red)
     }
-    // fetch the reward  links
-    // loop throught and claim it
   }
   async claimReward(id) {
+    if (!id) {
+      return;
+    }
     console.log("getting daily reward using code", id);
     const response = await this.post(`campaigns/${id}/click`, {
       source_url: `coinmaster://promotions?af_deeplink=true&campaign=${id}&media_source=FB_PAGE`
@@ -576,19 +757,22 @@ class CoinMaster {
     //await this.update_fb_data();
 
     let res = await this.getBalance();
+    //console.log(res)
+    await this.upgradePet(res.selectedPet, res.petXpBank);
+    await this.syncCard(this.syncTarget);
     //await this.getDailyFreeRewards();
     await this.handleMessage(res);
     const firstResponse = await this.getAllMessages();
     await this.handleMessage(firstResponse);
-    console.log("events", firstResponse.active_events)
-
-    if(!recursive) {
+    await this.getSet();
+    console.log("Active Events: ", firstResponse.active_events)
+    if (!recursive) {
       await this.claimTodayRewards();
-      //await this.claimReward("pe_FCBJmBGxT_20191127");
+      await this.claimTodayRewardsV1();
       const firstResponse = await this.getAllMessages();
       await this.handleMessage(firstResponse);
-      await this.daillySpin();
-      
+      await this.dailySpin();
+
     }
     await this.playQuest();
     //process.exit(0);
@@ -601,7 +785,7 @@ class CoinMaster {
     var spinCount = 0;
     while (spins >= this.bet) {
 
-      if(spins> 500 && !this.usedFreeSnack) {
+      if (spins > 500 && !this.usedFreeSnack) {
         await this.feedFox(res);
       }
       await this.waitFor(this.sleep || 1000);
@@ -673,6 +857,36 @@ class CoinMaster {
     await this.upgrade(res);
     console.log("end....")
   }
+  async upgradePet(selectedPet, petXpBank) {
+    if(selectedPet.level === 0) {
+      console.log("hatching pet", selectedPet)
+    const result = await this.post(`pets/${selectedPet.type}/upgrade`, {
+      "include[0]": "pets",
+      request_id: uuid.v4()
+    });
+    if(result) {
+      console.log("Selected pet:", result.selectedPet);
+    }
+
+  }
+  else {
+    const requireXp = selectedPet.nextXp - selectedPet.xp;
+    if(petXpBank ==0) {
+      console.log("No XP to upgrade");
+      return;
+    };
+    console.log("Upgrade pet with xp", petXpBank,  selectedPet.nextXp)
+    const feedResult = await this.post("pets/selected/feed", {
+      petv2: true,
+      request_id: uuid.v4(),
+      xp: Math.min(requireXp, petXpBank )
+    });
+    console.log("Upgrade bet result", feedResult.selectedPet, feedResult.petXpBank);
+    if(feedResult.petXpBank >0) {
+      await this.upgradePet(feedResult.selectedPet, feedResult.petXpBank);
+    }
+  }
+  }
   async handleMessage(spinResult) {
     if (!spinResult) {
       console.log("something wrong handleMessage with null".red);
@@ -706,6 +920,7 @@ class CoinMaster {
         e
       } = message;
       let baloonsCount = 0;
+     
       if (data && data.status === "PENDING_COLLECT" && data.collectUrl) {
         if (data.reward && data.reward.coins) {
           data.reward.coins = numeral(data.reward.coins).format("$(0.000a)")
@@ -724,8 +939,8 @@ class CoinMaster {
       } else if (data && data.foxFound) {
         // acttion to elimited foxFound message
       } else if (e && e.chest) {
-        // console.log("You got free chest, collect it", e.chest);
-        // await this.post('read_messages', {last: message.t});
+         //console.log("You got free chest, collect it", e.chest);
+         //await this.post('read_messages', {last: message.t});
       } else {
         // 3 -attack
         if (
@@ -740,7 +955,8 @@ class CoinMaster {
             "baloons",
             "tournaments",
             "set_blast",
-            "bet_blast"
+            "bet_blast",
+            "bet_master"
           ].some(x => x === message.data.type)
         ) {
           await this.readSyncMessage(message.t);
@@ -1075,6 +1291,7 @@ class CoinMaster {
     return spinResult;
   }
   async fixBuilding(spinResult) {
+    if (!this.allowUpgrade) return spinResult;
     console.log("Fix damage building if any".red);
     const priority = ["Farm", "House", "Ship", "Statue", "Crop"];
     let response = spinResult;
@@ -1107,16 +1324,12 @@ class CoinMaster {
     });
     console.log("Purchase", response.chest);
   }
-  async upgradePet() {
-    const res = await this.post('/pets/fox/upgrade', {
-      request_id: "fb7061b5eff84f97b4d2" + (new Date()).getTime(),
-      "include[0]": "pets"
-    });
-    console.log("pet", res.selectedPet)
-  }
   async upgrade(spinResult) {
+    // this.allowUpgrade=false;
+
     if (!spinResult || !this.allowUpgrade) return spinResult;
     console.log("************************* Running Upgrade **********************".magenta);
+
     let maxDelta = 0;
     let coins = spinResult.coins;
     let villageLevel = spinResult.village;
