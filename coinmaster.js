@@ -106,6 +106,13 @@ class CoinMaster {
       this.rewards = JSON.parse(fs.readFileSync(this.rewardLogFile, "utf8"));
     }
   }
+  async syncCardToAllFriends(){
+    const {friends } = await this.post("friends");
+    for (const f of friends) {
+      console.log("Share card to friend", f);
+      await this.syncCard(f.mid);
+    }
+  }
   async syncCard(to) {
 
     if (!to || to === this.userId) {
@@ -113,7 +120,12 @@ class CoinMaster {
       return;
     }
     //read the desk 
-    const existing = JSON.parse(fs.readFileSync(`data/${to}_sets.json`, "utf8"));
+    const existingFilename = `data/${to}/sets.json`;
+    if(!fs.existsSync(existingFilename)) {
+      console.log("IGNORE - do not send card to unmanaged friend".yellow, to);
+      return;
+    }
+    const existing = JSON.parse(fs.readFileSync(existingFilename, "utf8"));
     const toDecks = existing.decks;
     await this.getSet();
     if (!this.cardCollection) {
@@ -231,7 +243,7 @@ class CoinMaster {
     if (!this.enableQuest) return;
     const questCoins = this.vikingQuestBetOptions || [12500, 400000, 550000, 1250000, 3000000, 6500000]; //3000000
     let response = await this.getBalance(true);
-    if (response && response.active_events && !response.active_events.viking_quest) {
+    if (response && ( response.active_events && !response.active_events.viking_quest) || !response.active_events) {
       console.log("No Viking quest event, skip play quest".yellow);
       return response;
     }
@@ -273,7 +285,7 @@ class CoinMaster {
         coins = response.coins;
         const vk = response.viking_quest;
         const wheelResult = vk.reels.join(" ");
-        const outMessage = `QUEST ${wheelResult}: lv${vk.qn} ${vk.qd} \tBet: ${questCoins[questLevel]}, \tPay: ${this.numberFormat(vk.p)}, \t\tCoins: ${this.numberFormat(coins)} , \t Complete: ${vk.qcx}%`;
+        const outMessage = `QUEST ${wheelResult}: lv${vk.qn} ${vk.qd} \tBet: ${questCoins[questLevel]} \tPay: ${this.numberFormat(vk.p)} \t\tCoins: ${this.numberFormat(coins)}  \t Complete: ${vk.qcx}%`;
         console.log(vk.p > questCoins[questLevel] ? outMessage.magenta : outMessage.green)
         await this.handleMessage(response);
         this.currentQuestLevel = vk.qn;
@@ -699,7 +711,7 @@ class CoinMaster {
     if (response) {
       this.dumpFile("dailyreward", response);
       if(response.messages) {
-        const item = response.messages.find(x =>x.data && x.data.type == "CAMPAIGN_CLICK");
+        const item = response.messages.find(x =>x.data && x.data.reason == "CAMPAIGN_CLICK");
         if(item){
           this.rewards[id] = item.reward;
         }
@@ -734,6 +746,7 @@ class CoinMaster {
       let deltaSpins = "";
 
       res = await this.spin(res);
+      spins = res.spins;
       const {
         pay,
         r1,
@@ -780,7 +793,7 @@ class CoinMaster {
       }
       this.updateHistoryData(r1, r2, r3, type, deltaSpins);
 
-      const messageResult = await this.handleMessage(res);
+      await this.handleMessage(res);
 
       if (spinLimit && spinCount > spinLimit) return res;
       if (moneyLimit && res.coins > moneyLimit) return res;
@@ -800,6 +813,7 @@ class CoinMaster {
     //console.log(res)
     await this.upgradePet(res.selectedPet, res.petXpBank);
     await this.syncCard(this.syncTarget);
+    await this.syncCardToAllFriends();
     //await this.getDailyFreeRewards();
     await this.handleMessage(res);
     const firstResponse = await this.getAllMessages();
@@ -898,6 +912,7 @@ class CoinMaster {
     await this.sendGifts();
   }
   async upgradePet(selectedPet, petXpBank) {
+    if(!selectedPet) return;
     if(selectedPet.level === 0) {
       console.log("-------------------Hatching Pet-----------------", selectedPet)
     const result = await this.post(`pets/${selectedPet.type}/upgrade`, {
@@ -1175,11 +1190,12 @@ class CoinMaster {
     console.log("Collect gift");
 
     let response = await this.post("inbox/pending");
+    if(!response) return spinResult;
     const {
       messages
-    } = response;
+    } = response ;
     if (messages && messages.length > 0) {
-      console.log("Your have gifts", messages);
+      // console.log("Your have gifts", messages);
 
       for (const message of messages) {
         if (message.type !== "gift" && message.type != "send_cards") continue;
