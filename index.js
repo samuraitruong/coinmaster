@@ -44,8 +44,9 @@ let accounts = [];
         for (const account of accounts.filter(x => x.ID === index || index == "all")) {
           try {
             if (account.EMAIL[0] === "#" && isNaN(index)) continue;
-            console.log("PLAY AS: ", account.EMAIL)
+            console.log("PLAY AS: ", account)
             var cm = new CoinMaster({
+              // sycnTarget: account.SYNC_TARGET,
               userId: account.USER_ID,
               fbToken: account.FB_TOKEN,
               deviceId: account.DEVICE_ID,

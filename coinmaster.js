@@ -45,7 +45,7 @@ class CoinMaster {
    * }
    */
   constructor(options) {
-    this.syncTarget = process.env.SYNC_TARGET || null;
+    this.syncTarget = options.syncTarget || process.env.SYNC_TARGET || null;
     this.questLevelLimit = parseInt(process.env.QUEST_LEVEL_LIMIT || "6");
     this.allowUpgrade = false;
     this.allowUpgrade = options.allowUpgrade || process.env.ALLOw_UPGRADE === "true";
@@ -97,10 +97,21 @@ class CoinMaster {
         "Content-Type": "application/x-www-form-urlencoded"
       }
     };
-    this.dataFile = path.join(__dirname, "data", this.userId + ".csv");
+    fs.mkdirSync(path.join(__dirname, "data", this.userId), {recursive : true});
+    this.dataFile = path.join(__dirname, "data", this.userId,  "spin.csv");
     this.spinResult = null;
+    this.rewardLogFile = path.join(__dirname, "data", this.userId, "rewards.json");
     this.upgradeCost = {};
-
+    if(fs.existsSync(this.rewardLogFile)){
+      this.rewards = JSON.parse(fs.readFileSync(this.rewardLogFile, "utf8"));
+    }
+  }
+  async syncCardToAllFriends(){
+    const {friends } = await this.post("friends");
+    for (const f of friends) {
+      console.log("Share card to friend", f);
+      await this.syncCard(f.mid);
+    }
   }
   async syncCard(to) {
 
@@ -109,10 +120,14 @@ class CoinMaster {
       return;
     }
     //read the desk 
-    const existing = JSON.parse(fs.readFileSync(`data/${to}_sets.json`, "utf8"));
+    const existingFilename = `data/${to}/sets.json`;
+    if(!fs.existsSync(existingFilename)) {
+      console.log("IGNORE - do not send card to unmanaged friend".yellow, to);
+      return;
+    }
+    const existing = JSON.parse(fs.readFileSync(existingFilename, "utf8"));
     const toDecks = existing.decks;
     await this.getSet();
-    console.log("hahaha", this.cardCollection)
     if (!this.cardCollection) {
       return;
     }
@@ -124,7 +139,7 @@ class CoinMaster {
         for (const card of items) {
           if (card.count > 1 && card.swappable && (!toDecks[deck] || toDecks[deck].cards.filter(x => x.name == card.name) === 0)) {
             cardToSends.push(card.name);
-            if (cardToSends.length === 25) {
+            if (cardToSends.length === 5) {
               await this.sendCard(to, cardToSends);
               cardToSends = [];
             }
@@ -136,8 +151,26 @@ class CoinMaster {
       await this.sendCard(to, cardToSends);
     }
   }
+  
+  async sendGifts(){
+
+    const {friends} = await this.post("friends");
+    console.log(friends);
+    for(const friend of friends) {
+      console.log("GIFT - Sending spins to: ", friend.name);
+      const res = await this.post("gifts/send", {
+        to: friend.mid,
+        reward: "spins",
+        request_id: uuid.v4()
+      });
+      if(res) {
+        console.log(`GIFT - Successful send 1 spin to ${friend.name} `.green)
+      }
+    }
+  }
   async sendCard(to, cards) {
     console.log("Sending card ", to, cards);
+    await this.waitFor(1000);
     const request = {
       to,
       request_id: uuid.v4(),
@@ -174,8 +207,11 @@ class CoinMaster {
   }
   dumpFile(name, response) {
     name = name || "response";
+    const dir = path.join(__dirname, "data",this.userId);
+    // console.log("dir", dir)
     if (this.dumpResponseToFile) {
-      fs.writeJsonSync(path.join(__dirname, "data", name + ".json"), response, {
+      fs.mkdirSync(dir , {recursive: true});
+      fs.writeJsonSync(path.join(dir, name+".json"), response, {
         spaces: 4
       });
     }
@@ -207,7 +243,7 @@ class CoinMaster {
     if (!this.enableQuest) return;
     const questCoins = this.vikingQuestBetOptions || [12500, 400000, 550000, 1250000, 3000000, 6500000]; //3000000
     let response = await this.getBalance(true);
-    if (response && response.active_events && !response.active_events.viking_quest) {
+    if (response && ( response.active_events && !response.active_events.viking_quest) || !response.active_events) {
       console.log("No Viking quest event, skip play quest".yellow);
       return response;
     }
@@ -249,7 +285,7 @@ class CoinMaster {
         coins = response.coins;
         const vk = response.viking_quest;
         const wheelResult = vk.reels.join(" ");
-        const outMessage = `QUEST ${wheelResult}: lv${vk.qn} ${vk.qd} \tBet: ${questCoins[questLevel]}, \tPay: ${this.numberFormat(vk.p)}, \t\tCoins: ${this.numberFormat(coins)} , \t Complete: ${vk.qcx}%`;
+        const outMessage = `QUEST ${wheelResult}: lv${vk.qn} ${vk.qd} \tBet: ${questCoins[questLevel]} \tPay: ${this.numberFormat(vk.p)} \t\tCoins: ${this.numberFormat(coins)}  \t Complete: ${vk.qcx}%`;
         console.log(vk.p > questCoins[questLevel] ? outMessage.magenta : outMessage.green)
         await this.handleMessage(response);
         this.currentQuestLevel = vk.qn;
@@ -317,8 +353,15 @@ class CoinMaster {
     const response = await this.post(`campaigns/${campaign}/click`);
     console.log(response);
   }
-  numberFormat(num) {
-    return numeral(num).format("$(0.000a)")
+  numberFormat(num, digit) {
+    digit = digit || 2;
+    switch(digit) {
+      case 1:
+          return numeral(num).format("$(0.0a)");
+      case 2: return numeral(num).format("$(0.00a)");
+      case 3: return numeral(num).format("$(0.000a)");
+    }
+    return numeral(num).format("$(0.00a)")
 
   }
   async spin(lastRespponse) {
@@ -542,7 +585,7 @@ class CoinMaster {
     this.onData({
       cards: this.cardCollection
     });
-    this.dumpFile(`${this.userId}_sets`, this.cardCollection);
+    this.dumpFile(`sets`, this.cardCollection);
     const {
       decks
     } = this.cardCollection;
@@ -657,7 +700,8 @@ class CoinMaster {
     }
   }
   async claimReward(id) {
-    if (!id) {
+    this.rewards = this.rewards || {};
+    if (!id || this.rewards[id]) {
       return;
     }
     console.log("getting daily reward using code", id);
@@ -666,10 +710,18 @@ class CoinMaster {
     });
     if (response) {
       this.dumpFile("dailyreward", response);
+      if(response.messages) {
+        const item = response.messages.find(x =>x.data && x.data.reason == "CAMPAIGN_CLICK");
+        if(item){
+          this.rewards[id] = item.reward;
+        }
+      }
       await this.handleMessage(response);
     } else {
+      this.rewards[id] = {claimed: true};
       console.log("You already collect  this reward or it expired: code = ".yellow + id.red)
     }
+    this.dumpFile("rewards", this.rewards);
     return response;
   }
   async login(useToken) {
@@ -694,6 +746,7 @@ class CoinMaster {
       let deltaSpins = "";
 
       res = await this.spin(res);
+      spins = res.spins;
       const {
         pay,
         r1,
@@ -740,7 +793,7 @@ class CoinMaster {
       }
       this.updateHistoryData(r1, r2, r3, type, deltaSpins);
 
-      const messageResult = await this.handleMessage(res);
+      await this.handleMessage(res);
 
       if (spinLimit && spinCount > spinLimit) return res;
       if (moneyLimit && res.coins > moneyLimit) return res;
@@ -760,6 +813,7 @@ class CoinMaster {
     //console.log(res)
     await this.upgradePet(res.selectedPet, res.petXpBank);
     await this.syncCard(this.syncTarget);
+    await this.syncCardToAllFriends();
     //await this.getDailyFreeRewards();
     await this.handleMessage(res);
     const firstResponse = await this.getAllMessages();
@@ -785,10 +839,10 @@ class CoinMaster {
     var spinCount = 0;
     while (spins >= this.bet) {
 
-      if (spins > 500 && !this.usedFreeSnack) {
+      if (spins > 300 && !this.usedFreeSnack) {
         await this.feedFox(res);
       }
-      await this.waitFor(this.sleep || 1000);
+      // await this.waitFor(this.sleep || 1000);
       let deltaSpins = "";
 
       res = await this.spin(res);
@@ -849,17 +903,18 @@ class CoinMaster {
     res = await this.collectGift(res);
     if (res.spins > 0) {
       console.log("Recursive play", res.spins)
-      await this.play(false);
+      await this.play(true);
     }
     if (this.csvStream) {
       this.csvStream.close();
     }
     await this.upgrade(res);
-    console.log("end....")
+    await this.sendGifts();
   }
   async upgradePet(selectedPet, petXpBank) {
+    if(!selectedPet) return;
     if(selectedPet.level === 0) {
-      console.log("hatching pet", selectedPet)
+      console.log("-------------------Hatching Pet-----------------", selectedPet)
     const result = await this.post(`pets/${selectedPet.type}/upgrade`, {
       "include[0]": "pets",
       request_id: uuid.v4()
@@ -933,7 +988,7 @@ class CoinMaster {
         );
 
         await this.post("https://vik-game.moonactive.net" + data.collectUrl);
-        if (data.reward && data.reward.coins) {
+        if (data.reward && data.reward.coins && !this.enableQuest) {
           await this.upgrade(spinResult);
         }
       } else if (data && data.foxFound) {
@@ -956,7 +1011,8 @@ class CoinMaster {
             "tournaments",
             "set_blast",
             "bet_blast",
-            "bet_master"
+            "bet_master",
+            "viking_quest"
           ].some(x => x === message.data.type)
         ) {
           await this.readSyncMessage(message.t);
@@ -1134,11 +1190,12 @@ class CoinMaster {
     console.log("Collect gift");
 
     let response = await this.post("inbox/pending");
+    if(!response) return spinResult;
     const {
       messages
-    } = response;
+    } = response ;
     if (messages && messages.length > 0) {
-      console.log("Your have gifts", messages);
+      // console.log("Your have gifts", messages);
 
       for (const message of messages) {
         if (message.type !== "gift" && message.type != "send_cards") continue;

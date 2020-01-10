@@ -1,0 +1,1040 @@
+{
+    "me": {},
+    "friends": [
+        {
+            "fb_user_id": "106252113915130",
+            "mid": "rof2__cjuuqh6ui02ra9mlbafdc7pvt",
+            "score": 14437,
+            "village": {
+                "village": 179
+            },
+            "name": "Rohit Rohit"
+        },
+        {
+            "fb_user_id": "1136233326399287",
+            "mid": "A_cj8998ouu00o7twm7u8i69smc",
+            "score": 10440,
+            "village": {
+                "village": 151
+            },
+            "name": "Ramona Botezatu"
+        },
+        {
+            "fb_user_id": "10155752722849443",
+            "mid": "B_cjkrsx6ix2vdjt4h6yj63zkzy",
+            "score": 9546,
+            "village": {
+                "village": 159
+            },
+            "name": "Mina Racpan"
+        },
+        {
+            "fb_user_id": "10156799422207762",
+            "mid": "rof4__cjzn7tig40149hdli9tzz8f7g",
+            "score": 7779,
+            "village": {
+                "village": 155
+            },
+            "name": "Pham Thi Xuan Thao"
+        },
+        {
+            "fb_user_id": "107260393794418",
+            "mid": "rof5__cju3602fe00nhgol3gtqpatj0",
+            "score": 7131,
+            "village": {
+                "village": 137
+            },
+            "name": "Sue Mccampbell"
+        },
+        {
+            "fb_user_id": "149727182744151",
+            "mid": "rof4__cjvuvxctg03abbhk0dua1aaow",
+            "score": 6484,
+            "village": {
+                "village": 126
+            },
+            "name": "Sara Gordon"
+        },
+        {
+            "fb_user_id": "10153690954043775",
+            "mid": "rof4__cjuyyg4pk008zazl9ai30g479",
+            "score": 5569,
+            "village": {
+                "village": 124
+            },
+            "name": "Joanne Gallagher"
+        },
+        {
+            "fb_user_id": "105857274115469",
+            "mid": "rof4__cjziwxzxb0175auk1ajyo6daq",
+            "score": 4970,
+            "village": {
+                "village": 115
+            },
+            "name": "Hanne Sørensen"
+        },
+        {
+            "fb_user_id": "345643666301191",
+            "mid": "rof2__cju703hm806yn9tlb9u979ecx",
+            "score": 4920,
+            "village": {
+                "village": 108
+            },
+            "name": "Krushna Panda"
+        },
+        {
+            "fb_user_id": "159704061873110",
+            "mid": "rof4__cjzq2ta7s01qgasl87kg5dmro",
+            "score": 4443,
+            "village": {
+                "village": 115
+            },
+            "name": "Xuong Nguyen"
+        },
+        {
+            "fb_user_id": "444988585880180",
+            "mid": "B_cjiid4id401fls3imdolfx8au",
+            "score": 4312,
+            "village": {
+                "village": 110
+            },
+            "name": "Raja Sahu King"
+        },
+        {
+            "fb_user_id": "108071973910424",
+            "mid": "rof4__ck09czjio03i2aulcfp5d1653",
+            "score": 2490,
+            "village": {
+                "village": 71
+            },
+            "name": "Thaopham Pham"
+        },
+        {
+            "fb_user_id": "10154418377977393",
+            "mid": "rof5__cjw5box6e03e59yjw2rnv8as7",
+            "score": 2320,
+            "village": {
+                "village": 72
+            },
+            "name": "Shanti Sarno Armstrong"
+        },
+        {
+            "fb_user_id": "108918637182638",
+            "mid": "rof4__ck1d51sbh00iqnik77a66hjju",
+            "score": 2125,
+            "village": {
+                "village": 66
+            },
+            "name": "Maria Phan"
+        },
+        {
+            "fb_user_id": "113041823433674",
+            "mid": "rof4__ck1b5auv100kclkkch7yj9pdh",
+            "score": 1816,
+            "village": {
+                "village": 49
+            },
+            "name": "Trau Dien"
+        },
+        {
+            "fb_user_id": "114769226591796",
+            "mid": "rof4__ck156gol700ocm5k2203hgah4",
+            "score": 1763,
+            "village": {
+                "village": 49
+            },
+            "name": "Babara Smith"
+        },
+        {
+            "fb_user_id": "123619322369397",
+            "mid": "rof4__ck1579pjo00qmltk3ddso3jgn",
+            "score": 1598,
+            "village": {
+                "village": 50
+            },
+            "name": "Angela Smith"
+        },
+        {
+            "fb_user_id": "1204676683057655",
+            "mid": "rof4__cjzq3kzx8052ta4ljea3f4j8a",
+            "score": 1522,
+            "village": {
+                "village": 41
+            },
+            "name": "Truong Nguyen"
+        },
+        {
+            "fb_user_id": "2487420421479807",
+            "mid": "rof4__ck1bjml7l017nlykaeqn82ios",
+            "score": 1429,
+            "village": {
+                "village": 46
+            },
+            "name": "Nguyen Truong"
+        },
+        {
+            "fb_user_id": "10210064742287713",
+            "mid": "rof4__cjwf8jne500gdbalc1w8e5wnw",
+            "score": 124,
+            "village": {
+                "village": 5
+            },
+            "name": "Angelika Lichinchi"
+        },
+        {
+            "fb_user_id": "808995965916724",
+            "mid": "B_cjl0liz74107wsficcikw89tq",
+            "score": 80,
+            "village": {
+                "village": 3
+            },
+            "name": "Ball Bagbarry"
+        },
+        {
+            "fb_user_id": "1336112359795613",
+            "mid": "ciyug1ius002aapqjxxeb0qed",
+            "score": 20,
+            "village": {
+                "village": 1
+            },
+            "name": "Trần Minh"
+        },
+        {
+            "fb_user_id": "1466739726692991",
+            "mid": "rof4__cjxn7r03q006ua5lgciy0bgox",
+            "score": 20,
+            "village": {
+                "village": 1
+            },
+            "name": "Paulina Nowakowska"
+        },
+        {
+            "fb_user_id": "10216311410670298",
+            "mid": "rof4__ck006fgvh00n89zl8ahdk85td",
+            "score": 20,
+            "village": {
+                "village": 1
+            },
+            "name": "Trung Duc Nguyen"
+        },
+        {
+            "fb_user_id": "1483282891697277",
+            "mid": "A_cj7ehsb7q00ffgxqc86jbrrpl",
+            "score": 20,
+            "village": {
+                "village": 1
+            },
+            "name": "Oana Ma Cor"
+        },
+        {
+            "fb_user_id": "103437257703414",
+            "mid": "rof4__cjzy3s4c900dy9uk944ml4wj2",
+            "score": 20,
+            "village": {
+                "village": 1
+            },
+            "name": "Thao Pham"
+        },
+        {
+            "fb_user_id": "10211598708881607",
+            "mid": "rof4__ck0gmhsq200nc9tlj2p0l8omj",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Xuan Thao Pham"
+        },
+        {
+            "fb_user_id": "2646120332065291",
+            "mid": "rof4__cjzy1ifxr00draqln39q23j9p",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Anh Ly"
+        },
+        {
+            "fb_user_id": "1449377581833656",
+            "mid": "B_cjidls5ez06s1sejz4dwgl872",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Candice Soriano"
+        },
+        {
+            "fb_user_id": "10155020617105874",
+            "mid": "A_cj6pcp3jx09bb9oqqnkm0tye6",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Kjell Gudim"
+        },
+        {
+            "fb_user_id": "868483636653725",
+            "mid": "B_cjkf911oc04logjk28mqseryh",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Sumanta Gochhayat"
+        },
+        {
+            "fb_user_id": "2004536806224522",
+            "mid": "rof4__ck1gj4ign000nm2k98j5v50rr",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Nguyễn Đỗ Long Phi"
+        },
+        {
+            "fb_user_id": "2391908564390456",
+            "mid": "rof4__ck0unf3y904faakkafrok81gs",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Khuong Ngo Thi"
+        },
+        {
+            "fb_user_id": "104375370943716",
+            "mid": "rof4__ck008299d00ynaok2ggx23hbq",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Anh Truong"
+        },
+        {
+            "fb_user_id": "115412939832162",
+            "mid": "rof4__ck00uibra00ak9lk07r03fozj",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Truong Nguyen"
+        },
+        {
+            "fb_user_id": "106840560695241",
+            "mid": "rof4__cjzq57lnc04pwhylkevw1ht4h",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Truong Nguyen"
+        },
+        {
+            "fb_user_id": "110458316997643",
+            "mid": "rof4__ck00jlpk503uq9zk8eak1ctnk",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Truong Nguyen"
+        },
+        {
+            "fb_user_id": "105348150845738",
+            "mid": "rof4__ck00l3u5300c6h0ld8lpje2go",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Thao Tran"
+        },
+        {
+            "fb_user_id": "104718517575791",
+            "mid": "rof4__ck00k34k102q0akla87gvggu2",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Anh Kiet"
+        },
+        {
+            "fb_user_id": "116427656405732",
+            "mid": "rof5__ck0f961nf01y7i2lp8e7vdino",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Han Gian"
+        },
+        {
+            "fb_user_id": "114300803286581",
+            "mid": "rof5__ck0fbj5xr00k3hzle0myo5ntp",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Quai Thu"
+        },
+        {
+            "fb_user_id": "103908890990655",
+            "mid": "rof4__ck007bgw200ufaylh25w39auf",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Truong Nguyen"
+        },
+        {
+            "fb_user_id": "116139789768648",
+            "mid": "rof5__ck0fba8nj00jhhylegtsw6rd6",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Meo Hoang"
+        },
+        {
+            "fb_user_id": "113597986690701",
+            "mid": "rof4__ck0f9bmdw00pxbalf7z9h3v1g",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Binh Sua"
+        },
+        {
+            "fb_user_id": "115530093164178",
+            "mid": "rof5__ck0hk3neo005ph4li5jg96hgq",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Meo Con"
+        },
+        {
+            "fb_user_id": "112707073446813",
+            "mid": "rof4__ck0f77giv01moaslg3jcc82aq",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Minh Nguyet"
+        },
+        {
+            "fb_user_id": "115281389856096",
+            "mid": "rof5__ck0hc6h6501lthtln08g2hawr",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Trung Quoc"
+        },
+        {
+            "fb_user_id": "115259529856706",
+            "mid": "rof4__ck0f6z2pp00tlagllekgy8qzy",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Kala Rean"
+        },
+        {
+            "fb_user_id": "114692193246874",
+            "mid": "rof4__ck0f1v1xh00mja0lcdb0a9bfn",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Janie Kindom"
+        },
+        {
+            "fb_user_id": "116319009751644",
+            "mid": "rof4__ck0hfadrq024ehnk85jcjam06",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Muoi Bon"
+        },
+        {
+            "fb_user_id": "114582453259310",
+            "mid": "rof5__ck0gqltwl00dgh6jy5mc1c0zv",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Sinh Vat"
+        },
+        {
+            "fb_user_id": "112846996767298",
+            "mid": "rof5__ck0hb49pd01z0h6lg0siyaev5",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Hoai Bao"
+        },
+        {
+            "fb_user_id": "109755047078523",
+            "mid": "rof4__ck0gpn1fs00pba4k74ml11wnv",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Meo Con"
+        },
+        {
+            "fb_user_id": "113209833396442",
+            "mid": "rof5__ck0f9vc8v01mqi7la8aidfxiz",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Cho Duc"
+        },
+        {
+            "fb_user_id": "114766029907701",
+            "mid": "rof4__ck0goo4kb000f9hk4a7klbnd3",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Meo Hoang"
+        },
+        {
+            "fb_user_id": "115502419834070",
+            "mid": "rof5__ck0gqqy8v004d9zk44o8yhwxs",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Sinh Sat"
+        },
+        {
+            "fb_user_id": "111763203542118",
+            "mid": "rof5__ck0f81jmf01a3a1lk64tk0g9x",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Rob Ren"
+        },
+        {
+            "fb_user_id": "113355826716252",
+            "mid": "rof4__ck0hc3ws001w9a4kb2gsv8yxl",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Chuot Chui"
+        },
+        {
+            "fb_user_id": "112783416773654",
+            "mid": "rof4__ck0god587008tadjza6n68euu",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Viet Nam"
+        },
+        {
+            "fb_user_id": "113255753393215",
+            "mid": "rof5__ck0hkhzl00071hole9bum3n6i",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Heo Con"
+        },
+        {
+            "fb_user_id": "111541113565728",
+            "mid": "rof5__ck0hgijow025qb2lrg7el9l0t",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Truong Nguyen"
+        },
+        {
+            "fb_user_id": "104533147599977",
+            "mid": "rof4__ck09cfgz000qj9mlf692yd0xc",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Thaoxuan Pham"
+        },
+        {
+            "fb_user_id": "111283553592081",
+            "mid": "rof5__ck0hcb3et01urb2lrgvem2ezt",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Quoc Trung"
+        },
+        {
+            "fb_user_id": "110968173622663",
+            "mid": "rof5__ck0fburni03w9a6k25p6xe6r3",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Heo Nai"
+        },
+        {
+            "fb_user_id": "109950123726364",
+            "mid": "rof4__ck0hew77r024mhxlfc6nfaetu",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Muoi Ba"
+        },
+        {
+            "fb_user_id": "108955690493030",
+            "mid": "rof4__ck0go630t007z9ulog60h27kt",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Viet Nam"
+        },
+        {
+            "fb_user_id": "110450573675914",
+            "mid": "rof5__ck0he945602n79all7pzm3ece",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Muoi Mot"
+        },
+        {
+            "fb_user_id": "107825463940422",
+            "mid": "rof5__ck0hgsggm02wr9plh34tbd0we",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Meo Con"
+        },
+        {
+            "fb_user_id": "112911280094037",
+            "mid": "rof5__ck0gqb6h7003x9bll6t7a60dx",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Nam Than"
+        },
+        {
+            "fb_user_id": "109226873797506",
+            "mid": "rof5__ck0fbubpr01sea0lk9l050ae4",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Yeu Tinh"
+        },
+        {
+            "fb_user_id": "109346797120044",
+            "mid": "rof4__ck0gosc9r00tkaclj8yp4cjj6",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Meo Tinh"
+        },
+        {
+            "fb_user_id": "107769713944901",
+            "mid": "rof5__ck0f9lgwn01kz9gk90xee2ous",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Han Viet"
+        },
+        {
+            "fb_user_id": "111645140224026",
+            "mid": "rof5__ck0jhf2iy05s2aik6ct4q7l2u",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Truong Nguyen"
+        },
+        {
+            "fb_user_id": "107778240611167",
+            "mid": "rof4__ck0gmuurw00graojzgw3m0xjw",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Viet Nam"
+        },
+        {
+            "fb_user_id": "106283090761386",
+            "mid": "rof5__ck0faozme0153afllddm46cwt",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Meo Hoang"
+        },
+        {
+            "fb_user_id": "107149590675671",
+            "mid": "rof5__ck0hgmm0z028uafk92vd59eiv",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Truong Nghiem"
+        },
+        {
+            "fb_user_id": "105239700866763",
+            "mid": "rof5__ck0fay3ne00xsagleg4n9az41",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Meo Nho"
+        },
+        {
+            "fb_user_id": "108130147243190",
+            "mid": "rof5__ck0hkdbpq02b29uk65pvj15yh",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Sieu Nhan"
+        },
+        {
+            "fb_user_id": "105732944150195",
+            "mid": "rof4__ck0f8hyyh01ua9sln62vffy9o",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Viet Gian"
+        },
+        {
+            "fb_user_id": "107116447345681",
+            "mid": "rof5__ck0hg6evs02rd9kllhb6c24nz",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Muoi Sau"
+        },
+        {
+            "fb_user_id": "106795614044639",
+            "mid": "rof5__ck0hknb0w037ha6lhfn6y0anp",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Heo Sua"
+        },
+        {
+            "fb_user_id": "103822474343094",
+            "mid": "rof4__ck0fa486x03tsa7k260rcakhr",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Yeu Quai"
+        },
+        {
+            "fb_user_id": "104710564254582",
+            "mid": "rof5__ck0gpumjk002lhrk9fdqo5z8h",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Viet Nam"
+        },
+        {
+            "fb_user_id": "105261797532915",
+            "mid": "rof4__ck0hegxko024aaekb4q410dpd",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Muoi Hai"
+        },
+        {
+            "fb_user_id": "104312617628732",
+            "mid": "rof4__ck0h9dkuf01fa9uk65fr9bcep",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Meo Con"
+        },
+        {
+            "fb_user_id": "107738563947772",
+            "mid": "rof5__ck0f9p42801ybaslg6t2zf4m2",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Cho Cai"
+        },
+        {
+            "fb_user_id": "109883357066866",
+            "mid": "rof4__ck0hngw0002voaekbdgq35z0l",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Heo Tay"
+        },
+        {
+            "fb_user_id": "106098917446520",
+            "mid": "rof5__ck0f9u3vq01ml9fk96f8v0gvj",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Cho Meo"
+        },
+        {
+            "fb_user_id": "105589884164516",
+            "mid": "rof5__ck0fb51mo022qarlg7zfsekzf",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Meo Con"
+        },
+        {
+            "fb_user_id": "104237330969026",
+            "mid": "rof5__ck0gp0b6e00afh7jy3bu21nb9",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Chuot Bach"
+        },
+        {
+            "fb_user_id": "104251347634377",
+            "mid": "rof5__ck0gm6jxn00lm9nlo8wlwdrrn",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Chuot Chui"
+        },
+        {
+            "fb_user_id": "102984541094780",
+            "mid": "rof5__ck0fa8tqp01ftanle3iceebbw",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Yeu Thu"
+        },
+        {
+            "fb_user_id": "104799684244513",
+            "mid": "rof4__ck0f56gzn00b6aglehuu8650a",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Hindu Kubata"
+        },
+        {
+            "fb_user_id": "104247350968214",
+            "mid": "rof5__ck0hbjo6g01v1b0lr4hgf2sek",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Chien Ham"
+        },
+        {
+            "fb_user_id": "102791764447541",
+            "mid": "rof5__ck0faeqbw03u2a5k2eipm1t3f",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Viet Cong"
+        },
+        {
+            "fb_user_id": "101993674527709",
+            "mid": "rof4__ck0f7j2rw01dm9fk94b5ghesr",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Nguyet Minh"
+        },
+        {
+            "fb_user_id": "102305324498332",
+            "mid": "rof4__ck0hrabba02yca6iha14g2rbl",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Meo Con"
+        },
+        {
+            "fb_user_id": "104376997621911",
+            "mid": "rof5__ck0hbe5gw02hl98lk2bkp33bm",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Chien Binh"
+        },
+        {
+            "fb_user_id": "101200677943101",
+            "mid": "rof5__ck0hauql601s1hmk81yyk1p2o",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Uoc Mo"
+        },
+        {
+            "fb_user_id": "101097921286868",
+            "mid": "rof4__ck0hrfflf03w59plh6dnw5smb",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Trau Dien"
+        },
+        {
+            "fb_user_id": "102168071176938",
+            "mid": "rof4__ck0fbfaev01t4i7lah3vo676w",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Meo Cho"
+        },
+        {
+            "fb_user_id": "101095081285606",
+            "mid": "rof5__ck0f6o0gd01i4a6lf3fky9zgf",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Nguyen Van"
+        },
+        {
+            "fb_user_id": "100969307965017",
+            "mid": "rof4__ck0f95lev01wx9sln6ae79xna",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Viet Minh"
+        },
+        {
+            "fb_user_id": "102475904479238",
+            "mid": "rof5__ck0f7ccik00iwagle1lncfe1d",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Leon Vien"
+        },
+        {
+            "fb_user_id": "101016504626955",
+            "mid": "rof5__ck0f7vuk601u69rlng97r7sl6",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Thao Ga"
+        },
+        {
+            "fb_user_id": "100982211297145",
+            "mid": "rof4__ck0faqve9015aafllgnc7gb13",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Yeu Quai"
+        },
+        {
+            "fb_user_id": "100456301350316",
+            "mid": "rof5__ck0f8s1gq01lxi6laeyzd1zuk",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Sadru Ng"
+        },
+        {
+            "fb_user_id": "100575121339752",
+            "mid": "rof4__ck0hq961j00qwa9lq955x30ix",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Mua Hue"
+        },
+        {
+            "fb_user_id": "101648367897749",
+            "mid": "rof5__ck0hcdzq202lsa5lh4e7cgub7",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Chuot Nhoc"
+        },
+        {
+            "fb_user_id": "104675744258077",
+            "mid": "rof5__ck0goaapi000qacled1a4b02m",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Chuot Chui"
+        },
+        {
+            "fb_user_id": "103551554371691",
+            "mid": "rof4__ck0gn8qgq00d5agll19558bkg",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Meo Con"
+        },
+        {
+            "fb_user_id": "102989954428260",
+            "mid": "rof5__ck0gq4yvn0036hkk90frihsus",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Nam Tuoc"
+        },
+        {
+            "fb_user_id": "102836521110817",
+            "mid": "rof5__ck0hctm5501nyhsln2ymqbupp",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Shi Sha"
+        },
+        {
+            "fb_user_id": "100524748010099",
+            "mid": "rof5__ck0fae3nu01ynatlg8t34ebbd",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Yeu Nghiet"
+        },
+        {
+            "fb_user_id": "103070864453014",
+            "mid": "rof4__ck1x1dwzg01qlpuilag842l6w",
+            "score": 0,
+            "village": {
+                "village": 0
+            },
+            "name": "Huong Pham"
+        }
+    ]
+}
