@@ -108,14 +108,15 @@ class CoinMaster {
   }
   async syncCardToAllFriends(){
     const {friends } = await this.post("friends");
+    this.friends = friends;
     for (const f of friends) {
-      console.log("Share card to friend", f);
+      console.log("Share card to friend", f.name);
       await this.syncCard(f.mid);
     }
   }
-  async syncCard(to) {
+  async syncCard(to,ignoreDuplicate) {
 
-    if (!to || to === this.userId) {
+    if (!to || to === this.userId || to ==='rof4__ck0vls1jl0122lhlbf8uihclr')  {
       console.log("NO SYNC_TARGET set, ignore syncing process".yellow)
       return;
     }
@@ -127,7 +128,6 @@ class CoinMaster {
     }
     const existing = JSON.parse(fs.readFileSync(existingFilename, "utf8"));
     const toDecks = existing.decks;
-    await this.getSet();
     if (!this.cardCollection) {
       return;
     }
@@ -137,10 +137,13 @@ class CoinMaster {
       if (decks.hasOwnProperty(deck)) {
         const items = decks[deck].cards;
         for (const card of items) {
-          if (card.count > 1 && card.swappable && (!toDecks[deck] || toDecks[deck].cards.filter(x => x.name == card.name) === 0)) {
+          if (card.count > 1 && card.swappable && (ignoreDuplicate || !toDecks[deck] || toDecks[deck].cards.filter(x => x.name == card.name) === 0)) {
             cardToSends.push(card.name);
             if (cardToSends.length === 5) {
-              await this.sendCard(to, cardToSends);
+              const result = await this.sendCard(to, cardToSends);
+              if(!result) {
+                return;
+              }
               cardToSends = [];
             }
           }
@@ -155,19 +158,22 @@ class CoinMaster {
   async sendGifts(){
 
     const {friends} = await this.post("friends");
-    console.log(friends);
-    for(const friend of friends) {
-      console.log("GIFT - Sending spins to: ", friend.name);
-      const res = await this.post("gifts/send", {
-        to: friend.mid,
-        reward: "spins",
-        request_id: uuid.v4()
-      });
+    const data = {
+      // to: friend.mid,
+      reward: "spins",
+      collect_all: "spins",
+      request_id: uuid.v4()
+    };
+    friends.forEach((friend, index) => {
+      data[`to[${index}]`] = friend.mid;
+
+    })
+      const res = await this.post("gifts/send", data);
       if(res) {
-        console.log(`GIFT - Successful send 1 spin to ${friend.name} `.green)
+        console.log(`GIFT - Successful send spin to all friends `.green)
       }
     }
-  }
+  
   async sendCard(to, cards) {
     console.log("Sending card ", to, cards);
     await this.waitFor(1000);
@@ -179,7 +185,9 @@ class CoinMaster {
       request[`cards[${i}]`] = cards[i]
     }
     const results = await this.post("cards/send", request)
+    if(results){
     this.cardCollection = results;
+    }
   }
   async readHistoryData() {
     return new Promise(resolve => {
@@ -338,7 +346,8 @@ class CoinMaster {
 
       return info;
     } catch (err) {
-      console.log("Error".red, err.response.status, err.response.statusText);
+      console.log("Error".red, err.response.status, err.response.statusText, url);
+      console.log(err.response.data)
       // if (retry < 3) {
       // return this.post(url, data, retry + 1);
       //}
@@ -481,7 +490,7 @@ class CoinMaster {
       } = promotion;
       let index = 1;
       for (const offer of offers) {
-        if (offer.status === "READY_TO_PURCHASE" && offer.productDetails.price === 0) {
+        if (offer.status === "READY_TO_PURCHASE" && (offer.productDetails.price === 0 || offer.currency === "COINS")) {
           console.log("Purchasing offer", offer);
           const res = await this.post(`triple-promotion/${promotion.id}/purchase`, {
             "Purchase[item_code]": offer.sku,
@@ -581,6 +590,7 @@ class CoinMaster {
   }
   async getSet() {
     const sets = await this.post("sets");
+    if(!sets) return;
     this.cardCollection = sets;
     this.onData({
       cards: this.cardCollection
@@ -810,10 +820,11 @@ class CoinMaster {
     //await this.update_fb_data();
 
     let res = await this.getBalance();
+    await this.getSet();
+
     //console.log(res)
     await this.upgradePet(res.selectedPet, res.petXpBank);
-    await this.syncCard(this.syncTarget);
-    await this.syncCardToAllFriends();
+    await this.syncCard(this.syncTarget, true);
     //await this.getDailyFreeRewards();
     await this.handleMessage(res);
     const firstResponse = await this.getAllMessages();
@@ -910,6 +921,8 @@ class CoinMaster {
     }
     await this.upgrade(res);
     await this.sendGifts();
+    await this.syncCardToAllFriends();
+
   }
   async upgradePet(selectedPet, petXpBank) {
     if(!selectedPet) return;
@@ -994,8 +1007,10 @@ class CoinMaster {
       } else if (data && data.foxFound) {
         // acttion to elimited foxFound message
       } else if (e && e.chest) {
-         //console.log("You got free chest, collect it", e.chest);
-         //await this.post('read_messages', {last: message.t});
+         // console.log("You got free chest, collect it", e.chest);
+         // await this.post('read_messages', {last: message.t});
+         await this.readSyncMessage(message.t);
+         continue;
       } else {
         // 3 -attack
         if (
@@ -1194,6 +1209,7 @@ class CoinMaster {
     const {
       messages
     } = response ;
+    let hasCard = false;
     if (messages && messages.length > 0) {
       // console.log("Your have gifts", messages);
 
@@ -1201,7 +1217,9 @@ class CoinMaster {
         if (message.type !== "gift" && message.type != "send_cards") continue;
         console.log("Collect gift", message);
         try {
+          hasCard = true;
           response = await this.post(`inbox/pending/${message.id}/collect`);
+          //await this.handleMessage(response);
         } catch (err) {
           console.log("Error to collect gift", err.response || "Unknow");
         }
@@ -1209,6 +1227,7 @@ class CoinMaster {
     } else {
       console.log("No gift pending");
     }
+    await this.getSet();
     return response;
   }
   isAttackableVillage(userId, user) {
