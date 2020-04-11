@@ -5,7 +5,6 @@ const fs = require("fs");
 const csv = require("csv-parser");
 const accountFile = ".account.csv";
 var myArgs = process.argv.slice(2);
-console.log('myArgs: ', myArgs);
 let accounts = [];
 (async () => {
   const server = require('http').createServer();
