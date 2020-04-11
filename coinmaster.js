@@ -49,7 +49,7 @@ class CoinMaster {
     this.syncTarget = options.syncTarget || process.env.SYNC_TARGET || null;
     this.questLevelLimit = parseInt(process.env.QUEST_LEVEL_LIMIT || "6");
     this.allowUpgrade = false;
-    this.allowUpgrade = options.allowUpgrade || process.env.ALLOw_UPGRADE === "true";
+    this.allowUpgrade = options.allowUpgrade || process.env.ALLOW_UPGRADE === "true";
     this.enableQuest = process.env.ENABLE_QUEST === "true";
     this.options = options || {};
     this.dumpResponseToFile = options.dumpResponseToFile || true;
