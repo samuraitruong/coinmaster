@@ -9,6 +9,9 @@ let accounts = [];
 (async () => {
   const server = require('http').createServer();
   const io = require('socket.io')(server);
+  if(!fs.existsSync("data")){
+    fs.mkdirSync("data");
+  }
   io.on('connection', client => {
     client.on('connected', data => {
       io.emit("connected", true)

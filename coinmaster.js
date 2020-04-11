@@ -45,6 +45,7 @@ class CoinMaster {
    * }
    */
   constructor(options) {
+    this.authToken = process.env.AUTH_TOKEN;
     this.syncTarget = options.syncTarget || process.env.SYNC_TARGET || null;
     this.questLevelLimit = parseInt(process.env.QUEST_LEVEL_LIMIT || "6");
     this.allowUpgrade = false;
@@ -94,7 +95,11 @@ class CoinMaster {
     console.log("Enemy target", this.attackTarget);
     this.axiosConfig = {
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
+        "Content-Type": "application/x-www-form-urlencoded",
+        "authorization": "Bearer " + this.authToken,
+        "x-client-version": "3.5.62",
+        "user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36",
+        "x-platform": "WebGL"
       }
     };
     fs.mkdirSync(path.join(__dirname, "data", this.userId), {recursive : true});
@@ -105,6 +110,7 @@ class CoinMaster {
     if(fs.existsSync(this.rewardLogFile)){
       this.rewards = JSON.parse(fs.readFileSync(this.rewardLogFile, "utf8"));
     }
+    console.log("USER:", this.userId, this.authToken);
   }
   async syncCardToAllFriends(){
     const {friends } = await this.post("friends");
@@ -638,7 +644,7 @@ class CoinMaster {
           let logMessage = `CARD - ${key.rainbow} ${cards} `;
           if (item.cards.length === 9) {
             logMessage += " Completed".brightMagenta;
-            logMessage = logMessage.strikethrough;
+            logMessage = logMessage;
           }
           console.log(logMessage);
 

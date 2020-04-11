@@ -7,6 +7,6 @@ module.exports = function getConfig(deviceId, deviceChange, fbToken) {
   fbToken: fbToken,
   locale: "en",
   "Device[os]": "WebGL",
-  "Client[version]": "3.5.27"
+  "Client[version]": "3.5.62"
 }}
 
