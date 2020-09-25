@@ -14,6 +14,11 @@ create .env file in the and setup below property. see sample.env file for detail
 - DEVICE_CHANGE=20191002_2
 
 BET =1
+To get above information, You need to follow below step
+- Login to the game using FB
+- Using network tab in inspect mode(F11) of chrome browser
+- Wait until game load and start check in the network and find the request to coin master
+- All above information will be in the body and header of the request
 
 ## run
 
