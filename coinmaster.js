@@ -362,7 +362,7 @@ class CoinMaster {
   }
   async getDailyFreeRewards() {
     const sss =
-      await this.post("https://vik-game.moonactive.net/external/facebook/CoinMaster_3.5.33_prod_225/connect?minScreenSize=1300&pid=FB_PAGE&c=%28_%29VKpenjlwl00SkioYg0ZC6zw_382EWrI3LoCnT7qirDQ&campaign=%28_%29VKpenjlwl00SkioYg0ZC6zw_382EWrI3LoCnT7qirDQ&af_deeplink=true");
+      await this.post("https://vik-game.moonactive.net/external/facebook/CoinMaster_3.5.162_prod_2591/connect?minScreenSize=1300&pid=FB_PAGE&c=%28_%29VKpenjlwl00SkioYg0ZC6zw_382EWrI3LoCnT7qirDQ&campaign=%28_%29VKpenjlwl00SkioYg0ZC6zw_382EWrI3LoCnT7qirDQ&af_deeplink=true");
     console.log(sss);
     const campaign = "(_)VKpenjlwl00SkioYg0ZC6zw_382EWrI3LoCnT7qirDQ";
     const response = await this.post(`campaigns/${campaign}/click`);
