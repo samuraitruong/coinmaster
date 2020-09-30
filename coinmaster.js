@@ -97,7 +97,7 @@ class CoinMaster {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
         "authorization": "Bearer " + this.authToken,
-        "x-client-version": "3.5.62",
+        "x-client-version": "3.5.165",
         "user-agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Safari/537.36",
         "x-platform": "WebGL"
       }
@@ -669,9 +669,9 @@ class CoinMaster {
   }
   async claimTodayRewardsV1() {
     const {
-      data
-    } = await axios.get("https://raw.githubusercontent.com/samuraitruong/cm-spin/master/public/data.json");
-    for (const item of data.splice(0, 3)) {
+      data //https://raw.githubusercontent.com/samuraitruong/cm-spin/master/public/data.json
+    } = await axios.get("https://raw.githubusercontent.com/samuraitruong/cm-spin/master/public/freespinandcoin.blogspot.com.json");
+    for (const item of data) {
       await this.claimReward(item.code);
     }
   }
@@ -838,7 +838,7 @@ class CoinMaster {
     await this.getSet();
     console.log("Active Events: ", firstResponse.active_events)
     if (!recursive) {
-      await this.claimTodayRewards();
+      //await this.claimTodayRewards();
       await this.claimTodayRewardsV1();
       const firstResponse = await this.getAllMessages();
       await this.handleMessage(firstResponse);
