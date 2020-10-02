@@ -1,4 +1,4 @@
-# coinmaster
+# Coin Master automation script
 ## Introduction
 Coin Master is great game however, game animation is very annoy because it took time to finish, sometime I need to spin and do action as fast as I wish to avoid other player steal my money, or Sometime I have couple thounsand of spins and i want to spin them all but I don't want to hold the phone for an hours. Everything is easy, lets automate it
 
@@ -12,8 +12,8 @@ create .env file in the and setup below property. see sample.env file for detail
 - FB_TOKEN=xxx
 - DEVICE_ID=xxx
 - DEVICE_CHANGE=20191002_2
+- AUTH_TOKEN=authenticate token expired in 12h
 
-BET =1
 To get above information, You need to follow below step
 - Login to the game using FB
 - Using network tab in inspect mode(F11) of chrome browser
