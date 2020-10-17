@@ -23,7 +23,6 @@ To get above information, You need to follow below step
 ## run
 
 ```sh 
-npm install //for first use no package module
 node index.js
 
 ```
