@@ -1,4 +1,9 @@
 # Coin Master automation script
+
+## Attention
+Since web game play has stop working, please get token using below guides
+https://blog.jamie.holdings/2019/01/19/advanced-certificate-bypassing-in-android-with-frida/
+
 ## Introduction
 Coin Master is great game however, game animation is very annoy because it took time to finish, sometime I need to spin and do action as fast as I wish to avoid other player steal my money, or Sometime I have couple thounsand of spins and i want to spin them all but I don't want to hold the phone for an hours. Everything is easy, lets automate it
 
