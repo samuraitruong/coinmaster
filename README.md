@@ -18,7 +18,7 @@ create .env file in the and setup below property. see sample.env file for detail
 - DEVICE_ID=xxx
 - DEVICE_CHANGE=20191002_2
 - AUTH_TOKEN=authenticate token expired in 12h
-
+Bet =1
 To get above information, You need to follow below step
 - Login to the game using FB
 - Using network tab in inspect mode(F11) of chrome browser
